@@ -1,6 +1,6 @@
 ## Hi there 👋
 ### My name is hyemin
-### Today wheather is warm!
+### Today weather is warm!
 
 <!--
 **hyehye12/hyehye12** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
