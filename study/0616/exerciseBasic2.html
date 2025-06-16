@@ -19,5 +19,63 @@
             <li>정기자로 진급하면 장학금 지급</li>
         </ol>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSulPn2gv8XAIOIimNbMnTt9ihHOjTxhkn3MA&s" alt="카메라사진" width="500">
+
+
+        <br /><br /><br /><br /><br /><br /><br />
+
+        <form action="" method="get">
+            <label for="name">고객명: </label>
+            <input type="text" id="name" name="name" placeholder="이름을 입력하세요.">
+
+            <br />
+            <label for="tell">전화번호: </label>
+            <input type="text" id="tell" name="tell" placeholder="전화번호를 입력하세요.">
+
+            <br />
+            <label for="email">E-mail: </label>
+            <input type="email" id="emil" name="email" placeholder="이메일을 입력하세요.">
+
+            <br />
+            <label for="Pizza">피자선택</label>
+            <select name="Pizza" id="Pizza">
+                <option value="combination">콤비네이션</option>
+                <option value="potato">포테이토</option>
+                <option value="pepperoni">페퍼로니</option>
+                <option value="chesse">치즈</option>
+            </select>
+            
+            <fieldset>
+                <legend>피자 사이즈</legend>
+                <label><input type="radio" name="size">Small</label>
+                <label><input type="radio" name="size">Medium</label>
+                <label><input type="radio" name="size">Large</label>
+            </fieldset>
+            
+            <br />
+            <fieldset>
+                <legend>토핑 선택</legend>
+                <label><input type="checkbox" name="topping">베이컨</label>
+                <label><input type="checkbox" name="topping">치즈</label>
+                <label><input type="checkbox" name="topping">양파</label>
+                <label><input type="checkbox" name="topping">버섯</label>
+            </fieldset>
+
+            <br />
+            <label for="dete">희망배송시간</label>
+            <input type="date" id="date" name="date">
+            
+            <br />
+            <label for="message">배송사 요청사항</label>
+            <textarea id="message" name="message" rows="0" cols="200" placeholder="요청사항을 입력해주세요.">
+
+            </textarea>
+
+            <button type="Submit">주문하기</button>
+
+
+
+
+
+        </form>
     </body>
 </html>
