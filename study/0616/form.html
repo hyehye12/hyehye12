@@ -33,8 +33,81 @@
                         <label for="mail">메일 주소</label>
                         <input type="text" id="mail" name="mail" placeholder="메일을 입력해주세요.">
                     </li>
+                    <li>
+                        <label for="age">나이</label>
+                        <input type="number" id="age" name="age" min="0" max="200" placeholder="enter your age">
+                    </li>
+
+                    <li>
+                        <label for="subscribe"><input type="checkbox" name="subscribe">
+                        구독
+                        </label>
+                        <label for="subscribe"><input type="checkbox" name="subscribe">
+                        구독하기
+                        </label>
+                        <label for="subscribe"><input type="checkbox" name="subscribe">
+                        구독해
+                        </label>
+                    </li>
+
+                    <li>
+                        <label><input type="radio" name="gender">남자</label>
+                        <label><input type="radio" name="gender">여자</label>
+                        <label><input type="radio" name="gender">남자1</label>
+                        <label><input type="radio" name="gender">여자1</label>
+                    </li>
+
+                    <li> 
+                        <input type="file" name="file">
+                    </li>
+
+                    <li>
+                        <input type="date" name="date">
+                    </li>
+
+                    <li>
+                        <input type="range" name="range" min="0" nax="100">
+                    </li>
+
+                    <li> 
+                        <input type="color" name="color">
+                    </li>
+
+                    <li>
+                        <label for="country">Selcet your Country</label>
+                        <selcet name="country" id="country">
+                            <option value="usa">USA</option>
+                            <option value="korea">KOREA</option>
+                            <option value="uk">UK</option>
+                        </selcet>
+                    </li>
+
+                    <li>
+                        <lable for="message">Your message:</lable>
+                        <textarea id="message" name="message" rows="5" cols="50" placeholder="이메일을 입력"></textarea>
+                    </li>
+
+                    <li>
+                        <button type="submit">Submit</button>
+                    </li>
                 </ul>
             </fieldset>
+        </form>
+
+        <form action="" method="get">
+            <fieldset>
+                <legend>Contant</legend>
+                <label for="Name">Name:</lable>
+                <input type="text" id="Name" name="Name" placeholder="enter your name">
+                <br />
+                <label for="Email">Email:</label>
+                <input type="email" id="Email" name="Email" placeholder="enter your email">
+                <br />
+                <label for="Message">Message: </label>
+                <textarea id="Message" name="Message" rows="5" cols="100" placeholder="enter your message"></textarea>
+                <button type="submit">Send Your Message</button>
+            </fieldset>
+
         </form>
     </body>
 </html>
