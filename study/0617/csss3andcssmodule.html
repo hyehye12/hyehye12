@@ -17,16 +17,43 @@
                 height: 100px;
                 background-color: lightblue;
 
-                transform: rotate(45deg);
                 transform-origin: center;
                 transform-style: preserve-3d;
                 transform: translateX(100px);
+                transform: rotate(45deg);
+            }
+
+            /* 그라디언트*/
+            .gradient {
+                background: linear-gradient(to right red yellow);
+            }
+
+            /*미디어쿼리*/
+            @media (min-width: 1025px) {
+                .box {
+                    font-size: 50px;
+                    background-color: aquamarine;
+                }
+            }
+
+            @media (min-width: 768px) and (max-width: 1024px) {
+                .box {
+                    font-size: 10px;
+                    background-color: cornflowerblue;
+                }
+            }
+
+            @media (max-width: 767px) {
+                .box {
+                    font-size: 20px;
+                }
             }
         </style>
     </head>
     <body>
         <h1>CSS3 and CSS Module</h1>
-        <div class="css3 box">CSS3</div>
+        <div class="css3 box gradient">CSS3</div>
+        <div class="box">Box</div>
     
     </body>
 </html>
