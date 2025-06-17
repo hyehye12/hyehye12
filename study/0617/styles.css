@@ -1,0 +1,13 @@
+body{ 
+        background-color: yellow;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+h1{
+        color: lightgreen;
+    }
+
+h2{
+        color:aqua;
+        font-weight: 100;
+    }
