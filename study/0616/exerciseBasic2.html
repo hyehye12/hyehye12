@@ -47,7 +47,9 @@
             <fieldset>
                 <legend>피자 사이즈</legend>
                 <label><input type="radio" name="size">Small</label>
+                <br />
                 <label><input type="radio" name="size">Medium</label>
+                <br />
                 <label><input type="radio" name="size">Large</label>
             </fieldset>
             
@@ -55,27 +57,114 @@
             <fieldset>
                 <legend>토핑 선택</legend>
                 <label><input type="checkbox" name="topping">베이컨</label>
+                <br />
                 <label><input type="checkbox" name="topping">치즈</label>
+                <br />
                 <label><input type="checkbox" name="topping">양파</label>
+                <br />
                 <label><input type="checkbox" name="topping">버섯</label>
             </fieldset>
 
             <br />
-            <label for="dete">희망배송시간</label>
-            <input type="date" id="date" name="date">
+            <label for="time">희망배송시간</label>
+            <input type="time" id="time" name="time">
             
-            <br />
-            <label for="message">배송사 요청사항</label>
-            <textarea id="message" name="message" rows="0" cols="200" placeholder="요청사항을 입력해주세요.">
-
+            <br /><br />
+            <label for="message">배송사 요청사항: </label>
+            <textarea id="message" name="message" rows="0" placeholder="요청사항을 입력해주세요.">
             </textarea>
-
+            <br /><br />
             <button type="Submit">주문하기</button>
+        </form>
+        <br /><br /><br /><br /><br /><br /><br />
 
+        <form action="" method="get">
+            <fieldset>
+                <legend>납품자 정보</legend>
+                    <ol>
+                    <li>
+                        <label for="name">납품자명: </label>
+                        <input type="text" name="name">
+                    </li>
+                    <li>
+                        <label for="email">email: </label>
+                        <input type="email" name="email" placeholder="answer@naver.com">
+                    </li>
+                    <li>
+                        <label for="url">홈페이지: </label>
+                        <input type="text" name="url" placeholder="http://">
+                    </li>
+                    <li>
+                        <label for="region">지역: </label>
+                        <select name="region" id="region">
+                            <option value="Busan">부산</option>
+                            <option value="Seoul">서울</option>
+                            <option value="Daegu">대구</option>
+                            <option value="Daejeon">대전</option>
+                            <option value="Gwangju">광주</option>
+                        </select>
+                    </li>
+                </ol>
+            </fieldset>
 
+            <fieldset>
+                <legend>납품자 정보</legend>
+                <ul>
+                    <li>
+                        <label for="name">상품명: </label>
+                        <input type="text" name="name">
+                    </li>
+                    <li>
+                        <label for="count">납품수량: </label>
+                        <input type="text" name="count" placeholder="최소 100">
+                    </li>
+                    <li>
+                        <label for="range">납품등급: </label>
+                        <input type="range" name="range">
+                    </li>
+                    <li>
+                        <label for="massage">기타사항: </label>
+                        <textarea  id="matters" name="matters" rows="0"></textarea>
+                    </li>
+                </ul>
+            </fieldset>
 
+            <br />
+            <button type="submit">send message</button>
+        </form>
 
+        <form action="" method="get">
+            <div style="text-align: left;">
+                <fieldset class="required">
+                    <legend>필수 입력 사항</legend>
+                    <label for="ID">ID</label>
+                    <input type="text" id="ID" name="ID" placeholder="아이디 10글자 이내">
+                    
+                    <button type="submit">중복 확인</button>
 
+                    <br />
+
+                    <label for="password">비밀번호</label>
+                    <input type="password" name="password" placeholder="영문,숫자,특수문자 포함 8자 이상">
+
+                    <br />
+
+                    <label for="password">비밀번호 확인</label>
+                    <input type="password" name="passwordcheck">
+                    
+                    <br />
+
+                    <lable for="email">Email</lable>
+                    <input type="email" name="email">
+                    <select name="email">
+                        <option value="enter">직접입력</option>
+                        <option value="naver">naver.com</option>
+                        <option value="daum">daum.net</option>
+                        <option value="google">google.com</option>
+                        <option value="hanmail">hanmail.com</option>
+                    </select>
+                </fieldset>
+            </div>
         </form>
     </body>
 </html>
