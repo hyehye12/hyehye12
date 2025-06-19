@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DOM 구조 예시</title>
+    <style>
+        h1 + img {
+            
+            color: blue;
+
+        }
+
+        img[src^="image"] {
+            background-color: aqua;
+        }
+
+        p:hover {
+            background-color: blueviolet;
+        }
+
+        input:focus {
+            background-color: brown;
+        }
+
+        p:active {
+            background-color: darkcyan;
+        }
+
+        p:nth-child(odd) {
+            background-color: crimson;
+        }
+
+        p:nth-child(even) {
+            background-color: darkgray;
+        }
+
+        p:first-child {
+            background-color: greenyellow;
+        }
+
+        p:last-child {
+            background-color: gold;
+        }
+
+        P:nth-child( 3n + 1 ) {
+            background-color: darkblue;
+        }
+
+        div > p > strong {
+            font-weight: bold;
+            color:fuchsia
+        }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>
+        <strong>제목 강조</strong>
+      </h1>
+      <img src="image.jpg" alt="예시 이미지" />
+      <div>
+        <p><strong>첫 번째 단락 강조</strong></p>
+        <p><strong>두 번째 단락 강조</strong></p>
+        <p><strong>세 번째 단락 강조</strong></p>
+
+        <p><strong>첫 번째 단락 강조</strong></p>
+        <p><strong>두 번째 단락 강조</strong></p>
+        <p><strong>세 번째 단락 강조</strong></p>
+
+        <!-- <input type="text" > -->
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="Ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Multimedia</title>
+
+        <style>
+
+            .hero {
+                position: relative;
+                width: 100%;
+                height: 100vh;
+                overflow: hidden;    
+            }
+
+            .hero.video {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                z-index: 0;
+            }
+
+            .hero-content {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%); /*중간에 위치시키기*/
+                color: white;
+                text-align: center;
+                font-size: 2rem; /*루트가 정의해놓은 사이즈의 두배*/
+                z-index: 2;
+            }
+
+        </style>
+    </head>
+
+    <boby>
+        
+        <h1>Multimedia</h1>
+
+        <div class="hero">
+            <video autoplay loop muted>
+                <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </viedo>
+        </div>
+
+        <div class="hero-content">
+            <h1>Welcome to Our Website</h1>
+            <p> Your journey start here.</p>
+        </div>
+        
+    </boby>
+</html>
