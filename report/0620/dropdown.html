@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+    
+    <style>
+
+        .dongle-regular {
+            font-family: "Dongle", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        img {
+            margin: 20px;
+        }
+
+        li {
+            position: relative;
+        }
+
+        li:hover .dropdown {
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .dropdown {
+            width: 100px;
+            height: 50px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            position: absolute;
+            top: 160px;
+            z-index: 10;
+            visibility: hidden;
+            transform: translateX(-10px);
+            align-items: center;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 767px) { 
+            .dropdown{
+                margin: 0 auto;
+            }
+            img {
+                width: 80vW;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .dropdown {
+                width: 150px;
+                height: 75px;
+                background-color: rgba(124,124,0,0.7);
+                position: absolute;
+                top: 200px;
+                left: 100px;
+                font-size: 50px;
+                align-items: center;
+                font-family: "Dongle", sans-serif;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .dropdown {
+                width: 200px;
+                height: 100px;
+                background-color: rgba(0,124,124,0.8);
+                position: absolute;
+                top: 200px;
+                left: 100px;
+                font-size: 50px;
+                align-items: center;
+                font-family: "Dongle", sans-serif;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+            <ul type="none">
+                <li>
+                    <a href="https://naver.com" target="_blank">
+                        <img src="https://mblogthumb-phinf.pstatic.net/MjAyMjEyMTVfNTkg/MDAxNjcxMDkwNTk2MzE3.eIuSAvhv2k5PafnH8VlnF4bVr12ndK6pwDtHRE01Sfcg.BOGyhG9zddPPuyrXaCHw1Bu8Xz8xHYweWq0t2Cz5udcg.PNG.y2kwooga/%EB%84%A4%EC%9D%B4%EB%B2%84_AI-19.png?type=w800" alt="naver logo image">
+                    </a>
+                    <div class="dropdown">네이버</div>
+                </li>
+                
+                <li>
+                    <a href="https://daum.net" target="_blank">
+                        <img src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2017/09/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7-2017-09-07-%EC%98%A4%ED%9B%84-2.10.05.png" alt="daum logo image">
+                    </a>
+                    <div class="dropdown">다음</div>
+                </li>
+                
+                <li>
+                    <a href="https://google.com" target="_blank">
+                        <img src="https://png.pngtree.com/png-vector/20220517/ourmid/pngtree-google-search-bar-classic-window-png-image_4643242.png" alt="google logo image">
+                    </a>
+                    <div class="dropdown">구글</div>
+                </li>
+            </ul>
+    </nav>    
+</body>
+</html>

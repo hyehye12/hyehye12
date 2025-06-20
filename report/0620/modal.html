@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal</title>
+    <style>
+        #modal-open {
+            display: none;
+        }
+
+        .modal-open-button {
+            padding: 10px;
+            background-color: darkcyan;
+            color: white;
+            border-radius: 10px 20px 10px 20px;
+            cursor: pointer;
+            margin: 20px;
+            display: inline-block;
+        }
+
+        .modal-open-button:hover {
+            background-color: blueviolet;
+        }
+
+        .content {
+            display: none;
+            background-color: rgba(124,124,124,0.7);
+            color: white;
+            border: 1px, solid gray;
+            border-radius: 0 20px 20px 20px;
+            padding: 20px;
+        }
+
+        input[type="radio"]~label {
+            background-color: rgb(78, 71, 71);
+            display: inline-block;
+            transition: background 0.3s;
+            cursor: pointer;
+            width: 70px;
+            height: 30px;
+            border-radius: 10px 0;
+            text-align: center;
+        
+        }
+        input[type="radio"] {
+            display: none;
+        }
+
+        input[type="radio"]:checked +label {
+            background-color: gray;
+        }
+
+        #explain1:checked ~ #content1,
+        #explain2:checked ~ #content2,
+        #explain3:checked ~ #content3 {
+            display: block;
+        }
+
+        .modal {
+            display:none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            z-index: 10;
+        }
+
+        #modal-open:checked ~ .overlay,
+        #modal-open:checked ~ .modal {
+            display: block;
+        }
+        
+        .modal-close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close-button:hover {
+            color: #000
+        }
+    </style>
+</head>
+<body>
+    <input type="checkbox" id="modal-open">
+
+    <label for="modal-open" class="modal-open-button">모달 창 띄우기</label>
+
+    <label for="modal-open" class="overlay"></label>
+    
+    <div class="modal" id="modal">  
+         <label for="modal-open" class="modal-close-button">X</label>
+        <h1>설정</h1>  
+        <input type="radio" id="explain1" name="explain" checked>
+        <label for="explain1">프로필</label>
+
+        <input type="radio" id="explain2" name="explain">
+        <label for="explain2">글꼴</label>
+
+        <input type="radio" id="explain3" name="explain">
+        <label for="explain3">배경</label>
+    
+
+        <div class="content" id="content1">
+            <img src="https://w7.pngwing.com/pngs/948/545/png-transparent-computer-icons-shape-user-person-scalable-graphics-shape-text-shape-symbol-thumbnail.png" alt="person" style="width: 100px; height: 100px; border-radius: 50%; display: flex;">
+            <br />
+            <input type="file" id="profile" name="profile" style="display: flex;">
+            <label for="profile" id="profile1">프로필 사진</label>
+        </div>
+
+        <div class="content" id="content2">
+            <label for="select" name="text">글꼴</label>
+            <select name="text">
+                <option value="selif">명조체</option>
+                <option value="sans-serif">고딕체</option>
+                <option value="slab-serif">슬랩 세리프</option>
+                <option value="script">필기체</option>
+            </select>
+
+            <br />
+            <input type="color" id="color" name="color">
+            <label for="color" name="color">글꼴 색</label>
+        </div>
+
+        <div class="content" id="content3">
+            <input type="color" id="background-color" name="background-color">
+            <label for="background-color" name="background-color">배경 색</label>
+        </div>
+    </div>    
+    
+</body>
+</html>
