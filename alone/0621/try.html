@@ -9,7 +9,7 @@
     
 
     .Kiwoom {
-        width: 80%;
+        width: 85%;
         padding: 20px;
         bottom: 0;
         left: 0;
@@ -19,19 +19,28 @@
         position: relative;
         display: none;
         background-color: white;
+        text-align: center;
     }
 
     .posture {
         border: 1px solid rgb(128, 2, 8, 0.5);
         padding: 20px;
         display: flex;
+        border-radius: 20px;
     }
 
+    .posture:hover { 
+        transform: scale(1.05);
+    }
+    
     .posture img{
         width: 100px;
         height: 100px;
     }
 
+    .posture h2 {
+       align-items: center;
+    }
     #list-open-button {
         border: 1px solid black;
         background-color: rgb(128,8,4);
@@ -49,8 +58,9 @@
     #close-button {
         border: none;
         position: absolute;
-        left: 80vw;
-        font-size: 24px;
+        left: 75vw;
+        top: 20px;
+        font-size: 34px;
     }
 
     #close-button:hover {
@@ -83,6 +93,10 @@
         margin-top: 20px;
     }
 
+    .explanation {
+        flex: 1;
+    }
+
 </style>
 <body>
     
@@ -93,6 +107,7 @@
         <label for="open-button" id="overlay"></label>
 
         <div class="Kiwoom" >
+            <h2>0618 LINE UP</h2>
             <label for="open-button" id="close-button">X</label>
 
             <div class="explain-grid" >
@@ -100,6 +115,8 @@
                     <img src="https://heroesbaseball.co.kr/files/player.1//2025/03/20/31420417-9886-45c9-945b-cdd69c09e259.jpg" alt="captin">
                     <div class="explanation" id="explanation1">
                         <h2>송성문</h2>
+                        <hr />
+                        <h3>NO.24</h3>
                     </div>
                 </div>
         
