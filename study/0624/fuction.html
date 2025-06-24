@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function 예제</title>
+</head>
+<body>
+    <script>
+        //함수 예제
+        // function greet() {
+        //     alert("반갑습니다.")
+        // } 
+        // greet();
+
+        // function showName() {
+        //     let name ="홍길동";
+        //     name = "이순신"
+        //     console.log (name);
+        // }
+
+        // showName();
+
+        // console.log("outer"+ name); //함수 밖에서는 함수 내부의 일이 적용안됨.
+
+        function add(a,b) {
+            return a + b;
+        }
+
+        let sum = add(3,5);
+        console.log(sum);
+
+        function Bmi(w,h) {
+            return w/(h*h);
+        }
+        let result = Bmi(60,1.60);
+        console.log(result);
+    </script>
+</body>
+</html>
