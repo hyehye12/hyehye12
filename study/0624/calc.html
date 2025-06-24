@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>함수 계산기 예제</title>
+</head>
+<body>
+    <script>
+
+
+        //더하기 함수
+        function add( a , b ) {
+            return a + b;
+        }
+
+        const add2 = function (a , b) {
+            return a + b;
+        }
+
+        //빼기 함수
+        function s( a , b ) {
+            return a - b;
+        }
+
+        const s2 = function (a , b) {
+            return a - b;
+        }
+
+        //나누기 함수
+         function c( a , b ) {
+            return a / b;
+        }
+
+        const c2 = function (a , b) {
+            return a / b;
+        }
+
+        //곱하기 함수
+         function d( a , b ) {
+            return a * b;
+        }
+
+        const d2 = function (a , b) {
+            return a * b;
+        }
+
+        //나머지 함수
+         function r( a , b ) {
+            return a % b;
+        }
+
+        const r2 = function (a , b) {
+            return a % b;
+        }
+
+        const num1 = Number(prompt("첫 번째 숫자를 입력하세요."));
+        const operator = prompt("연산자를 입력하세요.");
+        const num2 = Number(prompt("두 번째 숫자를 입력하세요."));
+
+        //연산자에 따라 함수 호출
+        let result = 0;
+        if (operator==="+") {
+            result = add(num1,num2)
+        } else if (operator==="-") {
+            result = s(num1,num2)
+        } else if (operator==="/") {
+            result = c(num1,num2)
+        } else if (operator==="*") {
+            result = d(num1,num2)
+
+        } else if (operator==="%") {
+            result = r(num1,num2)
+        }else (alert("연산자를 다시 입력해주세요."))
+
+        document.write(result);
+
+
+
+    </script>
+</body>
+</html>
