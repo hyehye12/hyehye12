@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object</title>
+</head>
+<body>
+    <script>
+        // const user = {
+        //     name: "철수",
+        //     age: 20,
+        //     greet: function () {
+        //         alert("안녕하세요.");
+        //     }
+        // }
+
+        // console.log(user.name);
+        // console.log(user.age);
+        // user.greet();
+
+        // function Student (name, age, gender, grade) {
+        //     this.name = name;
+        //     this.age = age;
+        //     this.gender = gender;
+        //     this.grade = grade;
+
+        //     this.sayHi = function () {
+        //         alert(`안녕하세요. 저는 ${this.name}입니다.`);
+        //     };
+        // }
+
+        // const student1 = new Student("철수", 20, "남자", 1);
+        // const student2 = new Student("영희", 20, "여자", 2);
+
+        // console.log(student1.name);
+        // console.log(student2.age);
+        // student.sayHi();
+
+        // const user = {
+        //     name : "홍길동",
+        //     age : 30,
+        //     email : "hong@naver.com"
+
+        // };
+
+        // console.log(user.name);
+        // console.log(user.email);
+
+        // const Book= {};
+
+        // Book.title = "책 제목"
+        // Book.author = "김작가";
+        // Book.year = 2025;
+        
+        // delete Book.year;
+        
+        // for(let key in book) {
+        //     console.log(`${key}, ${Book[key]}`)
+        // }
+
+        // const product = {
+        //     id : 101,
+        //     name: "노트북",
+        //     price: 1200000
+
+        // }
+
+        // console.log(product["name"])
+
+        // for(let key in product) {
+        //     console.log(`key: ${key}, value: ${product[key]}`)
+        // }
+
+        // const calculator = {
+        // }
+        // calculator.add = (a+b)
+        // calculator.subtract = (a-b)
+
+        // console.log(calculator.add(3,5));
+
+        // const calculator = {
+        //     add : function (a,b) {
+        //         return a + b;
+        //     },
+        //     subtract : function (a,b) {
+        //         return a - b;
+        //     }
+        // }
+
+        // console.log (calculator.add(5,3));
+        // console.log (calculator.subtract(10,4));
+
+        // now.getTime();
+        // 1750819107412
+        // 기준은 1970년 1월1일 00시00분00초
+        // year = 55 * 12M * 30 D * 24H * 60 M * 60S * 1000 * 6M * 30D * 24H * 60M * 60S * 1000
+        // 천단위가 초
+
+        //기념일 계산기
+        // const today = new Date();
+        // const birthday = new Date("1990-10-25");
+
+        // let diff = today.getTime() - birthday.getTime();
+        // let days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        // alert ( `${days}일 째 되는 날입니다.`);
+        
+
+        // const now = new Date();
+        // console.log(now);
+        // console.log(now.getDay);
+        // console.log(now.getFullYear);
+        // console.log(now.getHours);
+        // console.log(now.getDate);
+
+        // const d = new Date ();
+        // console.log(d.getFullYear());
+        // console.log(d.getMonth());
+        // console.log(d.getDate());
+        // console.log(d.getDay());
+
+        // console.log(d.getHours());
+        // console.log(d.getMinutes());
+        // console.log(d.getSeconds());
+        // console.log(d.getMilliseconds());
+
+        // d.setFullYear(2026);
+        // d.setMonth(4);
+        // d.setDate(15);
+
+        // d.setHours(10);
+        // d.setMinutes(30);
+
+        // d.setDate(d.getDate()+7);
+        // d.setMonth(d.getMonth()+1);
+
+        // const date1 = new Date("2025-06-01");
+        // const date2 = new Date("2025-06-11");
+
+        // const diffInMs = date2 - date1;
+        // const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+        // console.log(diffInDays);
+
+        // const d = new Date();
+
+        // const fomatted = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2, "0")}`;
+        // console.log(fomatted);
+
+        // const dayNames = ['일','월','화','수','목','금','토'];
+        // const n = new Date();
+        // console.log(`오늘은 ${dayNmaes[d.getday()]}요일 입니다.`)
+
+        // const d = new Date();
+        // const hour = d.getHours();
+        // const ampm = hour 
+
+        // const now = new Date();
+        // console.log(`오늘은 ${now.getMonth}월 ${now.getDate()}일 입니다.`);
+
+        // const thatDay = new Date(2025-12-25);
+        // console.log(thatDay.getFullYear());
+        // console.log(thatDay.getMonth()+1);
+        // console.log(thatDay.getDay());
+
+        // const today = new Date();
+        // console.log(today.getFullYear());
+        // console.log(today.getMonth()+1);
+        // console.log(today.getDay());
+
+        // now.setDate(now.getDate()+100);
+        // const thatDay = new Date("2025-12-25");
+        // const diff = naw.getTime() - thatday.getTime()
+        // const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        // alert(`${days}일 째 되는 날입니다.`);
+
+        // console.log(now.getDay());
+        // thatday.setDay(0);
+        // console.log(thatday.getDay());
+        
+        //본인의 정보를 담은 객체를 만들어 이름 나이 자기소개() 메서드를 출력
+        const user = {
+            name: 곽혜민,
+            age: 26,
+            introduce: function () {
+                alert(`안녕하세요. 저는 ${user.name}이고, ${user.age}살 입니다.`)
+            }
+        }
+
+        //생성자 함수를 이용해 Book 객체 여러개 만들어보기
+        function Book(title,author, year) {
+            this.title = title;
+            this.author = author;
+            this.year = year;
+        }
+
+        const book1 = new Book ("책1", "저자1", 2025);
+        const book2 = new Book ("책2", "저자2", 2024);
+        const book3 = new Book ("책3", "저자3", 2023);
+
+        //Date 객체를 활용해 오늘 날짜와 특정 날짜 간의 차이 계산하기
+        const now = new Date();
+        const thatDay = new Date("2025-12-25");
+        const diff = naw.getTime() - thatday.getTime()
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        console.log(`${days}일 째 되는 날입니다.`);
+        
+    </script>    
+</body>
+</html>
