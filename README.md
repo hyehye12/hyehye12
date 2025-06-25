@@ -1,3 +1,4 @@
+![header](https://capsule-render.vercel.app/api?type=venom&color=7ad7fffb&height=300&section=header&text=Welcome&fontSize=90)
 ## Hi there 👋
 ### My name is hyemin 
 
@@ -22,9 +23,6 @@
 
 ### Top Languages
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=hyehye12&layout=compact&theme=radical)
-
-### GitHub Streak
-![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=hyehye12&theme=radical)
 
 
 ## 📫 연락하기
