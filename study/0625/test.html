@@ -8,15 +8,17 @@
 <body>
     <script>
        //별찍기
-       let stars = Number(" ");
-       stars=1;
-    //    for(stars; stars<10; stars++) {
-    //     console.log("*".repeat(stars));
-    //    }
-
-       for(stars; stars<=20; stars++) {
-        console.log(' '.repeat((20-stars)/2)+"*".repeat(stars));
-       }
+       let stars = " ";
+       let input = Number(prompt("숫자입력"))
+       if(input<=10) { for(stars; stars<=input; stars++) {
+        console.log("*".repeat(stars));
+            } 
+        } else /*피라미드*/ {
+            for(stars; stars<=input; stars++) {
+        console.log(' '.repeat((input-stars)/2)+"*".repeat(stars));
+            }
+        }
+       
     </script>
 </body>
 </html>

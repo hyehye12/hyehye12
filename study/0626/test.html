@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+<body>
+    <script>
+        
+        let input = Number(prompt("숫자를 입력하세요."));
+        let star = input-1;
+
+        //역피라미드 별찍기
+            for (star; star>=1; star--) {
+                console.log(' '.repeat((input-star)/2) + "*".repeat(star));
+            }
+        
+            
+            function printInvertedPyramid(n) {
+                for (let i = n; i > 0; i--) {
+                    const count = n * 2 -1;
+                    const start = n - 1;
+                    printStars(start, count);
+                }
+            }
+
+            function printStars(start, count) {
+                let stars = "";
+                for (let i =0; i < start; i ++);
+            }
+    </script>
+</body>
+</html>
