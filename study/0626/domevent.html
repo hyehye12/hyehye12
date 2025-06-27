@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>돔 이벤트 예제</title>
+    <style>
+        #map {
+            width: 500px;
+            height: 500px;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+
+        #char {
+            width: 50px;
+            height: 50px;
+            background-color: aqua;
+            position:absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        //키보드 방향키에 따라 div가 상하좌우로 이동.
+        let character = document.createElement("div");
+        let map = document.getElementById("map");
+        
+        character.id = "char";
+
+        map.appendChild(character);
+
+        document.addEventListener("keydown", function(event) {
+            // console.log(event);
+
+           
+            if (event.key === "ArrowUp") { 
+                if (character.offsetTop > 0) {
+                character.style.top = character.offsetTop-10+"px"};
+            } else if (event.key === "ArrowDown") {
+                if (character.offsetTop < 450) {
+                character.style.top = character.offsetTop+10+"px"};
+            }else if (event.key === "ArrowLeft") {
+                if (character.offsetLeft > 0) {
+                character.style.left = character.offsetLeft-10+"px"};
+            }else if (event.key === "ArrowRight") {
+                if (character.offsetLeft <450) {
+                character.style.left = character.offsetLeft+10+"px"};
+            }
+        })
+        //    }
+        //     if (event.key === "ArrowUp") {
+        //         character.style.top = character.offsetTop-10+"px";
+        //     } else if (event.key === "ArrowDown") {
+        //         character.style.top = character.offsetTop+10+"px";
+        //     }else if (event.key === "ArrowLeft") {
+        //         character.style.left = character.offsetLeft-10+"px";
+        //     }else if (event.key === "ArrowRight") {
+        //         character.style.left = character.offsetLeft+10+"px";
+        //     }
+        // })
+
+    </script>
+</body>
+</html>

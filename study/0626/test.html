@@ -12,23 +12,32 @@
         let star = input-1;
 
         //역피라미드 별찍기
-            for (star; star>=1; star--) {
-                console.log(' '.repeat((input-star)/2) + "*".repeat(star));
-            }
+            // for (star; star>=1; star--) {
+            //     console.log(' '.repeat((input-star)/2) + "*".repeat(star));
+            // }
         
             
             function printInvertedPyramid(n) {
-                for (let i = n; i > 0; i--) {
-                    const count = n * 2 -1;
-                    const start = n - 1;
-                    printStars(start, count);
-                }
+            for (let i = n; i > 0; i--) {
+            const start = n - i;
+            const count = n * 2 - 1;
+            printStars(start, count);
+            }
             }
 
-            function printStars(start, count) {
-                let stars = "";
-                for (let i =0; i < start; i ++);
+           function printStars(start, count) {
+            let stars = "";
+            for (let i = 0; i < start; i++) {
+            stars += " ";
             }
+            for (let i = 0; i < count; i++) {
+            stars += "*";
+            }
+            console.log(stars);
+            }
+
+        printInvertedPyramid(4);
+
     </script>
 </body>
 </html>
