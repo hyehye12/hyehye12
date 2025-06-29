@@ -5,47 +5,47 @@
 ### HTTP Request 구조
 
  **Start Line**: 
-    요청의 메서드: GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS, CONNECT, TRACE 
-    요청 URI (Request URI): 요청 대상 리소스의 경로를 나타냅니다. (예: /users, /products/123)
+요청의 메서드: GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS, CONNECT, TRACE 
+요청 URI (Request URI): 요청 대상 리소스의 경로를 나타냅니다. (예: /users, /products/123)
 
-    HTTP 버전 (HTTP Version): 클라이언트가 사용하는 HTTP 버전을 나타냅니다. (예: HTTP/1.1, HTTP/2.0)
+HTTP 버전 (HTTP Version): 클라이언트가 사용하는 HTTP 버전을 나타냅니다. (예: HTTP/1.1, HTTP/2.0)
 
- **Headers**: 요청에 대한 추가 정보(브라우저 정보, 인증, 데이터 타입 등)
- **CRLF**: 헤더와 바디를 구분하는 개행
+ **Headers**: 요청에 대한 추가 정보(브라우저 정보, 인증, 데이터 타입 등) <br />
+ **CRLF**: 헤더와 바디를 구분하는 개행<br />
  **Body**: 전송할 실제 데이터(주로 POST, PUT 등에서 사용)
 
 ### HTTP Response 구조
 
  **Status Line**: HTTP 버전 (HTTP Version): 서버가 사용하는 HTTP 버전을 나타냅니다.
 
-    상태 코드 (Status Code): 요청 처리 결과를 나타내는 3자리 숫자 코드입니다.
+상태 코드 (Status Code): 요청 처리 결과를 나타내는 3자리 숫자 코드입니다.
 
-    2xx (성공): 요청이 성공적으로 처리되었습니다. (예: 200 OK)
+2xx (성공): 요청이 성공적으로 처리되었습니다. (예: 200 OK)
 
-    3xx (리다이렉션): 요청을 완료하기 위해 추가적인 동작이 필요합니다. (예: 301 Moved Permanently, 302 Found)
+3xx (리다이렉션): 요청을 완료하기 위해 추가적인 동작이 필요합니다. (예: 301 Moved Permanently, 302 Found)
 
-    4xx (클라이언트 오류): 클라이언트의 요청이 잘못되었습니다. (예: 400 Bad Request, 404 Not Found)
+4xx (클라이언트 오류): 클라이언트의 요청이 잘못되었습니다. (예: 400 Bad Request, 404 Not Found)
 
-    5xx (서버 오류): 서버가 요청을 처리하는 데 실패했습니다. (예: 500 Internal Server Error)
+5xx (서버 오류): 서버가 요청을 처리하는 데 실패했습니다. (예: 500 Internal Server Error)
 
-    상태 메시지 (Reason Phrase): 상태 코드에 대한 간략한 설명을 제공합니다. (예: OK, Not Found)
+상태 메시지 (Reason Phrase): 상태 코드에 대한 간략한 설명을 제공합니다. (예: OK, Not Found)
  **Headers**: 서버와 응답에 대한 부가 정보를 포함합니다. key-value 쌍으로 구성됩니다.
 
-    Server: 응답을 생성한 서버 소프트웨어 정보.
+Server: 응답을 생성한 서버 소프트웨어 정보.
 
-    Content-Type: 응답 본문에 포함된 데이터의 미디어 타입.
+Content-Type: 응답 본문에 포함된 데이터의 미디어 타입.
 
-    Content-Length: 응답 본문의 길이.
+Content-Length: 응답 본문의 길이.
 
-    Set-Cookie: 클라이언트에 설정할 쿠키 정보.
+Set-Cookie: 클라이언트에 설정할 쿠키 정보.
 
-    Cache-Control: 캐싱에 대한 지시어.
+Cache-Control: 캐싱에 대한 지시어.
  **CRLF**: 헤더와 바디를 구분하는 개행
  **Body**: 클라이언트에게 전송되는 실제 데이터입니다.
 
-    예를 들어, HTML 문서, 이미지, JSON 데이터 등이 본문에 담겨 전송됩니다.
+예를 들어, HTML 문서, 이미지, JSON 데이터 등이 본문에 담겨 전송됩니다.
 
-    Content-Type 헤더에 따라 브라우저가 본문을 해석하고 렌더링합니다.
+Content-Type 헤더에 따라 브라우저가 본문을 해석하고 렌더링합니다.
 
 ## Ajax, Forward, Redirect 차이
 
