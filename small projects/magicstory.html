@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>마법의 버튼 - 날씨 확장</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Pretendard', sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: background 1s, color 1s;
+    }
+
+    .story-box {
+      text-align: center;
+      max-width: 600px;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .magic-button {
+      padding: 12px 24px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      background: #6a5acd;
+      color: white;
+      cursor: pointer;
+    }
+
+    .magic-button:hover {
+      background: #483d8b;
+    }
+
+    /* 상태별 배경 */
+    .state-day {
+      background: linear-gradient(to top, #87cefa, #ffffff);
+      color: #222;
+    }
+
+    .state-night {
+      background: linear-gradient(to top, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
+    }
+
+    .state-space {
+      background: radial-gradient(circle, #000000, #111);
+      color: #00ffcc;
+    }
+
+    .state-rain {
+      background: linear-gradient(to top, #4e5d6c, #a3b1c6);
+      color: #fff;
+    }
+
+    .state-snow {
+      background: linear-gradient(to bottom, #f0f8ff, #e6f7ff);
+      color: #333;
+    }
+
+    .state-rainbow {
+      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+      color: #000;
+    }
+
+    /* 비 애니메이션 */
+    .rain::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: repeating-linear-gradient(transparent, transparent 10px, rgba(255,255,255,0.3) 11px);
+      animation: rain 0.5s linear infinite;
+    }
+
+    @keyframes rain {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(100%); }
+    }
+
+    /* 눈 애니메이션 */
+    .snow::before {
+      content: "❄️ ❄️ ❄️ ❄️ ❄️";
+      font-size: 3rem;
+      position: absolute;
+      top: -50px;
+      animation: snow 3s linear infinite;
+    }
+
+    @keyframes snow {
+      from { top: -50px; }
+      to { top: 100%; }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="story-box" id="story">
+    🌞 아침이 밝았습니다! 마법의 버튼을 눌러보세요.
+  </div>
+  <button class="magic-button" onclick="changeWorld()">✨ 마법의 버튼</button>
+
+  <script>
+    const body = document.body;
+    const story = document.getElementById('story');
+
+    let state = 0;
+    const stories = [
+      { className: 'state-day', text: '🌞 아침이 밝았습니다!' },
+      { className: 'state-night', text: '🌙 밤이 찾아왔습니다. 별빛이 반짝입니다.' },
+      { className: 'state-space', text: '🚀 우주로 떠났습니다! 별들이 당신을 반깁니다.' },
+      { className: 'state-rain rain', text: '🌧️ 비가 내리기 시작합니다. 우산을 챙기세요.' },
+      { className: 'state-snow snow', text: '❄️ 눈이 펑펑 내립니다. 겨울왕국 같아요!' },
+      { className: 'state-rainbow', text: '🌈 비가 그치고 무지개가 떴습니다. 희망의 메시지 같아요.' },
+    ];
+
+    function changeWorld() {
+      state = (state + 1) % stories.length;
+      const { className, text } = stories[state];
+
+      body.className = className;
+      story.innerHTML = text;
+    }
+  </script>
+</body>
+</html>

@@ -31,56 +31,138 @@
       <button id="add">+</button>
 
       <button id="zero">0</button>
-      <button id="dot"></button>
+      <button id="dot">.</button>
       <button id="equal" class="equal">=</button>
     </div>
   </div>
-
   <script>
-    let display = document.getElementById("display");
-      let clear = document.getElementById("clear");
-      let backspace = document.getElementById("backspace");
-      let percent = document.getElementById("percent");
-      let divide = document.getElementById("divide");
-      let seven = document.getElementById("seven");
-      let eight = document.getElementById("eight");
-      let nine = document.getElementById("nine");
-      let multiply = document.getElementById("multiply");
-      let four = document.getElementById("four");
-      let five = document.getElementById("five");
-      let six = document.getElementById("six");
-      let subtract = document.getElementById("subtract");
-      let one = document.getElementById("one");
-      let two = document.getElementById("two");
-      let three = document.getElementById("three");
-      let add = document.getElementById("add");
-      let zero = document.getElementById("zero");
-      let dot = document.getElementById("dot");
-      let equal = document.getElementById("equal");
+    // script.js
+  document.addEventListener('DOMContentLoaded', () => {
+  const display = document.getElementById('display');
+  const buttons = document.getElementById('buttons');
 
-    function appendToDisplay(value) {
-        if (display.textContent === "0") {
-            display.textContent = value;
-        } else {
-        display.textContent += value ;
-        }
+  let currentInput = '0';
+  let operator = null;
+  let previousInput = null;
+  let resetDisplay = false;
+
+  // Function to update the display
+  function updateDisplay() {
+    display.textContent = currentInput;
+  }
+
+  // Function to handle number clicks
+  function handleNumber(number) {
+    if (resetDisplay) {
+      currentInput = number;
+      resetDisplay = false;
+    } else {
+      currentInput = currentInput === '0' ? number : currentInput + number;
     }
+    updateDisplay();
+  }
 
-    let buttons = document.getElementById("buttons");
-    buttons.addEventListener("click", function(event){
-        if (event.target.id === "equal") { 
-            console.log(event.target.innerText);
-            let result = eval(display.textContent);
-            appendToDisplay(event.target.innerText + result);}else {
-            // console.log(event.target)
-            appendToDisplay(event.target.innerText);}
-        }
-    )
+  // Function to handle operator clicks
+  function handleOperator(nextOperator) {
+    if (operator && !resetDisplay) {
+      calculate();
+      previousInput = currentInput;
+    } else {
+      previousInput = currentInput;
+    }
+    operator = nextOperator;
+    resetDisplay = true;
+  }
 
-    function clearDisplay() {
-            document.getElementById('display').value = '';
+  // Function to perform calculations
+  function calculate() {
+    let result;
+    const prev = parseFloat(previousInput);
+    const current = parseFloat(currentInput);
+
+    if (isNaN(prev) || isNaN(current)) return;
+
+    switch (operator) {
+      case '+':
+        result = prev + current;
+        break;
+      case '-':
+        result = prev - current;
+        break;
+      case '*':
+        result = prev * current;
+        break;
+      case '/':
+        if (current === 0) {
+          alert("0으로 나눌 수 없습니다!");
+          clearCalculator();
+          return;
         }
-      
-    </script>
+        result = prev / current;
+        break;
+      case '%': // Percentage calculation: current is percentage of previous
+        result = prev * (current / 100);
+        break;
+      default:
+        return;
+    }
+    currentInput = result.toString();
+    operator = null;
+    resetDisplay = true;
+    updateDisplay();
+  }
+
+  // Function to clear the calculator
+  function clearCalculator() {
+    currentInput = '0';
+    operator = null;
+    previousInput = null;
+    resetDisplay = false;
+    updateDisplay();
+  }
+
+  // Function for backspace
+  function handleBackspace() {
+    if (currentInput.length > 1) {
+      currentInput = currentInput.slice(0, -1);
+    } else {
+      currentInput = '0';
+    }
+    updateDisplay();
+  }
+
+  // Event listener for button clicks
+  buttons.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target.tagName !== 'BUTTON') return;
+
+    const buttonId = target.id;
+    const buttonText = target.textContent;
+
+    if (target.id === 'clear') {
+      clearCalculator();
+    } else if (target.id === 'backspace') {
+      handleBackspace();
+    } else if (['add', 'subtract', 'multiply', 'divide', 'percent'].includes(buttonId)) {
+      handleOperator(buttonText);
+    } else if (target.id === 'equal') {
+      calculate();
+    } else if (target.id === 'dot') {
+      if (resetDisplay) {
+        currentInput = '0.';
+        resetDisplay = false;
+      } else if (!currentInput.includes('.')) {
+        currentInput += '.';
+      }
+      updateDisplay();
+    } else { // Number buttons
+      handleNumber(buttonText);
+    }
+  });
+
+  // Initialize display
+  updateDisplay();
+});
+  </script>
 </body>
 </html>
