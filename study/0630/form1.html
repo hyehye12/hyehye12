@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id = signupForm>
+        <label for="userId">아이디</label>
+        <input id="userId" type="text">
+
+        <label for="email">이메일</label>
+        <input id="email" type="email">
+
+        <label for="password">비밀번호</label>
+        <input id="password" type="password">
+    
+
+        <button id="submit" type="submit" onchange="validateForm()">제출</button>
+
+        <div id="preview">
+            <p id="Id"></p>
+            <p id="emailcheck"></p>
+            <p id="passwordcheck"></p>
+        </div>
+        
+    </form>
+    <script>
+        let userId = document.getElementById("userId").value.trim();
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").vlaue;
+
+        document.getElementById("signupForm").addEventListener("submit", function(e) {
+        e.preventDefault(); // 폼 제출 막기
+
+        function validateForm(){
+        if(!userId) {
+            alert("아이디를 입력하세요.")
+            return;
+        }
+
+        let emailRegex = /^[\w.-]+@[\w.-]+\.[A-Za-z]{2,}$/;
+        if(!emailRegex.test(email)) {
+            alert("올바른 이메일을 입력하세요.")
+            return;
+        }
+
+        let passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+        if (!passwordRegex.test(password)) {
+            alert("비밀번호는 영문+숫자+특수문자를 조합해 8자이상 입력해주세요.")
+            return;
+        }
+        priview()
+    }});
+
+    //제출 버튼 누르면 미리보기 만들기
+    let id = document.getElementById("Id");
+    let emailCheck = document.getElementById("emailcheck");
+    let passwordCheck = document.getElementById("passwordcheck");
+
+    function preview() {
+        id.innerText = userId;
+        emailCheck.innerText=email
+        passwordCheck.innerText=password
+    }
+
+        
+
+
+    </script>
+</body>
+</html>
