@@ -72,33 +72,112 @@
     }
 
     /* 비 애니메이션 */
-    .rain::before {
-      content: "";
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-image: repeating-linear-gradient(transparent, transparent 10px, rgba(255,255,255,0.3) 11px);
-      animation: rain 0.5s linear infinite;
+   .rain-drop {
+    position: absolute;
+    width: 2px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: dropFall 0.6s linear infinite;
     }
 
-    @keyframes rain {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(100%); }
+    @keyframes dropFall {
+    from {
+        transform: translateY(-100vh);
+    }
+    to {
+        transform: translateY(100vh);
+    }
     }
 
     /* 눈 애니메이션 */
-    .snow::before {
-      content: "❄️ ❄️ ❄️ ❄️ ❄️";
-      font-size: 3rem;
-      position: absolute;
-      top: -50px;
-      animation: snow 3s linear infinite;
-    }
+   .snowflake {
+    position: absolute;
+    color: white;
+    font-size: 1.5rem;
+    animation: snowFall 6s linear infinite;
+        }
 
-    @keyframes snow {
-      from { top: -50px; }
-      to { top: 100%; }
+    @keyframes snowFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
     }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+    }
+  .state-cloudy {
+  background: linear-gradient(to top, #d7d2cc, #304352);
+  color: #fff;
+}
+
+/* 구름 스타일 */
+.cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0.8;
+  z-index: 0;
+  box-shadow:
+    -30px 10px 40px #fff,
+    30px 10px 50px #fff,
+    0px 10px 30px #fff;
+  animation: floatCloud 40s linear infinite;
+}
+
+@keyframes floatCloud {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(120vw);
+  }
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite ease-in-out;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+.rocket-img {
+  position: absolute;
+  width: 100px;
+  top: 80%;
+  left: -150px;
+  opacity: 0;
+  transition: none;
+  z-index: 2;
+}
+
+.rocket-fly {
+  animation: flyRocket 5s linear forwards;
+  opacity: 1;
+}
+
+@keyframes flyRocket {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(120vw, -120vh) rotate(30deg);
+    opacity: 0;
+  }
+}
+
 
   </style>
 </head>
@@ -107,6 +186,7 @@
     🌞 아침이 밝았습니다! 마법의 버튼을 눌러보세요.
   </div>
   <button class="magic-button" onclick="changeWorld()">✨ 마법의 버튼</button>
+ <audio id="bgm" src="sunnyday.mp3" preload="auto"></audio>
 
   <script>
     const body = document.body;
@@ -114,21 +194,113 @@
 
     let state = 0;
     const stories = [
-      { className: 'state-day', text: '🌞 아침이 밝았습니다!' },
-      { className: 'state-night', text: '🌙 밤이 찾아왔습니다. 별빛이 반짝입니다.' },
-      { className: 'state-space', text: '🚀 우주로 떠났습니다! 별들이 당신을 반깁니다.' },
-      { className: 'state-rain rain', text: '🌧️ 비가 내리기 시작합니다. 우산을 챙기세요.' },
-      { className: 'state-snow snow', text: '❄️ 눈이 펑펑 내립니다. 겨울왕국 같아요!' },
-      { className: 'state-rainbow', text: '🌈 비가 그치고 무지개가 떴습니다. 희망의 메시지 같아요.' },
-    ];
+  { className: 'state-day', text: '🌞 아침이 밝았습니다!' },
+  { className: 'state-night', text: '🌙 밤이 찾아왔습니다. 별빛이 반짝입니다.' },
+  { className: 'state-space', text: '🚀 우주로 떠났습니다! 별들이 당신을 반깁니다.' },
+  { className: 'state-rain rain', text: '🌧️ 비가 내리기 시작합니다. 우산을 챙기세요.' },
+  { className: 'state-snow snow', text: '❄️ 눈이 펑펑 내립니다. 겨울왕국 같아요!' },
+  { className: 'state-cloudy cloudy', text: '☁️ 하늘이 잔뜩 흐려요. 곧 비가 올 것 같네요.' },
+  { className: 'state-rainbow', text: '🌈 비가 그치고 무지개가 떴습니다. 희망의 메시지 같아요.' },
+];
 
-    function changeWorld() {
-      state = (state + 1) % stories.length;
-      const { className, text } = stories[state];
 
-      body.className = className;
-      story.innerHTML = text;
-    }
+ function changeWorld() {
+  const bgm = document.getElementById('bgm');
+  state = (state + 1) % stories.length;
+  const { className, text } = stories[state];
+
+  body.className = className;
+  story.innerHTML = text;
+
+  clearWeatherEffects();
+  if (className.includes('snow')) createSnowflakes();
+  if (className.includes('rain')) createRainDrops();
+  if (className.includes('cloudy')) createClouds();
+  if (className.includes('night')) createStars();
+  if (className.includes('space')) {
+    const rocket = document.querySelector('.rocket-img');
+    rocket.classList.add('rocket-fly');
+  }
+  if (className.includes('rainbow')) {
+    createRainDrops(30, 0.2, 1.5); // 잔잔한 비
+  }
+
+  // ✅ 배경음 재생/정지 조건
+  const isMusicState = className.includes('space') || className.includes('day');
+  if (isMusicState) {
+    bgm.volume = 0.5;
+    bgm.play();
+  } else {
+    bgm.pause();
+    bgm.currentTime = 0;
+  }
+}
+
+
+
+
+
+function clearWeatherEffects() {
+  document.querySelectorAll('.snowflake, .rain-drop, .cloud, .star').forEach(el => el.remove());
+  
+  const rocket = document.querySelector('.rocket-img');
+  if (rocket) rocket.classList.remove('rocket-fly'); // 매 상태 전환 시 초기화
+}
+
+
+function createStars() {
+  for (let i = 0; i < 50; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.top = `${Math.random() * 100}vh`;
+    star.style.left = `${Math.random() * 100}vw`;
+    star.style.animationDuration = `${1 + Math.random() * 2}s`;
+    document.body.appendChild(star);
+  }
+}
+
+
+function createSnowflakes() {
+  for (let i = 0; i < 30; i++) {
+    const snow = document.createElement('div');
+    snow.className = 'snowflake';
+    snow.textContent = '❄️';
+    snow.style.left = `${Math.random() * 100}vw`;
+    snow.style.animationDuration = `${3 + Math.random() * 3}s`;
+    snow.style.fontSize = `${1 + Math.random() * 2}rem`;
+    document.body.appendChild(snow);
+  }
+}
+
+function createRainDrops(count = 80, opacity = 0.5, speed = 0.6) {
+  for (let i = 0; i < count; i++) {
+    const drop = document.createElement('div');
+    drop.className = 'rain-drop';
+    drop.style.left = `${Math.random() * 100}vw`;
+    drop.style.animationDelay = `${Math.random() * 1}s`;
+    drop.style.opacity = opacity;
+    drop.style.animationDuration = `${speed}s`;
+    document.body.appendChild(drop);
+  }
+}
+
+
+function createClouds() {
+  for (let i = 0; i < 5; i++) {
+    const cloud = document.createElement('div');
+    cloud.className = 'cloud';
+    const size = 60 + Math.random() * 60;
+    cloud.style.width = `${size}px`;
+    cloud.style.height = `${size * 0.6}px`;
+    cloud.style.top = `${Math.random() * 40}vh`;
+    cloud.style.left = `${-200 - Math.random() * 300}px`;
+    cloud.style.animationDuration = `${20 + Math.random() * 10}s`;
+    document.body.appendChild(cloud);
+  }
+}
+
+    
   </script>
+  <img src="https://www.logoyogo.com/web/wp-content/uploads/edd/2021/03/logoyogo-1-247.jpg" class="rocket-img" alt="rocket" />
 </body>
 </html>
