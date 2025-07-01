@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>정보 표시기</title>
+</head>
+<body>
+    <h2>ℹ️ 브라우저 정보</h2>
+    <div class="search-box">
+    <input type="text" id="info-search" placeholder="원하는 정보를 입력하세요.">
+    </div>
+    <button onclick="openPopup()">확인하기</button>
+    <ul id="info"></ul>
+</body>
+
+<script>
+    let originalInfoItems = [];
+
+    function openPopup() {
+        info();
+    }
+    function info() {
+    let infoList = document.getElementById("info");
+    infoList.innerHTML = '';
+    originalInfoItems = [];
+    let li = (text) =>{ let listItem = document.createElement('li');
+            listItem.textContent = text;
+            return listItem;
+        };
+
+
+        const language = `언어: ${navigator.language}`;
+        const appName = `브라우저: ${navigator.appName}`;
+        const resolution = `화면해상도: ${screen.width}*${screen.height}`;
+        
+
+        infoList.appendChild(li(language));
+        infoList.appendChild(li(appName));
+        infoList.appendChild(li(resolution));
+    
+
+        originalInfoItems.push(language, appName, resolution);
+
+        if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const latitude = `위도: ${position.coords.latitude}`;
+            const longitude = `경도: ${position.coords.longitude}`;
+            infoList.appendChild(li(latitude));
+            infoList.appendChild(li(longitude));
+            originalInfoItems.push(latitude, longitude); // 원본 배열에 추가
+            applySearchFilter(); // 위치 정보 로드 후 검색 필터 다시 적용
+        }, () => {
+            const geoError = "위치 정보를 가져올 수 없습니다.";
+            infoList.appendChild(li(geoError));
+            originalInfoItems.push(geoError); // 원본 배열에 추가
+            applySearchFilter(); // 위치 정보 로드 후 검색 필터 다시 적용
+        });
+        } else {
+            const noGeo = "이 브라우저는 위치 정보를 지원하지 않습니다.";
+            infoList.appendChild(li(noGeo));
+            originalInfoItems.push(noGeo); // 원본 배열에 추가
+        }
+        }
+
+    //     if("geolocation" in navigator) {
+    //     navigator.geolocation.getCurrentPosition((position) => {
+    //         info.innerHTML += li(`위도: ${position.coords.latitude}` );
+    //         info.innerHTML += li(`경도: ${position.coords.longitude}` );
+    //     }, () => {
+    //         info.innerHTML += li("위치 정보를 가져올 수 없습니다.");
+    //     });
+    // } else {
+    //     info.innerHTML += li("이 브라우저는 위치 정보를 지원하지 않습니다.")
+    // }}
+
+    /*((position) => {
+            info.innerHTML += li(`위도: ${position.coords.latitude}` );
+            info.innerHTML += li(`경도: ${position.coords.longitude}` );
+        } Succes Callback*/
+
+    /* () => {
+            info.innerHTML += li("위치 정보를 가져올 수 없습니다.");
+        }); false Callback*/
+
+     function applySearchFilter() {
+        const infoSearch = document.getElementById("info-search");
+        const searchTerm = infoSearch.value.toLowerCase().trim();
+        const infoList = document.getElementById("info");
+
+        // 목록 초기화 후 원본 정보를 바탕으로 다시 그림
+        infoList.innerHTML = '';
+
+        originalInfoItems.forEach(itemText => {
+            const listItem = document.createElement('li');
+            
+            if (searchTerm === "") {
+                // 검색어가 없으면 하이라이트 없이 원래 텍스트 추가
+                listItem.textContent = itemText;
+            } else {
+                // 검색어가 있으면 매칭되는 부분 하이라이트
+                const regex = new RegExp(`(${searchTerm})`, 'gi');
+                listItem.innerHTML = itemText.replace(regex, `<span class="highlight">$1</span>`);
+            }
+            
+            // 검색어와 일치하는 항목만 표시 (또는 검색어가 없으면 모두 표시)
+            if (searchTerm === "" || itemText.toLowerCase().includes(searchTerm)) {
+                infoList.appendChild(listItem);
+            }
+        });
+    }
+
+    // 검색 입력 필드에 이벤트 리스너 추가
+    let infoSearch = document.getElementById("info-search");
+    infoSearch.addEventListener('input', applySearchFilter);
+
+      document.addEventListener('DOMContentLoaded', () => {
+      })
+</script>
+
+
+</html>

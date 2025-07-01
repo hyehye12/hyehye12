@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOM</title>
+</head>
+<body>
+    <script>
+        // function openPopup() {
+        //     window.open("https://naver.com", "popup", "width=300,height=300")
+        // }
+
+        // setTimeout(openPopup,3000);
+
+        // setInterval(openPopup,3000);
+
+        //Navigate
+        console.log(navigator.userAgent);
+        console.log(navigator.language);
+        console.log(navigator.platform);
+        console.log(navigator.appName);
+        console.log(navigator.appVersion);
+
+        //location
+        console.log(location.href); //현재 주소 //http://127.0.0.1:5500/study/0630/bom.html
+        console.log(location); 
+
+        // location.href = "https://naver.com"
+
+        // if (confirm("구글로 이동할까요?")) {
+        //     location.href = "https://google.com";
+        // } else {
+        //     location.href = "https://naver.com"
+        // }
+
+        //screen
+        // console.log("화면 너비:", screen.width);
+        // console.log("화면 높이:", screen.height);
+
+        //history
+        //history.back
+        //history.
+    </script>
+    <button onclick="openWindow()">새창 띄우기</button>
+
+    <script>
+        function openWindow() {
+            window.open("https://naver.com", "popup", "width="+ screen.width +",height=500")
+        }
+
+        function autoMovePage() {
+            setTimeout(function()
+            {location.href="https://naver.com"},5000);
+        }
+    </script>
+
+    <button onclick="back()">뒤로가기</button>
+    <button onclick="go()">앞으로 가기</button>
+
+    <script>
+        function back() {
+            history.go(-1);
+        }
+
+        function go() {
+            history.go();
+        }
+    </script>
+</body>
+</html>
