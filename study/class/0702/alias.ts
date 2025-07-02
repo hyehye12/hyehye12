@@ -3,8 +3,6 @@ let score: Points = 40; //재활용성, 리팩토링-> 중복이 많다 싶으�
 
 console.log(score);
 
-//@ts-ignore
-//@ts-nocheck
 //@prettier-ignore
 
 type ComplexPerson = {
