@@ -206,6 +206,10 @@
       const story = document.getElementById("story");
 
       let state = 0;
+      const witchStory = {
+        className: "state-witch",
+        text: "🧙‍♀️ 마녀가 나타났어요! 주문을 외우기 시작했습니다...",
+      };
       const stories = [
         { className: "state-day", text: "🌞 아침이 밝았습니다!" },
         {
@@ -217,16 +221,16 @@
           text: "🚀 우주로 떠났습니다! 별들이 당신을 반깁니다.",
         },
         {
-          className: "state-rain rain",
-          text: "🌧️ 비가 내리기 시작합니다. 우산을 챙기세요.",
-        },
-        {
-          className: "state-snow snow",
+          className: "state-snow",
           text: "❄️ 눈이 펑펑 내립니다. 겨울왕국 같아요!",
         },
         {
-          className: "state-cloudy cloudy",
+          className: "state-cloudy",
           text: "☁️ 하늘이 잔뜩 흐려요. 곧 비가 올 것 같네요.",
+        },
+        {
+          className: "state-rain",
+          text: "🌧️ 비가 내리기 시작합니다. 우산을 챙기세요.",
         },
         {
           className: "state-rainbow",
@@ -240,89 +244,86 @@
         const { className, text } = stories[state];
 
         body.className = className;
-        story.innerHTML = text;
+        clearWeatherEffects(); // ✅ 반드시 먼저 실행
 
-        clearWeatherEffects();
-        if (className.includes("snow")) createSnowflakes();
-        if (className.includes("rain")) createRainDrops();
-        if (className.includes("cloudy")) createClouds();
-        if (className.includes("night")) createStars();
-        if (className.includes("space")) {
+        let finalText = text;
+        if (className === "state-rain") createRainDrops();
+        if (className === "state-snow") createSnowflakes();
+        if (className === "state-cloudy") createClouds();
+        if (className === "state-night") createStars();
+        if (className === "state-space") {
           const rocket = document.querySelector(".rocket-img");
           rocket.classList.add("rocket-fly");
         }
-        if (className.includes("rainbow")) {
-          createRainDrops(30, 0.2, 1.5); // 잔잔한 비
-        }
 
-        // ✅ 배경음 재생/정지 조건
+        story.innerHTML = finalText;
 
+        const isMusicState =
+          className.includes("state-space") || className.includes("state-day");
         if (isMusicState) {
           bgm.volume = 0.5;
-          bgm.play().catch((e) => {
-            console.log("오디오 자동 재생 차단됨:", e);
-          });
+          bgm.play().catch((e) => console.log("음악 재생 차단:", e));
         } else {
           bgm.pause();
           bgm.currentTime = 0;
         }
+      }
 
-        function clearWeatherEffects() {
-          document
-            .querySelectorAll(".snowflake, .rain-drop, .cloud, .star")
-            .forEach((el) => el.remove());
+      function clearWeatherEffects() {
+        document
+          .querySelectorAll(".snowflake, .rain-drop, .cloud, .star")
+          .forEach((el) => el.remove());
 
-          const rocket = document.querySelector(".rocket-img");
-          if (rocket) rocket.classList.remove("rocket-fly"); // 매 상태 전환 시 초기화
+        const rocket = document.querySelector(".rocket-img");
+        if (rocket) rocket.classList.remove("rocket-fly"); // 매 상태 전환 시 초기화
+      }
+
+      function createStars() {
+        for (let i = 0; i < 50; i++) {
+          const star = document.createElement("div");
+          star.className = "star";
+          star.style.top = `${Math.random() * 100}vh`;
+          star.style.left = `${Math.random() * 100}vw`;
+          star.style.animationDuration = `${1 + Math.random() * 2}s`;
+          document.body.appendChild(star);
         }
+      }
 
-        function createStars() {
-          for (let i = 0; i < 50; i++) {
-            const star = document.createElement("div");
-            star.className = "star";
-            star.style.top = `${Math.random() * 100}vh`;
-            star.style.left = `${Math.random() * 100}vw`;
-            star.style.animationDuration = `${1 + Math.random() * 2}s`;
-            document.body.appendChild(star);
-          }
+      function createSnowflakes() {
+        for (let i = 0; i < 30; i++) {
+          const snow = document.createElement("div");
+          snow.className = "snowflake";
+          snow.textContent = "❄️";
+          snow.style.left = `${Math.random() * 100}vw`;
+          snow.style.animationDuration = `${3 + Math.random() * 3}s`;
+          snow.style.fontSize = `${1 + Math.random() * 2}rem`;
+          document.body.appendChild(snow);
         }
+      }
 
-        function createSnowflakes() {
-          for (let i = 0; i < 30; i++) {
-            const snow = document.createElement("div");
-            snow.className = "snowflake";
-            snow.textContent = "❄️";
-            snow.style.left = `${Math.random() * 100}vw`;
-            snow.style.animationDuration = `${3 + Math.random() * 3}s`;
-            snow.style.fontSize = `${1 + Math.random() * 2}rem`;
-            document.body.appendChild(snow);
-          }
+      function createRainDrops(count = 80, opacity = 0.5, speed = 0.6) {
+        for (let i = 0; i < count; i++) {
+          const drop = document.createElement("div");
+          drop.className = "rain-drop";
+          drop.style.left = `${Math.random() * 100}vw`;
+          drop.style.animationDelay = `${Math.random() * 1}s`;
+          drop.style.opacity = opacity;
+          drop.style.animationDuration = `${speed}s`;
+          document.body.appendChild(drop);
         }
+      }
 
-        function createRainDrops(count = 80, opacity = 0.5, speed = 0.6) {
-          for (let i = 0; i < count; i++) {
-            const drop = document.createElement("div");
-            drop.className = "rain-drop";
-            drop.style.left = `${Math.random() * 100}vw`;
-            drop.style.animationDelay = `${Math.random() * 1}s`;
-            drop.style.opacity = opacity;
-            drop.style.animationDuration = `${speed}s`;
-            document.body.appendChild(drop);
-          }
-        }
-
-        function createClouds() {
-          for (let i = 0; i < 5; i++) {
-            const cloud = document.createElement("div");
-            cloud.className = "cloud";
-            const size = 60 + Math.random() * 60;
-            cloud.style.width = `${size}px`;
-            cloud.style.height = `${size * 0.6}px`;
-            cloud.style.top = `${Math.random() * 40}vh`;
-            cloud.style.left = `${-200 - Math.random() * 300}px`;
-            cloud.style.animationDuration = `${20 + Math.random() * 10}s`;
-            document.body.appendChild(cloud);
-          }
+      function createClouds() {
+        for (let i = 0; i < 5; i++) {
+          const cloud = document.createElement("div");
+          cloud.className = "cloud";
+          const size = 60 + Math.random() * 60;
+          cloud.style.width = `${size}px`;
+          cloud.style.height = `${size * 0.6}px`;
+          cloud.style.top = `${Math.random() * 40}vh`;
+          cloud.style.left = `${-200 - Math.random() * 300}px`;
+          cloud.style.animationDuration = `${20 + Math.random() * 10}s`;
+          document.body.appendChild(cloud);
         }
       }
     </script>
