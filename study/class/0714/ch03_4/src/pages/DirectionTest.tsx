@@ -4,13 +4,13 @@ import * as D from "../data";
 export default function DirectionTest() {
   const boxes = D.range(1, 9 + 1).map((number) => {
     return (
-      <p key={number} className={`border-2 border-blue-300 p-1 mt-1 ml-1`}>
+      <p key={number} className={`border-2 border-black-300 p-1 mt-1 ml-1`}>
         {number}
       </p>
     );
   });
   return (
-    <section className="mt-4">
+    <section className="mt-4 mb-4">
       <Title>DirectionTest</Title>
       <Div className="flex flex-row mt-4">
         <Div className="mr-2">
