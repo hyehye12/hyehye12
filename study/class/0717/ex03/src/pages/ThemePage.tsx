@@ -1,15 +1,18 @@
 import ThemeProvider from "../contexts/ThemeContext";
 import { Header } from "../components/Header";
 import Content from "../components/Content";
+import LanguageProvider from "../contexts/LanguageContext";
 
 export default function ThemePage() {
   return (
     <div>
       <h2>테마 테스트</h2>
-      <ThemeProvider>
-        <Header />
-        <Content />
-      </ThemeProvider>
+      <LanguageProvider>
+        <ThemeProvider>
+          <Header />
+          <Content />
+        </ThemeProvider>
+      </LanguageProvider>
     </div>
   );
 }

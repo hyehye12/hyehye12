@@ -1,11 +1,18 @@
 import { ThemeContext } from "../contexts/ThemeContext";
 import { useContext } from "react";
+import { LanguageContext } from "../contexts/LanguageContext";
 
 export default function Content() {
-  const context = useContext(ThemeContext);
-  if (!context) throw new Error("ThemeConntext not found");
+  const themecontext = useContext(ThemeContext);
+  if (!themecontext) throw new Error("ThemeConntext not found");
 
-  const { theme } = context;
+  const { theme } = themecontext;
+
+  const languagecontext = useContext(LanguageContext);
+  if (!languagecontext) throw new Error("languageContext not found");
+
+  const { language } = languagecontext;
+
   return (
     <main
       style={{
@@ -15,6 +22,7 @@ export default function Content() {
       }}
     >
       <p>현재 테마: {theme}</p>
+      <p>현재 언어: {language}</p>
     </main>
   );
 }

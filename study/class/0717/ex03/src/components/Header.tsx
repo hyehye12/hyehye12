@@ -1,11 +1,17 @@
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { LanguageContext } from "../contexts/LanguageContext";
 
 export function Header() {
-  const context = useContext(ThemeContext);
-  if (!context) throw new Error("ThemeContext not found");
+  const themecontext = useContext(ThemeContext);
+  if (!themecontext) throw new Error("ThemeContext not found");
 
-  const { theme, toggleTheme } = context;
+  const { theme, toggleTheme } = themecontext;
+
+  const languagecontext = useContext(LanguageContext);
+  if (!languagecontext) throw new Error("languageContext not found");
+
+  const { language, setLanguage } = languagecontext;
 
   return (
     <header
@@ -18,6 +24,9 @@ export function Header() {
       <h1>내 웹사이트</h1>
       <button onClick={toggleTheme}>
         {theme === "light" ? "다크 모드" : "라이트 모드"}
+      </button>
+      <button onClick={() => setLanguage(language === "ko" ? "en" : "ko")}>
+        {language === "ko" ? "영어" : "한국어"}
       </button>
     </header>
   );
