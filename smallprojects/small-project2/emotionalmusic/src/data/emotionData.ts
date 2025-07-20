@@ -1,6 +1,6 @@
 //노래 추천 더미 데이터
 
-export interface EmotionTrack {
+export type EmotionTrack = {
   id: string;
   name: string;
   artist: string;

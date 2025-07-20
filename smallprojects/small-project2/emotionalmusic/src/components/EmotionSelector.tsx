@@ -1,6 +1,6 @@
 import React from "react";
 
-interface EmotionSelectorProps {
+type EmotionSelectorProps = {
   emotions: string[];
   emojiList: string[];
   emojiToEmotion: { [key: string]: string };

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { getTracksByEmotion, EmotionTrack } from "../data/emotionData";
+import { getEmotionAdvice } from "../data/emotionAdvice";
 import { motion } from "framer-motion";
 import LoadingSpinner from "../components/LoadingSpinner";
 import TrackCard from "../components/TrackCard";
+import Healing from "../components/Healing";
 
 // 스포티파이 API (오류나서 보류)
 /*
-interface SpotifyTrack {
+type SpotifyTrack = {
   id: string;
   name: string;
   artists: Array<{ name: string }>;
@@ -19,7 +21,7 @@ interface SpotifyTrack {
   };
 }
 
-interface SpotifyResponse {
+type SpotifyResponse = {
   tracks: {
     items: SpotifyTrack[];
   };
@@ -44,7 +46,7 @@ const emotionToSpotifyQuery: { [key: string]: string } = {
 };
 */
 
-interface ResultPageProps {
+type ResultPageProps = {
   emotion: string;
   onBack: () => void;
 }
@@ -53,6 +55,7 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
   const [tracks, setTracks] = useState<EmotionTrack[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showHealing, setShowHealing] = useState(false);
 
   useEffect(() => {
     searchTracks();
@@ -103,6 +106,15 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
     }
   };
 
+  const handleHealingClick = () => {
+    setShowHealing(true);
+  };
+
+  const handleRestart = () => {
+    setShowHealing(false);
+    onBack();
+  };
+
     if (loading) {
     return <LoadingSpinner emotion={emotion} />;
   }
@@ -123,6 +135,11 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
         </div>
       </div>
     );
+  }
+
+  if (showHealing) {
+    const advice = getEmotionAdvice(emotion);
+    return <Healing emotion={emotion} advice={advice} onRestart={handleRestart} />;
   }
 
   return (
@@ -160,8 +177,11 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
           🔄 다른 음악 추천받기
         </button>
         {["우울함", "지침", "스트레스"].includes(emotion) && (
-          <button className="px-6 py-2 ml-4 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600">
-            📝 AI로 감정 분석하기
+          <button 
+            onClick={handleHealingClick}
+            className="px-6 py-2 ml-4 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600"
+          >
+            💌 감정 상담 받기
           </button>
         )}
       </div>
