@@ -1,4 +1,4 @@
-// src/components/Healing.tsx
+
 import React from "react";
 
 type HealingProps = {
