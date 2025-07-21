@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getTracksByEmotion, EmotionTrack } from "../data/emotionData";
 import { getEmotionAdvice } from "../data/emotionAdvice";
-import { motion } from "framer-motion";
 import LoadingSpinner from "../components/LoadingSpinner";
 import TrackCard from "../components/TrackCard";
 import Healing from "../components/Healing";
@@ -49,7 +48,7 @@ const emotionToSpotifyQuery: { [key: string]: string } = {
 type ResultPageProps = {
   emotion: string;
   onBack: () => void;
-}
+};
 
 export default function ResultPage({ emotion, onBack }: ResultPageProps) {
   const [tracks, setTracks] = useState<EmotionTrack[]>([]);
@@ -115,7 +114,7 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
     onBack();
   };
 
-    if (loading) {
+  if (loading) {
     return <LoadingSpinner emotion={emotion} />;
   }
 
@@ -139,7 +138,9 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
 
   if (showHealing) {
     const advice = getEmotionAdvice(emotion);
-    return <Healing emotion={emotion} advice={advice} onRestart={handleRestart} />;
+    return (
+      <Healing emotion={emotion} advice={advice} onRestart={handleRestart} />
+    );
   }
 
   return (
@@ -177,7 +178,7 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
           🔄 다른 음악 추천받기
         </button>
         {["우울함", "지침", "스트레스"].includes(emotion) && (
-          <button 
+          <button
             onClick={handleHealingClick}
             className="px-6 py-2 ml-4 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600"
           >
