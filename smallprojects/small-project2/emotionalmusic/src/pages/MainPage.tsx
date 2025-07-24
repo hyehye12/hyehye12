@@ -1,28 +1,12 @@
 import React, { useState } from "react";
 import ResultPage from "./ResultPage";
 import EmotionSelector from "../components/EmotionSelector";
+import { useEmotionSelection } from "../hooks/useEmotionSelection";
+import { emotions, emojiList, emojiToEmotion } from "../components/EmotionSelector";
 
 // 줄글로 입력해도 키워드 뽑아내서 감정분석 & 음악 추천 해주는 기능 추가 하기
 
-export const emotions = [
-  "행복함",
-  "우울함",
-  "스트레스",
-  "설렘",
-  "평온함",
-  "지침",
-];
 
-const emojiList = ["😀", "😢", "😡", "😍", "😌", "😩"];
-
-const emojiToEmotion: { [key: string]: string } = {
-  "😀": "행복함",
-  "😢": "우울함",
-  "😡": "스트레스",
-  "😍": "설렘",
-  "😌": "평온함",
-  "😩": "지침",
-};
 
 export default function MainPage() {
   const [emotionText, setEmotionText] = useState("");

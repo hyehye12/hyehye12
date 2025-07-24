@@ -8,6 +8,26 @@ type EmotionSelectorProps = {
   onTagClick: (tag: string) => void;
 }
 
+export const emotions = [
+  "행복함",
+  "우울함",
+  "스트레스",
+  "설렘",
+  "평온함",
+  "지침",
+];
+
+export const emojiList = ["😀", "😢", "😡", "😍", "😌", "😩"];
+
+export const emojiToEmotion: { [key: string]: string } = {
+  "😀": "행복함",
+  "😢": "우울함",
+  "😡": "스트레스",
+  "😍": "설렘",
+  "😌": "평온함",
+  "😩": "지침",
+};
+
 export default function EmotionSelector({
   emotions,
   emojiList,
