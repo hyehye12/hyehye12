@@ -23,9 +23,12 @@ export default function LoadingSpinner({ emotion }: LoadingSpinnerProps) {
         >
           🎵
         </motion.div>
-        <h2 className="mb-2 text-2xl font-bold">음악을 찾고 있어요...</h2>
-        <p className="text-gray-600">
-          "{emotion}"에 맞는 음악을 추천해드릴게요!
+        <h2 className="mb-2 text-2xl font-bold">일기를 분석하고 있어요...</h2>
+        <p className="text-gray-600 mb-4">
+          당신의 하루를 분석해서 어울리는 음악을 찾고 있어요!
+        </p>
+        <p className="text-sm text-gray-500">
+          분석된 감정: <span className="font-semibold text-purple-600">"{emotion}"</span>
         </p>
       </div>
     </div>

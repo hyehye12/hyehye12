@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { getTracksByEmotion, EmotionTrack } from "../data/emotionData";
 import { getEmotionAdvice } from "../data/emotionAdvice";
+import { getEmotionDescription } from "../utils/emotionAnalyzer";
+import { diaryStore } from "../utils/diaryStore";
 import LoadingSpinner from "../components/LoadingSpinner";
 import TrackCard from "../components/TrackCard";
 import Healing from "../components/Healing";
@@ -45,22 +48,25 @@ const emotionToSpotifyQuery: { [key: string]: string } = {
 };
 */
 
-type ResultPageProps = {
-  emotion: string;
-  onBack: () => void;
-};
+type ResultPageProps = {};
 
-export default function ResultPage({ emotion, onBack }: ResultPageProps) {
+export default function ResultPage({}: ResultPageProps) {
+  const { emotion } = useParams<{ emotion: string }>();
+  const navigate = useNavigate();
   const [tracks, setTracks] = useState<EmotionTrack[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showHealing, setShowHealing] = useState(false);
 
   useEffect(() => {
-    searchTracks();
+    if (emotion) {
+      searchTracks();
+    }
   }, [emotion]);
 
   const searchTracks = async () => {
+    if (!emotion) return;
+    
     try {
       setLoading(true);
       setError(null);
@@ -111,8 +117,16 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
 
   const handleRestart = () => {
     setShowHealing(false);
-    onBack();
+    navigate("/");
   };
+
+  const handleBack = () => {
+    navigate("/");
+  };
+
+  if (!emotion) {
+    return <Navigate to="/" replace />;
+  }
 
   if (loading) {
     return <LoadingSpinner emotion={emotion} />;
@@ -126,7 +140,7 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
           <h2 className="mb-2 text-2xl font-bold">오류가 발생했습니다</h2>
           <p className="mb-4 text-gray-600">{error}</p>
           <button
-            onClick={onBack}
+            onClick={handleBack}
             className="px-4 py-2 text-white bg-purple-300 rounded-lg hover:bg-purple-600"
           >
             다시 시도하기
@@ -137,9 +151,8 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
   }
 
   if (showHealing) {
-    const advice = getEmotionAdvice(emotion);
     return (
-      <Healing emotion={emotion} advice={advice} onRestart={handleRestart} />
+      <Healing userInput={emotion} onRestart={handleRestart} />
     );
   }
 
@@ -147,7 +160,7 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
     <div className="min-h-screen p-6 bg-gradient-to-br from-blue-100 to-purple-100">
       <div className="flex items-center justify-between mb-6">
         <button
-          onClick={onBack}
+          onClick={handleBack}
           className="flex items-center px-4 py-2 bg-white rounded-lg shadow hover:bg-gray-50"
         >
           ← 돌아가기
@@ -158,8 +171,11 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
         <div className="w-24"></div>
       </div>
       <div className="mb-8 text-center">
-        <p className="text-gray-600">
-          당신의 감정 "{emotion}"에 어울리는 음악들을 추천해드려요!
+        <p className="text-gray-600 mb-4">
+          {getEmotionDescription(emotion, "")}
+        </p>
+        <p className="text-sm text-gray-500">
+          분석된 감정: <span className="font-semibold text-purple-600">"{emotion}"</span>
         </p>
       </div>
       <div className="max-w-4xl mx-auto">
@@ -170,17 +186,30 @@ export default function ResultPage({ emotion, onBack }: ResultPageProps) {
         </div>
       </div>
 
-      <div className="mt-8 text-center">
+      <div className="mt-8 text-center space-x-4">
         <button
           onClick={searchTracks}
-          className="px-6 py-2 mr-4 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600"
+          className="px-6 py-2 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600"
         >
           🔄 다른 음악 추천받기
+        </button>
+        <button
+          onClick={() => {
+            const savedDiaryText = diaryStore.getDiaryText();
+            if (savedDiaryText) {
+              navigate(`/analysis/${encodeURIComponent(savedDiaryText)}`);
+            } else {
+              navigate('/');
+            }
+          }}
+          className="px-6 py-2 text-white transition-colors bg-blue-400 rounded-lg hover:bg-blue-600"
+        >
+          🤖 AI 감정 분석받기
         </button>
         {["우울함", "지침", "스트레스"].includes(emotion) && (
           <button
             onClick={handleHealingClick}
-            className="px-6 py-2 ml-4 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600"
+            className="px-6 py-2 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600"
           >
             💌 감정 상담 받기
           </button>

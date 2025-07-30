@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MovieModal from "./MovieModal";
+import { useNavigate } from "react-router-dom";
 
 type Movie = {
   id: number;
@@ -22,9 +22,8 @@ type MovieListProps = {
 export default function MovieList({ searchQuery = "" }: MovieListProps) {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -57,13 +56,7 @@ export default function MovieList({ searchQuery = "" }: MovieListProps) {
   }, [searchQuery, movies]);
 
   const handleMovieClick = (movie: Movie) => {
-    setSelectedMovie(movie);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedMovie(null);
+    navigate(`/movie/${movie.id}`);
   };
 
   if (isLoading) {
@@ -106,12 +99,6 @@ export default function MovieList({ searchQuery = "" }: MovieListProps) {
           ))}
         </div>
       )}
-
-      <MovieModal
-        movie={selectedMovie}
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-      />
     </div>
   );
 }
