@@ -7,28 +7,54 @@ type LoadingSpinnerProps = {
 
 export default function LoadingSpinner({ emotion }: LoadingSpinnerProps) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-blue-100 to-purple-100">
-      <div className="text-center">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-6 font-sans">
+      <div className="bg-white rounded-2xl shadow-soft p-12 max-w-md w-full text-center animate-scale-in">
         <motion.div
-          className="mb-4 text-4xl"
+          className="mb-8"
           animate={{
-            y: [-10, 10, -10],
-            scale: [1, 1.1, 1],
+            y: [-5, 5, -5],
+            rotate: [0, 5, -5, 0],
           }}
           transition={{
-            duration: 1.2,
+            duration: 2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         >
-          🎵
+          <div className="w-16 h-16 mx-auto bg-gradient-to-r from-primary-500 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl shadow-medium">
+            🎵
+          </div>
         </motion.div>
-        <h2 className="mb-2 text-2xl font-bold">일기를 분석하고 있어요...</h2>
-        <p className="text-gray-600 mb-4">
-          당신의 하루를 분석해서 어울리는 음악을 찾고 있어요!
+        
+        <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">
+          Analyzing Your Story
+        </h2>
+        <p className="text-gray-600 mb-6 leading-relaxed">
+          We're analyzing your day and finding the perfect music that matches your emotions.
         </p>
+        
+        <div className="flex items-center justify-center mb-6">
+          <div className="flex space-x-1">
+            <motion.div
+              className="w-2 h-2 bg-primary-500 rounded-full"
+              animate={{ scale: [1, 1.5, 1] }}
+              transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+            />
+            <motion.div
+              className="w-2 h-2 bg-primary-500 rounded-full"
+              animate={{ scale: [1, 1.5, 1] }}
+              transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+            />
+            <motion.div
+              className="w-2 h-2 bg-primary-500 rounded-full"
+              animate={{ scale: [1, 1.5, 1] }}
+              transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+            />
+          </div>
+        </div>
+        
         <p className="text-sm text-gray-500">
-          분석된 감정: <span className="font-semibold text-purple-600">"{emotion}"</span>
+          Detected emotion: <span className="font-semibold text-primary-600">"{emotion}"</span>
         </p>
       </div>
     </div>

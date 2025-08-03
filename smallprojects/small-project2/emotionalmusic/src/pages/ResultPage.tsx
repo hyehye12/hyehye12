@@ -1,115 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
-import { getTracksByEmotion, EmotionTrack } from "../data/emotionData";
-import { getEmotionAdvice } from "../data/emotionAdvice";
+import { useMusicSearch } from "../hooks/useMusicSearch";
 import { getEmotionDescription } from "../utils/emotionAnalyzer";
-import { diaryStore } from "../utils/diaryStore";
+
 import LoadingSpinner from "../components/LoadingSpinner";
 import TrackCard from "../components/TrackCard";
 import Healing from "../components/Healing";
 
-// 스포티파이 API (오류나서 보류)
-/*
-type SpotifyTrack = {
-  id: string;
-  name: string;
-  artists: Array<{ name: string }>;
-  album: {
-    name: string;
-    images: Array<{ url: string }>;
-  };
-  external_urls: {
-    spotify: string;
-  };
-}
-
-type SpotifyResponse = {
-  tracks: {
-    items: SpotifyTrack[];
-  };
-}
-*/
-
-// 감정별 스포티파이 검색 키워드
-/*
-const emotionToSpotifyQuery: { [key: string]: string } = {
-  "😀": "happy upbeat music",
-  "😢": "sad emotional music", 
-  "😡": "angry rock music",
-  "😍": "romantic love songs",
-  "😌": "calm peaceful music",
-  "😴": "relaxing sleep music",
-  "행복함": "happy upbeat music",
-  "지침": "tired relaxing music",
-  "스트레스": "stress relief calming music",
-  "설렘": "romantic love songs",
-  "우울함": "sad emotional music",
-  "평온함": "calm peaceful music",
-};
-*/
-
-type ResultPageProps = {};
-
-export default function ResultPage({}: ResultPageProps) {
+export default function ResultPage() {
   const { emotion } = useParams<{ emotion: string }>();
   const navigate = useNavigate();
-  const [tracks, setTracks] = useState<EmotionTrack[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [showHealing, setShowHealing] = useState(false);
-
-  useEffect(() => {
-    if (emotion) {
-      searchTracks();
-    }
-  }, [emotion]);
-
-  const searchTracks = async () => {
-    if (!emotion) return;
-    
-    try {
-      setLoading(true);
-      setError(null);
-
-      const emotionTracks = getTracksByEmotion(emotion);
-
-      setTimeout(() => {
-        setTracks(emotionTracks);
-        setLoading(false);
-      }, 1000);
-
-      // 스포티파이 API 호출 코드
-      /*
-      // 감정에 맞는 검색 쿼리 가져오기
-      const query = emotionToSpotifyQuery[emotion] || "mood music";
-      
-      // 스포티파이 액세스 토큰 가져오기
-      const token = await getSpotifyToken();
-      
-      // 스포티파이 검색 API 호출
-      const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=9`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('스포티파이 API 호출 실패');
-      }
-
-      const data: SpotifyResponse = await response.json();
-      setTracks(data.tracks.items);
-      setLoading(false);
-      */
-    } catch (err) {
-      console.error("음악 검색 오류:", err);
-      setError("음악을 불러오는 중 오류가 발생했습니다.");
-      setLoading(false);
-    }
-  };
+  const { tracks, loading, error, searchTracks } = useMusicSearch(emotion || '');
 
   const handleHealingClick = () => {
     setShowHealing(true);
@@ -134,16 +36,16 @@ export default function ResultPage({}: ResultPageProps) {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-blue-100 to-purple-100">
-        <div className="text-center">
-          <div className="mb-4 text-4xl">❌</div>
-          <h2 className="mb-2 text-2xl font-bold">오류가 발생했습니다</h2>
-          <p className="mb-4 text-gray-600">{error}</p>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-6 font-sans">
+        <div className="bg-white rounded-2xl shadow-soft p-8 max-w-md w-full text-center animate-scale-in">
+          <div className="text-6xl mb-6 animate-bounce-gentle">❌</div>
+          <h2 className="text-2xl font-serif font-bold text-gray-900 mb-4">Something went wrong</h2>
+          <p className="text-gray-600 mb-8">{error}</p>
           <button
             onClick={handleBack}
-            className="px-4 py-2 text-white bg-purple-300 rounded-lg hover:bg-purple-600"
+            className="px-8 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 font-medium transform hover:scale-105"
           >
-            다시 시도하기
+            Try Again
           </button>
         </div>
       </div>
@@ -157,63 +59,78 @@ export default function ResultPage({}: ResultPageProps) {
   }
 
   return (
-    <div className="min-h-screen p-6 bg-gradient-to-br from-blue-100 to-purple-100">
-      <div className="flex items-center justify-between mb-6">
-        <button
-          onClick={handleBack}
-          className="flex items-center px-4 py-2 bg-white rounded-lg shadow hover:bg-gray-50"
-        >
-          ← 돌아가기
-        </button>
-        <h1 className="text-2xl font-bold text-center">
-          🎵 "{emotion}"에 맞는 음악 추천
-        </h1>
-        <div className="w-24"></div>
-      </div>
-      <div className="mb-8 text-center">
-        <p className="text-gray-600 mb-4">
-          {getEmotionDescription(emotion, "")}
-        </p>
-        <p className="text-sm text-gray-500">
-          분석된 감정: <span className="font-semibold text-purple-600">"{emotion}"</span>
-        </p>
-      </div>
-      <div className="max-w-4xl mx-auto">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {tracks.map((track) => (
-            <TrackCard key={track.id} track={track} />
-          ))}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 font-sans">
+      {/* Header */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-blue-500/10"></div>
+        <div className="relative max-w-7xl mx-auto px-6 py-16">
+          <div className="flex items-center justify-between mb-8">
+            <button
+              onClick={handleBack}
+              className="flex items-center px-6 py-3 bg-white rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 font-medium text-gray-700 hover:text-gray-900 transform hover:scale-105"
+            >
+              ← Back
+            </button>
+            <h1 className="text-4xl font-serif font-bold text-center text-gray-900">
+              Music for
+              <span className="block bg-gradient-to-r from-primary-500 to-blue-600 bg-clip-text text-transparent">
+                "{emotion}"
+              </span>
+            </h1>
+            <div className="w-32"></div>
+          </div>
+          
+          <div className="text-center mb-12 animate-fade-in">
+            <p className="text-xl text-gray-600 mb-4 max-w-2xl mx-auto">
+              {getEmotionDescription(emotion, "")}
+            </p>
+            <p className="text-sm text-gray-500">
+              Analyzed emotion: <span className="font-semibold text-primary-600">"{emotion}"</span>
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="mt-8 text-center space-x-4">
-        <button
-          onClick={searchTracks}
-          className="px-6 py-2 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600"
-        >
-          🔄 다른 음악 추천받기
-        </button>
-        <button
-          onClick={() => {
-            const savedDiaryText = diaryStore.getDiaryText();
-            if (savedDiaryText) {
-              navigate(`/analysis/${encodeURIComponent(savedDiaryText)}`);
-            } else {
-              navigate('/');
-            }
-          }}
-          className="px-6 py-2 text-white transition-colors bg-blue-400 rounded-lg hover:bg-blue-600"
-        >
-          🤖 AI 감정 분석받기
-        </button>
-        {["우울함", "지침", "스트레스"].includes(emotion) && (
-          <button
-            onClick={handleHealingClick}
-            className="px-6 py-2 text-white transition-colors bg-purple-300 rounded-lg hover:bg-purple-600"
-          >
-            💌 감정 상담 받기
-          </button>
-        )}
+      {/* Music Grid */}
+      <div className="max-w-7xl mx-auto px-6 pb-16">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {tracks.map((track, index) => (
+            <div 
+              key={track.id} 
+              className="animate-slide-up"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <TrackCard track={track} emotion={emotion} />
+            </div>
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-16 text-center space-y-4 animate-slide-up">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={searchTracks}
+              className="px-8 py-4 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 font-medium transform hover:scale-105"
+            >
+              🔄 Get Different Recommendations
+            </button>
+            <button
+              onClick={() => navigate('/')}
+              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 font-medium transform hover:scale-105"
+            >
+              🤖 AI Emotional Analysis
+            </button>
+          </div>
+          
+          {["우울함", "지침", "스트레스"].includes(emotion) && (
+            <button
+              onClick={handleHealingClick}
+              className="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-600 text-white rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 font-medium transform hover:scale-105"
+            >
+              💌 Get Emotional Support
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
