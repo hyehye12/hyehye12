@@ -36,10 +36,22 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 p-6">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-kitsch-pink-50 via-kitsch-purple-50 to-kitsch-blue-50 p-6 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-kitsch-pattern opacity-20"></div>
+      
+      {/* Floating Kitsch Elements */}
+      <div className="absolute top-20 left-10 w-3 h-3 bg-gradient-to-br from-kitsch-pink-300 to-kitsch-purple-300 rounded-full opacity-60 animate-kitsch-float"></div>
+      <div className="absolute top-40 right-20 w-2 h-2 bg-gradient-to-br from-kitsch-purple-300 to-kitsch-blue-300 rounded-full opacity-60 animate-kitsch-pulse"></div>
+      <div className="absolute bottom-40 left-20 w-4 h-4 bg-gradient-to-br from-kitsch-blue-300 to-kitsch-pink-300 rounded-full opacity-60 animate-kitsch-float"></div>
+      <div className="absolute top-60 left-1/2 w-2 h-2 bg-gradient-to-br from-kitsch-pink-300 to-kitsch-blue-300 rounded-full opacity-60 animate-kitsch-pulse"></div>
+
+      <div className="max-w-md w-full kitsch-card shadow-kitsch p-8 relative overflow-hidden">
+        <div className="absolute top-4 right-4 w-3 h-3 bg-gradient-to-br from-kitsch-pink-200 to-kitsch-purple-200 rounded-full opacity-60 animate-kitsch-float"></div>
+        <div className="absolute bottom-4 left-4 w-2 h-2 bg-gradient-to-br from-kitsch-blue-200 to-kitsch-pink-200 rounded-full opacity-60 animate-kitsch-pulse"></div>
+        
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-kitsch-pink-500 via-kitsch-purple-500 to-kitsch-blue-500 bg-clip-text text-transparent mb-2">
             {isLogin ? '로그인' : '회원가입'}
           </h1>
           <p className="text-gray-600">
@@ -57,7 +69,7 @@ export default function AuthPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300"
+                className="w-full px-3 py-2 border border-white/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-kitsch-purple-300 bg-white/80 backdrop-blur-sm shadow-kitsch transition-all duration-300"
                 placeholder="이름을 입력하세요"
                 required
               />
@@ -72,7 +84,7 @@ export default function AuthPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300"
+              className="w-full px-3 py-2 border border-white/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-kitsch-purple-300 bg-white/80 backdrop-blur-sm shadow-kitsch transition-all duration-300"
               placeholder="이메일을 입력하세요"
               required
             />
@@ -86,14 +98,14 @@ export default function AuthPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300"
+              className="w-full px-3 py-2 border border-white/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-kitsch-purple-300 bg-white/80 backdrop-blur-sm shadow-kitsch transition-all duration-300"
               placeholder="비밀번호를 입력하세요"
               required
             />
           </div>
 
           {error && (
-            <div className="text-red-500 text-sm text-center">
+            <div className="text-red-500 text-sm text-center bg-red-50 p-3 rounded-lg border border-red-200">
               {error}
             </div>
           )}
@@ -101,10 +113,10 @@ export default function AuthPage() {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
+            className={`w-full py-3 px-4 rounded-lg text-white font-medium transition-all duration-300 relative overflow-hidden group ${
               loading
                 ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-purple-500 hover:bg-purple-600'
+                : 'bg-gradient-to-r from-kitsch-pink-500 to-kitsch-purple-500 hover:shadow-kitsch-glow transform hover:-translate-y-1'
             }`}
           >
             {loading ? (
@@ -113,7 +125,10 @@ export default function AuthPage() {
                 처리 중...
               </div>
             ) : (
-              isLogin ? '로그인' : '회원가입'
+              <>
+                <span className="relative z-10">{isLogin ? '로그인' : '회원가입'}</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-kitsch-purple-500 to-kitsch-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </>
             )}
           </button>
         </form>
@@ -121,7 +136,7 @@ export default function AuthPage() {
         <div className="mt-6 text-center">
           <button
             onClick={() => setIsLogin(!isLogin)}
-            className="text-purple-600 hover:text-purple-700 text-sm"
+            className="text-kitsch-purple-600 hover:text-kitsch-purple-700 text-sm font-medium transition-colors duration-300"
           >
             {isLogin ? '계정이 없으신가요? 회원가입' : '이미 계정이 있으신가요? 로그인'}
           </button>
@@ -130,9 +145,10 @@ export default function AuthPage() {
         <div className="mt-8 text-center">
           <button
             onClick={() => navigate('/')}
-            className="text-gray-500 hover:text-gray-700 text-sm"
+            className="text-gray-500 hover:text-gray-700 text-sm font-medium transition-colors duration-300 flex items-center justify-center mx-auto group"
           >
-            ← 메인으로 돌아가기
+            <span className="group-hover:-translate-x-1 transition-transform duration-300">←</span>
+            <span className="ml-1">메인으로 돌아가기</span>
           </button>
         </div>
       </div>

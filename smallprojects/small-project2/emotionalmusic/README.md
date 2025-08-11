@@ -7,7 +7,7 @@
 ### 🎯 핵심 기능
 - **일기 작성 및 감정 분석**: 3-4줄의 일기를 작성하면 AI가 감정을 분석
 - **GPT 기반 감정 상담**: OpenAI GPT를 활용한 깊이 있는 감정 분석 및 조언
-- **Spotify 음악 추천**: 분석된 감정에 맞는 음악을 Spotify API를 통해 추천
+- **iTunes 음악 추천**: 분석된 감정에 맞는 음악을 iTunes API를 통해 추천
 - **음악 미리듣기**: 추천된 음악의 30초 미리듣기 기능
 - **음악 공유**: 추천받은 음악을 소셜미디어에 공유
 
@@ -32,7 +32,7 @@
 
 ### Backend & API
 - **OpenAI GPT API** - 감정 분석 및 상담
-- **Spotify Web API** - 음악 검색 및 추천
+- **iTunes Search API** - 음악 검색 및 추천 (무료, 인증 불필요)
 - **LocalStorage** - 사용자 데이터 저장 (개발용)
 
 ### 상태 관리
@@ -59,9 +59,7 @@ npm install
 # OpenAI API 키 (GPT 분석용)
 REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
 
-# Spotify API 키 (음악 검색용)
-REACT_APP_SPOTIFY_CLIENT_ID=your_spotify_client_id_here
-REACT_APP_SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
+# iTunes API는 무료이며 별도의 API 키가 필요하지 않습니다
 ```
 
 ### 4. 개발 서버 실행
@@ -78,11 +76,9 @@ npm start
 2. API 키 생성
 3. `.env` 파일에 `REACT_APP_OPENAI_API_KEY`로 설정
 
-### Spotify API 키
-1. [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)에 가입
-2. 새 앱 생성
-3. Client ID와 Client Secret 복사
-4. `.env` 파일에 설정
+### iTunes API
+- iTunes Search API는 무료이며 별도의 API 키가 필요하지 않습니다
+- 한국어 음악 검색을 위해 한국 지역 설정이 자동으로 적용됩니다
 
 ## 📱 사용 방법
 
@@ -90,7 +86,7 @@ npm start
 1. 메인 페이지에서 오늘 하루 있었던 일을 3-4줄로 작성
 2. "나에게 어울리는 음악 추천받기" 버튼 클릭
 3. AI가 감정을 분석하고 맞춤형 음악 추천
-4. 추천된 음악 미리듣기 및 Spotify에서 듣기
+4. 추천된 음악 미리듣기 및 iTunes에서 듣기
 5. 마음에 드는 음악 공유하기
 
 ### 2. AI 감정 상담
