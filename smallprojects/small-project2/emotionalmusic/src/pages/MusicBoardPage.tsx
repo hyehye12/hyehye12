@@ -96,162 +96,213 @@ export default function MusicBoardPage() {
     : recommendations;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 p-6 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(120,119,198,0.1)_0%,transparent_50%),radial-gradient(circle_at_80%_20%,rgba(255,119,198,0.1)_0%,transparent_50%),radial-gradient(circle_at_40%_40%,rgba(120,219,255,0.1)_0%,transparent_50%)]"></div>
-      
-      {/* Floating Kitsch Elements */}
-      <div className="absolute top-20 left-10 w-3 h-3 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full opacity-60 animate-pulse"></div>
-      <div className="absolute top-40 right-20 w-2 h-2 bg-gradient-to-br from-purple-300 to-blue-300 rounded-full opacity-60 animate-bounce"></div>
-      <div className="absolute bottom-40 left-20 w-4 h-4 bg-gradient-to-br from-blue-300 to-pink-300 rounded-full opacity-60 animate-pulse"></div>
-      <div className="absolute top-60 left-1/2 w-2 h-2 bg-gradient-to-br from-pink-300 to-blue-300 rounded-full opacity-60 animate-bounce"></div>
-      
-      {/* Cross-shaped decorative elements */}
-      <div className="absolute top-32 right-32 w-1 h-4 bg-gradient-to-b from-pink-200 to-purple-200 opacity-40"></div>
-      <div className="absolute top-32 right-32 w-4 h-1 bg-gradient-to-r from-pink-200 to-purple-200 opacity-40"></div>
-      <div className="absolute bottom-32 left-32 w-1 h-4 bg-gradient-to-b from-blue-200 to-pink-200 opacity-40"></div>
-      <div className="absolute bottom-32 left-32 w-4 h-1 bg-gradient-to-r from-blue-200 to-pink-200 opacity-40"></div>
+    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 p-6 relative overflow-hidden font-mono">
+      {/* Retro Cassette Tape Background Elements */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-20 left-20 w-48 h-28 bg-orange-400 rounded-lg transform rotate-12 shadow-2xl"></div>
+        <div className="absolute bottom-20 right-20 w-36 h-24 bg-orange-300 rounded-lg transform -rotate-6 shadow-2xl"></div>
+        <div className="absolute top-60 left-1/2 w-32 h-20 bg-orange-500 rounded-lg transform rotate-45 shadow-2xl"></div>
+        <div className="absolute top-1/3 right-1/4 w-28 h-16 bg-amber-400 rounded-lg transform -rotate-12 shadow-2xl"></div>
+        <div className="absolute top-1/4 left-1/3 w-24 h-12 bg-yellow-400 rounded-lg transform rotate-30 shadow-2xl"></div>
+        <div className="absolute bottom-1/3 left-1/4 w-20 h-16 bg-orange-300 rounded-lg transform rotate-15 shadow-2xl"></div>
+      </div>
 
-      <div className="max-w-6xl mx-auto">
-        {/* 헤더 */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent mb-2">
+      <div className="max-w-7xl mx-auto">
+        {/* Header with Cassette Tape Design */}
+        <div className="flex justify-between items-center mb-12">
+          <div className="relative">
+            {/* Cassette Tape Design Elements */}
+            <div className="absolute -top-6 left-0 w-32 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg transform rotate-3 opacity-20"></div>
+            <div className="absolute -bottom-6 right-0 w-28 h-16 bg-gradient-to-br from-orange-300 to-orange-500 rounded-lg transform -rotate-6 opacity-20"></div>
+            
+            <h1 className="text-5xl font-black bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent mb-4 tracking-widest uppercase relative z-10">
               🎵 음악 추천 게시판
             </h1>
-            <p className="text-gray-600">
+            
+            {/* Cassette Tape Holes */}
+            <div className="flex items-center space-x-8 mb-4">
+              <div className="w-6 h-6 bg-orange-200 rounded-full border-3 border-orange-400 shadow-lg"></div>
+              <div className="w-6 h-6 bg-orange-200 rounded-full border-3 border-orange-400 shadow-lg"></div>
+            </div>
+            
+            <p className="text-orange-700 text-xl font-bold tracking-wide">
               기분에 맞는 음악을 추천하고 공유해보세요
             </p>
+            
+            {/* Track Info */}
+            <div className="mt-4 inline-block bg-gradient-to-r from-orange-200 to-amber-200 p-3 rounded-lg border-2 border-orange-300 transform rotate-1">
+              <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
+                <div className="flex justify-between mb-1">
+                  <span>TRACK 01</span>
+                  <span>4:20</span>
+                </div>
+                <div className="text-center font-black text-orange-900">MUSIC BOARD</div>
+              </div>
+            </div>
           </div>
-          <div className="flex space-x-4">
+          
+          <div className="flex space-x-6">
             <button
               onClick={() => setShowCreateForm(true)}
-              className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group backdrop-blur-sm"
+              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 font-black tracking-widest uppercase transform hover:scale-105 relative overflow-hidden group border-4 border-orange-300"
             >
               <span className="relative z-10">✏️ 추천 작성하기</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
             <button
               onClick={() => navigate('/')}
-              className="px-4 py-2 bg-white/80 backdrop-blur-sm text-gray-700 rounded-lg hover:bg-white hover:shadow-lg transition-all duration-300 border border-white/50"
+              className="px-6 py-4 bg-white/90 backdrop-blur-sm text-orange-700 rounded-2xl hover:bg-white hover:shadow-2xl transition-all duration-300 border-4 border-orange-300 font-black tracking-wide"
             >
               ← 돌아가기
             </button>
           </div>
         </div>
 
-        {/* 감정 필터 */}
-        <div className="bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-6 mb-8 relative overflow-hidden border border-white/50">
-          <div className="absolute top-4 right-4 w-2 h-2 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full opacity-60 animate-pulse"></div>
+        {/* 감정 필터 - Album Insert Style */}
+        <div className="bg-white/95 backdrop-blur-sm shadow-3xl rounded-3xl p-8 mb-12 relative overflow-hidden border-4 border-orange-300 transform rotate-1">
+          {/* Cassette Tape Design Elements */}
+          <div className="absolute top-6 right-6 w-20 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg transform rotate-6 opacity-20 shadow-lg"></div>
+          <div className="absolute bottom-6 left-6 w-16 h-10 bg-gradient-to-br from-orange-300 to-orange-500 rounded-lg transform -rotate-8 opacity-20 shadow-lg"></div>
           
-          <h2 className="text-xl font-bold text-gray-800 mb-4">감정별 필터</h2>
-          <div className="flex flex-wrap gap-3">
-            <button
-              onClick={() => setSelectedEmotion('')}
-              className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-                selectedEmotion === '' 
-                  ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg' 
-                  : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-lg border border-white/50'
-              }`}
-            >
-              전체
-            </button>
-            {EMOTIONS.map(emotion => (
+          <div className="relative">
+            <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-4 border-white shadow-lg"></div>
+            <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-3 border-white shadow-lg"></div>
+            
+            <h2 className="text-3xl font-black text-orange-900 mb-6 tracking-widest uppercase">감정별 필터</h2>
+            <div className="flex flex-wrap gap-4">
               <button
-                key={emotion}
-                onClick={() => setSelectedEmotion(emotion)}
-                className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-                  selectedEmotion === emotion 
-                    ? 'bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg' 
-                    : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-lg border border-white/50'
+                onClick={() => setSelectedEmotion('')}
+                className={`px-6 py-3 rounded-2xl transition-all duration-300 font-black tracking-wide border-4 ${
+                  selectedEmotion === '' 
+                    ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-2xl border-orange-300' 
+                    : 'bg-white/80 backdrop-blur-sm text-orange-700 hover:bg-white hover:shadow-2xl border-orange-200'
                 }`}
               >
-                {emotion}
+                전체
               </button>
-            ))}
+              {EMOTIONS.map(emotion => (
+                <button
+                  key={emotion}
+                  onClick={() => setSelectedEmotion(emotion)}
+                  className={`px-6 py-3 rounded-2xl transition-all duration-300 font-black tracking-wide border-4 ${
+                    selectedEmotion === emotion 
+                      ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-2xl border-orange-300' 
+                      : 'bg-white/80 backdrop-blur-sm text-orange-700 hover:bg-white hover:shadow-2xl border-orange-200'
+                  }`}
+                >
+                  {emotion}
+                </button>
+              ))}
+            </div>
+            
+            {/* Track Info Badge */}
+            <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform -rotate-3">
+              <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
+                <div className="text-center">TRACK A1</div>
+                <div className="text-center">1:30</div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* 추천 작성 폼 */}
+        {/* 추천 작성 폼 - Album Insert Style */}
         {showCreateForm && (
-          <div className="bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-6 mb-8 relative overflow-hidden border border-white/50">
-            <div className="absolute top-4 right-4 w-3 h-3 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-60 animate-pulse"></div>
-            <div className="absolute bottom-4 left-4 w-2 h-2 bg-gradient-to-br from-blue-200 to-pink-200 rounded-full opacity-60 animate-bounce"></div>
+          <div className="bg-white/95 backdrop-blur-sm shadow-3xl rounded-3xl p-10 mb-12 relative overflow-hidden border-4 border-orange-300 transform -rotate-1">
+            {/* Cassette Tape Design Elements */}
+            <div className="absolute top-6 right-6 w-20 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg transform rotate-6 opacity-20 shadow-lg"></div>
+            <div className="absolute bottom-6 left-6 w-16 h-10 bg-gradient-to-br from-orange-300 to-orange-500 rounded-lg transform -rotate-8 opacity-20 shadow-lg"></div>
             
-            <h2 className="text-xl font-bold text-gray-800 mb-4">새 추천 작성</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  감정 선택
-                </label>
-                <select
-                  value={newRecommendation.emotion}
-                  onChange={(e) => setNewRecommendation(prev => ({ ...prev, emotion: e.target.value }))}
-                  className="w-full px-3 py-2 border border-white/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300"
-                >
-                  <option value="">감정을 선택하세요</option>
-                  {EMOTIONS.map(emotion => (
-                    <option key={emotion} value={emotion}>{emotion}</option>
-                  ))}
-                </select>
+            <div className="relative">
+              <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-4 border-white shadow-lg"></div>
+              <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-3 border-white shadow-lg"></div>
+              
+              <h2 className="text-3xl font-black text-orange-900 mb-6 tracking-widest uppercase">새 추천 작성</h2>
+              <div className="space-y-6">
+                <div className="relative">
+                  <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full opacity-60"></div>
+                  <label className="block text-lg font-black text-orange-800 mb-3 tracking-wide uppercase">
+                    감정 선택
+                  </label>
+                  <select
+                    value={newRecommendation.emotion}
+                    onChange={(e) => setNewRecommendation(prev => ({ ...prev, emotion: e.target.value }))}
+                    className="w-full px-6 py-4 border-4 border-orange-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-400 focus:border-transparent bg-white/90 backdrop-blur-sm shadow-2xl transition-all duration-300 font-bold tracking-wide text-orange-800"
+                  >
+                    <option value="">감정을 선택하세요</option>
+                    {EMOTIONS.map(emotion => (
+                      <option key={emotion} value={emotion}>{emotion}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="relative">
+                  <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full opacity-60"></div>
+                  <label className="block text-lg font-black text-orange-800 mb-3 tracking-wide uppercase">
+                    제목
+                  </label>
+                  <input
+                    type="text"
+                    value={newRecommendation.title}
+                    onChange={(e) => setNewRecommendation(prev => ({ ...prev, title: e.target.value }))}
+                    className="w-full px-6 py-4 border-4 border-orange-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-400 focus:border-transparent bg-white/90 backdrop-blur-sm shadow-2xl transition-all duration-300 font-bold tracking-wide text-orange-800"
+                    placeholder="추천 제목을 입력하세요"
+                  />
+                </div>
+                <div className="relative">
+                  <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full opacity-60"></div>
+                  <label className="block text-lg font-black text-orange-800 mb-3 tracking-wide uppercase">
+                    설명
+                  </label>
+                  <textarea
+                    value={newRecommendation.description}
+                    onChange={(e) => setNewRecommendation(prev => ({ ...prev, description: e.target.value }))}
+                    className="w-full px-6 py-4 border-4 border-orange-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-400 focus:border-transparent bg-white/90 backdrop-blur-sm shadow-2xl transition-all duration-300 font-bold tracking-wide text-orange-800 h-32 resize-none"
+                    placeholder="추천 이유나 설명을 입력하세요"
+                  />
+                </div>
+                <div className="flex space-x-6">
+                  <button
+                    onClick={handleCreateRecommendation}
+                    className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group font-black tracking-widest uppercase border-4 border-orange-300"
+                  >
+                    <span className="relative z-10">추천 작성하기</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </button>
+                  <button
+                    onClick={() => setShowCreateForm(false)}
+                    className="px-8 py-4 bg-white/80 backdrop-blur-sm text-orange-700 rounded-2xl hover:bg-white hover:shadow-2xl transition-all duration-300 border-4 border-orange-200 font-black tracking-wide"
+                  >
+                    취소
+                  </button>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  제목
-                </label>
-                <input
-                  type="text"
-                  value={newRecommendation.title}
-                  onChange={(e) => setNewRecommendation(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full px-3 py-2 border border-white/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300"
-                  placeholder="추천 제목을 입력하세요"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  설명
-                </label>
-                <textarea
-                  value={newRecommendation.description}
-                  onChange={(e) => setNewRecommendation(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full px-3 py-2 border border-white/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 bg-white/80 backdrop-blur-sm shadow-sm transition-all duration-300 h-24"
-                  placeholder="추천 이유나 설명을 입력하세요"
-                />
-              </div>
-              <div className="flex space-x-4">
-                <button
-                  onClick={handleCreateRecommendation}
-                  className="px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
-                >
-                  <span className="relative z-10">추천 작성하기</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </button>
-                <button
-                  onClick={() => setShowCreateForm(false)}
-                  className="px-6 py-2 bg-white/80 backdrop-blur-sm text-gray-700 rounded-lg hover:bg-white hover:shadow-lg transition-all duration-300 border border-white/50"
-                >
-                  취소
-                </button>
+              
+              {/* Track Info Badge */}
+              <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform rotate-3">
+                <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
+                  <div className="text-center">TRACK A2</div>
+                  <div className="text-center">2:15</div>
+                </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* 추천 목록 */}
-        <div className="space-y-6">
+        {/* 추천 목록 - Album Insert Style */}
+        <div className="space-y-8">
           {filteredRecommendations.length > 0 ? (
-            filteredRecommendations.map(recommendation => (
-              <div key={recommendation.id} className="bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-6 relative overflow-hidden group hover:shadow-xl transition-all duration-300 border border-white/50">
-                <div className="absolute top-4 right-4 w-2 h-2 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full opacity-60 animate-pulse"></div>
-                <div className="absolute bottom-4 left-4 w-1.5 h-1.5 bg-gradient-to-br from-blue-300 to-pink-300 rounded-full opacity-60 animate-bounce"></div>
+            filteredRecommendations.map((recommendation, index) => (
+              <div key={recommendation.id} className="bg-white/95 backdrop-blur-sm shadow-3xl rounded-3xl p-8 relative overflow-hidden group hover:shadow-4xl transition-all duration-300 border-4 border-orange-300 transform rotate-1">
+                {/* Cassette Tape Design Elements */}
+                <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-3 border-white shadow-lg"></div>
+                <div className="absolute bottom-6 left-6 w-4 h-4 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-2 border-white shadow-lg"></div>
                 
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
+                <div className="flex justify-between items-start mb-6">
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-black text-orange-900 mb-3 tracking-wide">
                       {recommendation.title}
                     </h3>
-                    <p className="text-gray-600 mb-2">{recommendation.description}</p>
-                    <div className="flex items-center space-x-4 text-sm text-gray-500">
+                    <p className="text-orange-700 text-lg font-bold tracking-wide mb-4">{recommendation.description}</p>
+                    <div className="flex items-center space-x-6 text-lg text-orange-600 font-bold tracking-wide">
                       <span>작성자: {recommendation.author}</span>
                       <span>감정: {recommendation.emotion}</span>
                       <span>{recommendation.createdAt.toLocaleDateString()}</span>
@@ -259,7 +310,7 @@ export default function MusicBoardPage() {
                   </div>
                   <button
                     onClick={() => handleLike(recommendation.id)}
-                    className="flex items-center space-x-1 px-3 py-1 bg-gradient-to-r from-pink-100 to-purple-100 text-pink-600 rounded-full hover:from-pink-200 hover:to-purple-200 transition-all duration-300 border border-white/50"
+                    className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 text-orange-600 rounded-full hover:from-orange-200 hover:to-amber-200 transition-all duration-300 border-2 border-orange-200 font-black tracking-wide"
                   >
                     <span>❤️</span>
                     <span>{recommendation.likes}</span>
@@ -269,29 +320,59 @@ export default function MusicBoardPage() {
                 {/* 음악 추천 버튼 */}
                 <button
                   onClick={() => navigate(`/result/${encodeURIComponent(recommendation.emotion)}`)}
-                  className="px-4 py-2 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-lg hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
+                  className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group font-black tracking-wide border-4 border-green-300"
                 >
                   <span className="relative z-10">🎵 이 감정에 맞는 음악 추천받기</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
+                
+                {/* Track Info Badge */}
+                <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform -rotate-3">
+                  <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
+                    <div className="text-center">TRACK {String.fromCharCode(66 + Math.floor(index / 3))}{index % 3 + 1}</div>
+                    <div className="text-center">{Math.floor(Math.random() * 3) + 2}:{String(Math.floor(Math.random() * 60)).padStart(2, '0')}</div>
+                  </div>
+                </div>
               </div>
             ))
           ) : (
-            <div className="bg-white/60 backdrop-blur-md rounded-2xl shadow-lg p-8 text-center relative overflow-hidden border border-white/50">
-              <div className="absolute top-4 right-4 w-3 h-3 bg-gradient-to-br from-pink-200 to-purple-200 rounded-full opacity-60 animate-pulse"></div>
+            <div className="bg-white/95 backdrop-blur-sm shadow-3xl rounded-3xl p-10 text-center relative overflow-hidden border-4 border-orange-300 transform -rotate-1">
+              {/* Cassette Tape Design Elements */}
+              <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-3 border-white shadow-lg"></div>
+              <div className="absolute bottom-6 left-6 w-4 h-4 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-2 border-white shadow-lg"></div>
               
-              <p className="text-gray-500 text-lg">
+              <p className="text-orange-600 text-2xl font-black tracking-wide mb-6">
                 {selectedEmotion ? `${selectedEmotion}에 대한 추천이 없어요.` : '아직 추천이 없어요.'}
               </p>
               <button
                 onClick={() => setShowCreateForm(true)}
-                className="mt-4 px-6 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white rounded-lg hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group"
+                className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group font-black tracking-widest uppercase border-4 border-orange-300"
               >
                 <span className="relative z-10">첫 번째 추천 작성하기</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
+              
+              {/* Track Info Badge */}
+              <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform rotate-3">
+                <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
+                  <div className="text-center">TRACK A3</div>
+                  <div className="text-center">1:00</div>
+                </div>
+              </div>
             </div>
           )}
+        </div>
+        
+        {/* Album Credits */}
+        <div className="mt-16 text-center">
+          <div className="bg-gradient-to-r from-orange-200 to-amber-200 p-6 rounded-2xl border-4 border-orange-300 transform rotate-1 inline-block">
+            <div className="text-sm text-orange-800 font-black tracking-widest uppercase">
+              <div className="mb-2">PRODUCED BY: MUSIC COMMUNITY</div>
+              <div className="mb-2">MIXED BY: USER RECOMMENDATIONS</div>
+              <div className="mb-2">MASTERED BY: EMOTIONAL MUSIC PROJECT</div>
+              <div className="text-xs">© 2024 EMOTIONAL MUSIC PROJECT. ALL RIGHTS RESERVED.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
