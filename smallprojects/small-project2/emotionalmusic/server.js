@@ -1,9 +1,22 @@
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
+require('dotenv').config();
+
+// MongoDB 연결
+const { connectDB } = require('./src/config/database');
+
+// 라우트 import
+const authRoutes = require('./src/routes/auth');
+const diaryRoutes = require('./src/routes/diary');
+const musicRoutes = require('./src/routes/music');
+const dashboardRoutes = require('./src/routes/dashboard');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// MongoDB 연결
+connectDB();
 
 // CORS 설정
 app.use(cors());
@@ -58,7 +71,7 @@ const emotionToSpotifyQuery = {
 // 1. GPT API 프록시 - 감정 분석
 app.post('/api/gpt/emotion-advice', async (req, res) => {
   try {
-    const { userInput } = req.body;
+    const { userInput, userId } = req.body;
     
     if (!OPENAI_API_KEY) {
       return res.json({
@@ -97,6 +110,23 @@ app.post('/api/gpt/emotion-advice', async (req, res) => {
     const emotion = content.match(/감정:\s*(.+)/)?.[1].trim() || "알 수 없음";
     const advice = content.match(/한마디:\s*(.+)/)?.[1].trim() || "마음 잘 챙기세요.";
     
+    // 사용자 ID가 있으면 감정 분석 데이터 저장
+    if (userId) {
+      try {
+        const { EmotionAnalysis } = require('./src/models');
+        const emotionAnalysis = new EmotionAnalysis({
+          userId,
+          inputText: userInput,
+          detectedEmotion: emotion,
+          advice,
+          analysisType: 'text'
+        });
+        await emotionAnalysis.save();
+      } catch (dbError) {
+        console.error('감정 분석 데이터 저장 실패:', dbError);
+      }
+    }
+    
     res.json({ emotion, advice });
   } catch (error) {
     console.error('GPT API 오류:', error);
@@ -110,7 +140,7 @@ app.post('/api/gpt/emotion-advice', async (req, res) => {
 // 2. GPT API 프록시 - 일기 분석
 app.post('/api/gpt/analyze-diary', async (req, res) => {
   try {
-    const { diaryText } = req.body;
+    const { diaryText, userId } = req.body;
     
     if (!OPENAI_API_KEY) {
       return res.json({
@@ -161,6 +191,23 @@ app.post('/api/gpt/analyze-diary', async (req, res) => {
     
     // JSON 파싱
     const result = JSON.parse(content);
+    
+    // 사용자 ID가 있으면 감정 분석 데이터 저장
+    if (userId) {
+      try {
+        const { EmotionAnalysis } = require('./src/models');
+        const emotionAnalysis = new EmotionAnalysis({
+          userId,
+          inputText: diaryText,
+          detectedEmotion: result.emotion,
+          advice: result.advice,
+          analysisType: 'diary'
+        });
+        await emotionAnalysis.save();
+      } catch (dbError) {
+        console.error('일기 분석 데이터 저장 실패:', dbError);
+      }
+    }
     
     res.json({
       emotion: result.emotion,

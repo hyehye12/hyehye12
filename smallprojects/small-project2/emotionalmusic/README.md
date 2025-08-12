@@ -1,50 +1,38 @@
-# 🎵 Emotional Music - 감정 기반 음악 추천 서비스
+# Emotional Music - 감정 기반 음악 추천 서비스
 
-사용자의 일기를 분석하여 감정에 맞는 음악을 추천해주는 웹 애플리케이션입니다.
+사용자의 감정 상태를 분석하고 그에 맞는 음악을 추천해주는 웹 애플리케이션입니다.
 
-## ✨ 주요 기능
+## 주요 기능
 
-### 🎯 핵심 기능
-- **일기 작성 및 감정 분석**: 3-4줄의 일기를 작성하면 AI가 감정을 분석
-- **GPT 기반 감정 상담**: OpenAI GPT를 활용한 깊이 있는 감정 분석 및 조언
-- **iTunes 음악 추천**: 분석된 감정에 맞는 음악을 iTunes API를 통해 추천
-- **음악 미리듣기**: 추천된 음악의 30초 미리듣기 기능
-- **음악 공유**: 추천받은 음악을 소셜미디어에 공유
+- 🎭 **감정 분석**: GPT를 활용한 텍스트 및 일기 감정 분석
+- 🎵 **음악 추천**: 감정에 맞는 Spotify 음악 추천
+- 📝 **감정 일기**: 감정 상태를 기록하고 분석
+- 📊 **대시보드**: 감정 변화 추이 및 통계 시각화
+- 👤 **사용자 관리**: 회원가입, 로그인, 개인화된 서비스
 
-### 👤 사용자 기능
-- **회원가입/로그인**: 개인화된 서비스 이용
-- **기분 분석 대시보드**: 주간/월간 기분 변화 추이 및 통계
-- **일기 히스토리**: 작성한 일기 목록 및 감정 변화 기록
-- **개인화된 추천**: 사용자의 기분 패턴을 학습한 맞춤형 음악 추천
-
-### 🎵 커뮤니티 기능
-- **음악 추천 게시판**: 사용자들이 기분별 음악을 추천하고 공유
-- **좋아요 시스템**: 추천에 대한 반응 표시
-- **감정별 필터링**: 원하는 감정의 음악 추천만 확인
-
-## 🚀 기술 스택
+## 기술 스택
 
 ### Frontend
-- **React 18** + **TypeScript**
-- **Tailwind CSS** - 스타일링
-- **React Router** - 라우팅
-- **Framer Motion** - 애니메이션
+- React 19
+- TypeScript
+- Tailwind CSS
+- DaisyUI
+- Framer Motion
 
-### Backend & API
-- **OpenAI GPT API** - 감정 분석 및 상담
-- **iTunes Search API** - 음악 검색 및 추천 (무료, 인증 불필요)
-- **LocalStorage** - 사용자 데이터 저장 (개발용)
+### Backend
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT 인증
+- OpenAI GPT API
+- Spotify API
 
-### 상태 관리
-- **React Hooks** - 커스텀 훅 기반 상태 관리
-- **Context API** - 전역 상태 관리
-
-## 📦 설치 및 실행
+## 설치 및 실행
 
 ### 1. 저장소 클론
 ```bash
-git clone https://github.com/your-username/emotional-music.git
-cd emotional-music
+git clone <repository-url>
+cd emotionalmusic
 ```
 
 ### 2. 의존성 설치
@@ -52,118 +40,166 @@ cd emotional-music
 npm install
 ```
 
-### 3. 환경 변수 설정
-`.env` 파일을 생성하고 다음 변수들을 설정하세요:
+### 3. 환경변수 설정
+프로젝트 루트에 `.env` 파일을 생성하고 다음 내용을 추가하세요:
 
 ```env
-# OpenAI API 키 (GPT 분석용)
-REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
+# MongoDB 연결 정보
+MONGODB_URI=mongodb://localhost:27017/emotionalmusic
 
-# iTunes API는 무료이며 별도의 API 키가 필요하지 않습니다
+# JWT 시크릿
+JWT_SECRET=your_jwt_secret_key_here
+
+# OpenAI API 키
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Spotify API 키
+SPOTIFY_CLIENT_ID=your_spotify_client_id_here
+SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
+
+# 서버 포트
+PORT=5000
 ```
 
-### 4. 개발 서버 실행
+### 4. MongoDB 설정
+로컬 MongoDB를 사용하는 경우:
+```bash
+# MongoDB 설치 (Windows)
+# https://www.mongodb.com/try/download/community 에서 다운로드
+
+# MongoDB 서비스 시작
+net start MongoDB
+
+# 또는 MongoDB Compass 사용
+```
+
+클라우드 MongoDB 사용 (MongoDB Atlas):
+- MongoDB Atlas 계정 생성
+- 클러스터 생성
+- 연결 문자열을 MONGODB_URI에 설정
+
+### 5. 서버 실행
 ```bash
 npm start
 ```
 
-브라우저에서 `http://localhost:3000`으로 접속하세요.
-
-## 🔧 API 키 설정 방법
-
-### OpenAI API 키
-1. [OpenAI Platform](https://platform.openai.com/)에 가입
-2. API 키 생성
-3. `.env` 파일에 `REACT_APP_OPENAI_API_KEY`로 설정
-
-### iTunes API
-- iTunes Search API는 무료이며 별도의 API 키가 필요하지 않습니다
-- 한국어 음악 검색을 위해 한국 지역 설정이 자동으로 적용됩니다
-
-## 📱 사용 방법
-
-### 1. 일기 작성 및 음악 추천
-1. 메인 페이지에서 오늘 하루 있었던 일을 3-4줄로 작성
-2. "나에게 어울리는 음악 추천받기" 버튼 클릭
-3. AI가 감정을 분석하고 맞춤형 음악 추천
-4. 추천된 음악 미리듣기 및 iTunes에서 듣기
-5. 마음에 드는 음악 공유하기
-
-### 2. AI 감정 상담
-1. 일기 작성 후 "AI 감정 분석 및 조언받기" 버튼 클릭
-2. GPT가 일기를 깊이 있게 분석
-3. 개인화된 조언과 위로 메시지 제공
-
-### 3. 사용자 계정 관리
-1. 우측 상단 "로그인" 버튼 클릭
-2. 회원가입 또는 로그인
-3. 대시보드에서 기분 변화 추이 확인
-4. 작성한 일기 히스토리 확인
-
-### 4. 음악 추천 게시판
-1. "음악 추천 게시판" 버튼 클릭
-2. 감정별 필터링으로 원하는 추천 확인
-3. 새로운 음악 추천 작성 및 공유
-4. 다른 사용자의 추천에 좋아요 표시
-
-## 🎨 프로젝트 구조
-
-```
-src/
-├── api/                 # API 서비스
-│   └── spotify.ts      # Spotify API 연동
-├── components/         # 재사용 가능한 컴포넌트
-│   ├── Healing.tsx     # 감정 상담 컴포넌트
-│   ├── LoadingSpinner.tsx
-│   └── TrackCard.tsx   # 음악 카드 컴포넌트
-├── hooks/              # 커스텀 훅
-│   ├── useAuth.ts      # 인증 훅
-│   ├── useGPTAnalysis.ts # GPT 분석 훅
-│   ├── useMusicSearch.ts # 음악 검색 훅
-│   ├── useDiaryStore.ts # 일기 저장 훅
-│   └── useMoodAnalytics.ts # 기분 분석 훅
-├── pages/              # 페이지 컴포넌트
-│   ├── MainPage.tsx    # 메인 페이지
-│   ├── ResultPage.tsx  # 결과 페이지
-│   ├── GPTAnalysisPage.tsx # GPT 분석 페이지
-│   ├── AuthPage.tsx    # 인증 페이지
-│   ├── DashboardPage.tsx # 대시보드
-│   └── MusicBoardPage.tsx # 음악 게시판
-├── services/           # 서비스 로직
-│   └── authService.ts  # 인증 및 데이터 관리
-├── utils/              # 유틸리티 함수
-│   ├── emotionAnalyzer.ts # 감정 분석
-│   └── gptService.ts   # GPT 서비스
-└── router/             # 라우팅
-    └── AppRouter.tsx
+### 6. 클라이언트 실행 (새 터미널)
+```bash
+npm run start
 ```
 
-## 🔮 향후 계획
+## API 엔드포인트
 
-- [ ] **서버 백엔드 구축**: Node.js/Express 또는 Django 백엔드
-- [ ] **데이터베이스 연동**: PostgreSQL 또는 MongoDB 연동
-- [ ] **실시간 기능**: WebSocket을 활용한 실시간 알림
-- [ ] **모바일 앱**: React Native로 모바일 앱 개발
-- [ ] **AI 모델 개선**: 더 정확한 감정 분석을 위한 모델 고도화
-- [ ] **플레이리스트 생성**: 자동 플레이리스트 생성 기능
-- [ ] **소셜 기능**: 친구와 음악 추천 공유
+### 인증
+- `POST /api/auth/register` - 회원가입
+- `POST /api/auth/login` - 로그인
+- `GET /api/auth/me` - 현재 사용자 정보
 
-## 🤝 기여하기
+### 일기
+- `POST /api/diary` - 일기 작성
+- `GET /api/diary` - 일기 목록 조회
+- `GET /api/diary/:id` - 특정 일기 조회
+- `PUT /api/diary/:id` - 일기 수정
+- `DELETE /api/diary/:id` - 일기 삭제
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+### 음악
+- `POST /api/music` - 음악 선택 저장
+- `GET /api/music` - 음악 목록 조회
+- `GET /api/music/:id` - 특정 음악 조회
+- `DELETE /api/music/:id` - 음악 삭제
+- `GET /api/music/stats/emotions` - 감정별 음악 통계
+
+### 대시보드
+- `GET /api/dashboard` - 대시보드 메인 데이터
+- `GET /api/dashboard/emotion-history` - 감정 분석 히스토리
+- `GET /api/dashboard/emotion-details/:emotion` - 감정별 상세 통계
+
+### GPT 분석
+- `POST /api/gpt/emotion-advice` - 감정 조언
+- `POST /api/gpt/analyze-diary` - 일기 분석
+
+### Spotify
+- `GET /api/spotify/search/:emotion` - 감정별 음악 검색
+
+## 데이터베이스 스키마
+
+### User (사용자)
+- email: 이메일 (고유)
+- password: 비밀번호 (해시화)
+- username: 사용자명
+- createdAt, updatedAt: 타임스탬프
+
+### Diary (일기)
+- userId: 사용자 ID (참조)
+- content: 일기 내용
+- emotion: 감정 상태
+- analysis: GPT 분석 결과
+- advice: 조언
+- encouragement: 격려
+- createdAt, updatedAt: 타임스탬프
+
+### Music (음악)
+- userId: 사용자 ID (참조)
+- trackId: Spotify 트랙 ID
+- trackName: 트랙명
+- artistName: 아티스트명
+- albumName: 앨범명
+- albumImage: 앨범 이미지 URL
+- previewUrl: 미리듣기 URL
+- emotion: 감정 상태
+- selectedAt: 선택 시간
+- createdAt, updatedAt: 타임스탬프
+
+### EmotionAnalysis (감정 분석)
+- userId: 사용자 ID (참조)
+- inputText: 입력 텍스트
+- detectedEmotion: 감지된 감정
+- advice: 조언
+- analysisType: 분석 유형 (text/diary)
+- createdAt, updatedAt: 타임스탬프
+
+## 개발 가이드
+
+### 새로운 기능 추가
+1. 데이터 모델 정의 (`src/models/`)
+2. API 라우트 생성 (`src/routes/`)
+3. 프론트엔드 컴포넌트 구현
+4. API 서비스 연동 (`src/services/`)
+
+### 데이터베이스 마이그레이션
+```bash
+# 스키마 변경 시
+npm run db:migrate
+
+# 시드 데이터 추가
+npm run db:seed
+```
+
+## 배포
+
+### 환경변수 설정
+프로덕션 환경에서는 다음 환경변수를 설정하세요:
+- `NODE_ENV=production`
+- `MONGODB_URI`: 프로덕션 MongoDB 연결 문자열
+- `JWT_SECRET`: 강력한 JWT 시크릿 키
+
+### 빌드
+```bash
+npm run build
+```
+
+## 라이선스
+
+MIT License
+
+## 기여
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📄 라이선스
+## 문의
 
-이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
-
-## 📞 문의
-
-프로젝트에 대한 문의사항이 있으시면 이슈를 생성해주세요.
-
----
-
-**감정에 맞는 음악으로 마음을 위로받아보세요! 🎵💙** 
+프로젝트에 대한 문의사항이 있으시면 이슈를 생성해주세요. 
