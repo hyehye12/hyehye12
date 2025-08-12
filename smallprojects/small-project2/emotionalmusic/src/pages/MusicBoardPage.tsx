@@ -96,86 +96,62 @@ export default function MusicBoardPage() {
     : recommendations;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 p-6 relative overflow-hidden font-mono">
-      {/* Retro Cassette Tape Background Elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-48 h-28 bg-orange-400 rounded-lg transform rotate-12 shadow-2xl"></div>
-        <div className="absolute bottom-20 right-20 w-36 h-24 bg-orange-300 rounded-lg transform -rotate-6 shadow-2xl"></div>
-        <div className="absolute top-60 left-1/2 w-32 h-20 bg-orange-500 rounded-lg transform rotate-45 shadow-2xl"></div>
-        <div className="absolute top-1/3 right-1/4 w-28 h-16 bg-amber-400 rounded-lg transform -rotate-12 shadow-2xl"></div>
-        <div className="absolute top-1/4 left-1/3 w-24 h-12 bg-yellow-400 rounded-lg transform rotate-30 shadow-2xl"></div>
-        <div className="absolute bottom-1/3 left-1/4 w-20 h-16 bg-orange-300 rounded-lg transform rotate-15 shadow-2xl"></div>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 p-8 relative overflow-hidden font-sans">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 bg-vintage-pattern opacity-5"></div>
 
       <div className="max-w-7xl mx-auto">
-        {/* Header with Cassette Tape Design */}
-        <div className="flex justify-between items-center mb-12">
-          <div className="relative">
-            {/* Cassette Tape Design Elements */}
-            <div className="absolute -top-6 left-0 w-32 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg transform rotate-3 opacity-20"></div>
-            <div className="absolute -bottom-6 right-0 w-28 h-16 bg-gradient-to-br from-orange-300 to-orange-500 rounded-lg transform -rotate-6 opacity-20"></div>
-            
-            <h1 className="text-5xl font-black bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent mb-4 tracking-widest uppercase relative z-10">
+        {/* Header Section */}
+        <div className="flex justify-between items-start mb-20">
+          <div className="relative animate-elegant-fade">
+            <h1 className="font-serif text-7xl font-light text-gray-900 mb-8 leading-tight tracking-wide">
               🎵 음악 추천 게시판
             </h1>
             
-            {/* Cassette Tape Holes */}
-            <div className="flex items-center space-x-8 mb-4">
-              <div className="w-6 h-6 bg-orange-200 rounded-full border-3 border-orange-400 shadow-lg"></div>
-              <div className="w-6 h-6 bg-orange-200 rounded-full border-3 border-orange-400 shadow-lg"></div>
-            </div>
-            
-            <p className="text-orange-700 text-xl font-bold tracking-wide">
+            <p className="text-xl text-gray-600 font-light leading-relaxed max-w-2xl">
               기분에 맞는 음악을 추천하고 공유해보세요
             </p>
             
-            {/* Track Info */}
-            <div className="mt-4 inline-block bg-gradient-to-r from-orange-200 to-amber-200 p-3 rounded-lg border-2 border-orange-300 transform rotate-1">
-              <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-                <div className="flex justify-between mb-1">
-                  <span>TRACK 01</span>
-                  <span>4:20</span>
-                </div>
-                <div className="text-center font-black text-orange-900">MUSIC BOARD</div>
-              </div>
+            {/* Decorative Elements */}
+            <div className="flex items-center space-x-6 mt-8">
+              <div className="w-4 h-4 bg-neon-lime-300 rounded-full animate-neon-glow"></div>
+              <div className="w-3 h-3 bg-vintage-400 rounded-full animate-vintage-float"></div>
+              <div className="w-4 h-4 bg-neon-lime-300 rounded-full animate-neon-glow animation-delay-1000"></div>
             </div>
           </div>
           
-          <div className="flex space-x-6">
+          <div className="flex space-x-8 animate-elegant-fade animation-delay-300">
             <button
               onClick={() => setShowCreateForm(true)}
-              className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 font-black tracking-widest uppercase transform hover:scale-105 relative overflow-hidden group border-4 border-orange-300"
+              className="px-10 py-5 bg-neon-lime-500 text-white rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-500 font-medium transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
             >
               <span className="relative z-10">✏️ 추천 작성하기</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-neon-lime-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
             <button
               onClick={() => navigate('/')}
-              className="px-6 py-4 bg-white/90 backdrop-blur-sm text-orange-700 rounded-2xl hover:bg-white hover:shadow-2xl transition-all duration-300 border-4 border-orange-300 font-black tracking-wide"
+              className="px-8 py-5 bg-white/90 backdrop-blur-sm text-gray-700 rounded-3xl hover:bg-white hover:shadow-elegant transition-all duration-500 border border-gray-200 font-medium"
             >
               ← 돌아가기
             </button>
           </div>
         </div>
 
-        {/* 감정 필터 - Album Insert Style */}
-        <div className="bg-white/95 backdrop-blur-sm shadow-3xl rounded-3xl p-8 mb-12 relative overflow-hidden border-4 border-orange-300 transform rotate-1">
-          {/* Cassette Tape Design Elements */}
-          <div className="absolute top-6 right-6 w-20 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg transform rotate-6 opacity-20 shadow-lg"></div>
-          <div className="absolute bottom-6 left-6 w-16 h-10 bg-gradient-to-br from-orange-300 to-orange-500 rounded-lg transform -rotate-8 opacity-20 shadow-lg"></div>
+        {/* Emotion Filter Section */}
+        <div className="bg-white/90 backdrop-blur-sm shadow-elegant rounded-3xl p-12 mb-20 relative overflow-hidden border border-gray-200 transform hover:scale-100.5 transition-all duration-500">
+          {/* Subtle Background Elements */}
+          <div className="absolute top-8 right-8 w-24 h-16 bg-neon-lime-100 rounded-3xl transform rotate-6 opacity-30"></div>
+          <div className="absolute bottom-8 left-8 w-20 h-12 bg-vintage-200 rounded-3xl transform -rotate-8 opacity-30"></div>
           
           <div className="relative">
-            <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-4 border-white shadow-lg"></div>
-            <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-3 border-white shadow-lg"></div>
-            
-            <h2 className="text-3xl font-black text-orange-900 mb-6 tracking-widest uppercase">감정별 필터</h2>
-            <div className="flex flex-wrap gap-4">
+            <h2 className="font-serif text-5xl font-light text-gray-900 mb-10 tracking-wide">감정별 필터</h2>
+            <div className="flex flex-wrap gap-6">
               <button
                 onClick={() => setSelectedEmotion('')}
-                className={`px-6 py-3 rounded-2xl transition-all duration-300 font-black tracking-wide border-4 ${
+                className={`px-8 py-4 rounded-3xl transition-all duration-500 font-medium border-2 ${
                   selectedEmotion === '' 
-                    ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-2xl border-orange-300' 
-                    : 'bg-white/80 backdrop-blur-sm text-orange-700 hover:bg-white hover:shadow-2xl border-orange-200'
+                    ? 'bg-neon-lime-500 text-white shadow-elegant border-neon-lime-300' 
+                    : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-elegant border-gray-200'
                 }`}
               >
                 전체
@@ -184,49 +160,38 @@ export default function MusicBoardPage() {
                 <button
                   key={emotion}
                   onClick={() => setSelectedEmotion(emotion)}
-                  className={`px-6 py-3 rounded-2xl transition-all duration-300 font-black tracking-wide border-4 ${
+                  className={`px-8 py-4 rounded-3xl transition-all duration-500 font-medium border-2 ${
                     selectedEmotion === emotion 
-                      ? 'bg-gradient-to-r from-orange-500 to-amber-600 text-white shadow-2xl border-orange-300' 
-                      : 'bg-white/80 backdrop-blur-sm text-orange-700 hover:bg-white hover:shadow-2xl border-orange-200'
+                      ? 'bg-neon-lime-500 text-white shadow-elegant border-neon-lime-300' 
+                      : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white hover:shadow-elegant border-gray-200'
                   }`}
                 >
                   {emotion}
                 </button>
               ))}
             </div>
-            
-            {/* Track Info Badge */}
-            <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform -rotate-3">
-              <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-                <div className="text-center">TRACK A1</div>
-                <div className="text-center">1:30</div>
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* 추천 작성 폼 - Album Insert Style */}
+        {/* Create Recommendation Form */}
         {showCreateForm && (
-          <div className="bg-white/95 backdrop-blur-sm shadow-3xl rounded-3xl p-10 mb-12 relative overflow-hidden border-4 border-orange-300 transform -rotate-1">
-            {/* Cassette Tape Design Elements */}
-            <div className="absolute top-6 right-6 w-20 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg transform rotate-6 opacity-20 shadow-lg"></div>
-            <div className="absolute bottom-6 left-6 w-16 h-10 bg-gradient-to-br from-orange-300 to-orange-500 rounded-lg transform -rotate-8 opacity-20 shadow-lg"></div>
+          <div className="bg-white/90 backdrop-blur-sm shadow-elegant rounded-3xl p-16 mb-20 relative overflow-hidden border border-gray-200 transform hover:scale-100.5 transition-all duration-500">
+            {/* Subtle Background Elements */}
+            <div className="absolute top-8 right-8 w-24 h-16 bg-neon-lime-100 rounded-3xl transform rotate-6 opacity-30"></div>
+            <div className="absolute bottom-8 left-8 w-20 h-12 bg-vintage-200 rounded-3xl transform -rotate-8 opacity-30"></div>
             
             <div className="relative">
-              <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-4 border-white shadow-lg"></div>
-              <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-3 border-white shadow-lg"></div>
-              
-              <h2 className="text-3xl font-black text-orange-900 mb-6 tracking-widest uppercase">새 추천 작성</h2>
-              <div className="space-y-6">
+              <h2 className="font-serif text-5xl font-light text-gray-900 mb-10 tracking-wide">새 추천 작성</h2>
+              <div className="space-y-10">
                 <div className="relative">
-                  <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full opacity-60"></div>
-                  <label className="block text-lg font-black text-orange-800 mb-3 tracking-wide uppercase">
+                  <div className="absolute top-2 right-2 w-4 h-4 bg-neon-lime-300 rounded-full opacity-60 animate-neon-glow"></div>
+                  <label className="block text-lg font-medium text-gray-700 mb-4 tracking-wide">
                     감정 선택
                   </label>
                   <select
                     value={newRecommendation.emotion}
                     onChange={(e) => setNewRecommendation(prev => ({ ...prev, emotion: e.target.value }))}
-                    className="w-full px-6 py-4 border-4 border-orange-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-400 focus:border-transparent bg-white/90 backdrop-blur-sm shadow-2xl transition-all duration-300 font-bold tracking-wide text-orange-800"
+                    className="w-full px-8 py-5 border-2 border-gray-200 rounded-3xl focus:outline-none focus:ring-4 focus:ring-neon-lime-200 focus:border-neon-lime-300 bg-white/90 backdrop-blur-sm shadow-elegant transition-all duration-300 font-medium text-gray-700"
                   >
                     <option value="">감정을 선택하세요</option>
                     {EMOTIONS.map(emotion => (
@@ -235,74 +200,66 @@ export default function MusicBoardPage() {
                   </select>
                 </div>
                 <div className="relative">
-                  <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full opacity-60"></div>
-                  <label className="block text-lg font-black text-orange-800 mb-3 tracking-wide uppercase">
+                  <div className="absolute top-2 right-2 w-4 h-4 bg-neon-lime-300 rounded-full opacity-60 animate-neon-glow"></div>
+                  <label className="block text-lg font-medium text-gray-700 mb-4 tracking-wide">
                     제목
                   </label>
                   <input
                     type="text"
                     value={newRecommendation.title}
                     onChange={(e) => setNewRecommendation(prev => ({ ...prev, title: e.target.value }))}
-                    className="w-full px-6 py-4 border-4 border-orange-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-400 focus:border-transparent bg-white/90 backdrop-blur-sm shadow-2xl transition-all duration-300 font-bold tracking-wide text-orange-800"
+                    className="w-full px-8 py-5 border-2 border-gray-200 rounded-3xl focus:outline-none focus:ring-4 focus:ring-neon-lime-200 focus:border-neon-lime-300 bg-white/90 backdrop-blur-sm shadow-elegant transition-all duration-300 font-medium text-gray-700"
                     placeholder="추천 제목을 입력하세요"
                   />
                 </div>
                 <div className="relative">
-                  <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full opacity-60"></div>
-                  <label className="block text-lg font-black text-orange-800 mb-3 tracking-wide uppercase">
+                  <div className="absolute top-2 right-2 w-4 h-4 bg-neon-lime-300 rounded-full opacity-60 animate-neon-glow"></div>
+                  <label className="block text-lg font-medium text-gray-700 mb-4 tracking-wide">
                     설명
                   </label>
                   <textarea
                     value={newRecommendation.description}
                     onChange={(e) => setNewRecommendation(prev => ({ ...prev, description: e.target.value }))}
-                    className="w-full px-6 py-4 border-4 border-orange-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-orange-400 focus:border-transparent bg-white/90 backdrop-blur-sm shadow-2xl transition-all duration-300 font-bold tracking-wide text-orange-800 h-32 resize-none"
+                    className="w-full px-8 py-5 border-2 border-gray-200 rounded-3xl focus:outline-none focus:ring-4 focus:ring-neon-lime-200 focus:border-neon-lime-300 bg-white/90 backdrop-blur-sm shadow-elegant transition-all duration-300 font-medium text-gray-700 h-40 resize-none"
                     placeholder="추천 이유나 설명을 입력하세요"
                   />
                 </div>
-                <div className="flex space-x-6">
+                <div className="flex space-x-8">
                   <button
                     onClick={handleCreateRecommendation}
-                    className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group font-black tracking-widest uppercase border-4 border-orange-300"
+                    className="px-10 py-5 bg-neon-lime-500 text-white rounded-3xl hover:shadow-card-hover transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group font-medium"
                   >
                     <span className="relative z-10">추천 작성하기</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-neon-lime-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </button>
                   <button
                     onClick={() => setShowCreateForm(false)}
-                    className="px-8 py-4 bg-white/80 backdrop-blur-sm text-orange-700 rounded-2xl hover:bg-white hover:shadow-2xl transition-all duration-300 border-4 border-orange-200 font-black tracking-wide"
+                    className="px-10 py-5 bg-white/80 backdrop-blur-sm text-gray-700 rounded-3xl hover:bg-white hover:shadow-elegant transition-all duration-500 border border-gray-200 font-medium"
                   >
                     취소
                   </button>
-                </div>
-              </div>
-              
-              {/* Track Info Badge */}
-              <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform rotate-3">
-                <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-                  <div className="text-center">TRACK A2</div>
-                  <div className="text-center">2:15</div>
                 </div>
               </div>
             </div>
           </div>
         )}
 
-        {/* 추천 목록 - Album Insert Style */}
-        <div className="space-y-8">
+        {/* Recommendations List */}
+        <div className="space-y-10 animate-elegant-fade animation-delay-500">
           {filteredRecommendations.length > 0 ? (
             filteredRecommendations.map((recommendation, index) => (
-              <div key={recommendation.id} className="bg-white/95 backdrop-blur-sm shadow-3xl rounded-3xl p-8 relative overflow-hidden group hover:shadow-4xl transition-all duration-300 border-4 border-orange-300 transform rotate-1">
-                {/* Cassette Tape Design Elements */}
-                <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-3 border-white shadow-lg"></div>
-                <div className="absolute bottom-6 left-6 w-4 h-4 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-2 border-white shadow-lg"></div>
+              <div key={recommendation.id} className="bg-white/90 backdrop-blur-sm shadow-elegant rounded-3xl p-12 relative overflow-hidden group hover:shadow-card-hover transition-all duration-500 border border-gray-200 transform hover:scale-100.5">
+                {/* Subtle Background Elements */}
+                <div className="absolute top-8 right-8 w-8 h-8 bg-neon-lime-200 rounded-full animate-vintage-float"></div>
+                <div className="absolute bottom-8 left-8 w-6 h-6 bg-vintage-300 rounded-full animate-vintage-float animation-delay-1000"></div>
                 
-                <div className="flex justify-between items-start mb-6">
+                <div className="flex justify-between items-start mb-10">
                   <div className="flex-1">
-                    <h3 className="text-2xl font-black text-orange-900 mb-3 tracking-wide">
+                    <h3 className="font-serif text-4xl font-light text-gray-900 mb-6 tracking-wide">
                       {recommendation.title}
                     </h3>
-                    <p className="text-orange-700 text-lg font-bold tracking-wide mb-4">{recommendation.description}</p>
-                    <div className="flex items-center space-x-6 text-lg text-orange-600 font-bold tracking-wide">
+                    <p className="text-gray-600 text-xl font-light leading-relaxed mb-8">{recommendation.description}</p>
+                    <div className="flex items-center space-x-10 text-lg text-gray-500 font-light tracking-wide">
                       <span>작성자: {recommendation.author}</span>
                       <span>감정: {recommendation.emotion}</span>
                       <span>{recommendation.createdAt.toLocaleDateString()}</span>
@@ -310,66 +267,50 @@ export default function MusicBoardPage() {
                   </div>
                   <button
                     onClick={() => handleLike(recommendation.id)}
-                    className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-orange-100 to-amber-100 text-orange-600 rounded-full hover:from-orange-200 hover:to-amber-200 transition-all duration-300 border-2 border-orange-200 font-black tracking-wide"
+                    className="flex items-center space-x-4 px-8 py-4 bg-neon-lime-100 text-neon-lime-700 rounded-full hover:bg-neon-lime-200 transition-all duration-300 border-2 border-neon-lime-200 font-medium"
                   >
                     <span>❤️</span>
                     <span>{recommendation.likes}</span>
                   </button>
                 </div>
                 
-                {/* 음악 추천 버튼 */}
+                {/* Music Recommendation Button */}
                 <button
                   onClick={() => navigate(`/result/${encodeURIComponent(recommendation.emotion)}`)}
-                  className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-2xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group font-black tracking-wide border-4 border-green-300"
+                  className="px-10 py-5 bg-vintage-400 text-white rounded-3xl hover:shadow-card-hover transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group font-medium"
                 >
                   <span className="relative z-10">🎵 이 감정에 맞는 음악 추천받기</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-vintage-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
-                
-                {/* Track Info Badge */}
-                <div className="absolute top-4 left-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform -rotate-3">
-                  <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-                    <div className="text-center">TRACK {String.fromCharCode(66 + Math.floor(index / 3))}{index % 3 + 1}</div>
-                    <div className="text-center">{Math.floor(Math.random() * 3) + 2}:{String(Math.floor(Math.random() * 60)).padStart(2, '0')}</div>
-                  </div>
-                </div>
               </div>
             ))
           ) : (
-            <div className="bg-white/95 backdrop-blur-sm shadow-3xl rounded-3xl p-10 text-center relative overflow-hidden border-4 border-orange-300 transform -rotate-1">
-              {/* Cassette Tape Design Elements */}
-              <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-3 border-white shadow-lg"></div>
-              <div className="absolute bottom-6 left-6 w-4 h-4 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-2 border-white shadow-lg"></div>
+            <div className="bg-white/90 backdrop-blur-sm shadow-elegant rounded-3xl p-16 text-center relative overflow-hidden border border-gray-200 transform hover:scale-100.5 transition-all duration-500">
+              {/* Subtle Background Elements */}
+              <div className="absolute top-8 right-8 w-8 h-8 bg-neon-lime-200 rounded-full animate-vintage-float"></div>
+              <div className="absolute bottom-8 left-8 w-6 h-6 bg-vintage-300 rounded-full animate-vintage-float animation-delay-1000"></div>
               
-              <p className="text-orange-600 text-2xl font-black tracking-wide mb-6">
+              <p className="text-gray-600 text-3xl font-light mb-10 leading-relaxed">
                 {selectedEmotion ? `${selectedEmotion}에 대한 추천이 없어요.` : '아직 추천이 없어요.'}
               </p>
               <button
                 onClick={() => setShowCreateForm(true)}
-                className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group font-black tracking-widest uppercase border-4 border-orange-300"
+                className="px-10 py-5 bg-neon-lime-500 text-white rounded-3xl hover:shadow-card-hover transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group font-medium"
               >
                 <span className="relative z-10">첫 번째 추천 작성하기</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-neon-lime-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
-              
-              {/* Track Info Badge */}
-              <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform rotate-3">
-                <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-                  <div className="text-center">TRACK A3</div>
-                  <div className="text-center">1:00</div>
-                </div>
-              </div>
             </div>
           )}
         </div>
         
-        {/* Album Credits */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-orange-200 to-amber-200 p-6 rounded-2xl border-4 border-orange-300 transform rotate-1 inline-block">
-            <div className="text-sm text-orange-800 font-black tracking-widest uppercase">
-              <div className="mb-2">PRODUCED BY: MUSIC COMMUNITY</div>
-              <div className="mb-2">MIXED BY: USER RECOMMENDATIONS</div>
-              <div className="mb-2">MASTERED BY: EMOTIONAL MUSIC PROJECT</div>
+        {/* Footer */}
+        <div className="mt-24 text-center animate-elegant-fade animation-delay-700">
+          <div className="bg-white/70 backdrop-blur-sm p-12 rounded-3xl border border-gray-200 inline-block">
+            <div className="text-sm text-gray-500 font-light tracking-wide">
+              <div className="mb-3">PRODUCED BY: MUSIC COMMUNITY</div>
+              <div className="mb-3">MIXED BY: USER RECOMMENDATIONS</div>
+              <div className="mb-3">MASTERED BY: EMOTIONAL MUSIC PROJECT</div>
               <div className="text-xs">© 2024 EMOTIONAL MUSIC PROJECT. ALL RIGHTS RESERVED.</div>
             </div>
           </div>

@@ -2,6 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom Animation Delays */
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
+}
+
+.animation-delay-700 {
+  animation-delay: 700ms;
+}
+
+.animation-delay-1000 {
+  animation-delay: 1000ms;
+}
+
+/* Custom Hover Scale */
+.hover\:scale-100\.5:hover {
+  transform: scale(1.005);
+}
+
+/* Smooth Transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8ff73;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b4f63c;
+}
+
+/* Focus Styles */
+.focus\:ring-neon-lime-200:focus {
+  --tw-ring-color: #c8ff73;
+}
+
+.focus\:border-neon-lime-300:focus {
+  --tw-border-opacity: 1;
+  border-color: #b4f63c;
+}
+
+/* Backdrop Blur */
+.backdrop-blur-xs {
+  backdrop-filter: blur(2px);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

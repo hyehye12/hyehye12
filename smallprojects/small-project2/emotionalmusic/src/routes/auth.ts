@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../models';
+import { User, IUser } from '../models';
 import { generateToken } from '../middleware/auth';
 
 const router = Router();
@@ -30,13 +30,14 @@ router.post('/register', async (req: Request, res: Response) => {
     await user.save();
 
     // 토큰 생성
-    const token = generateToken(user._id);
+    const userId = (user as any)._id?.toString() || user.id;
+    const token = generateToken(userId);
 
     res.status(201).json({
       message: '회원가입이 완료되었습니다.',
       token,
       user: {
-        id: user._id,
+        id: userId,
         email: user.email,
         username: user.username
       }
@@ -70,13 +71,14 @@ router.post('/login', async (req: Request, res: Response) => {
     }
 
     // 토큰 생성
-    const token = generateToken(user._id);
+    const userId = (user as any)._id?.toString() || user.id;
+    const token = generateToken(userId);
 
     res.json({
       message: '로그인이 완료되었습니다.',
       token,
       user: {
-        id: user._id,
+        id: userId,
         email: user.email,
         username: user.username
       }

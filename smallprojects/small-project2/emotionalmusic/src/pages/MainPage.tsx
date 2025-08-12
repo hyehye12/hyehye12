@@ -5,7 +5,6 @@ import { useDiaryStore } from "../hooks/useDiaryStore";
 import { useAuth } from "../hooks/useAuth";
 import { DiaryService, MoodService } from "../services/authService";
 import { EMOTION_SCORES } from "../data/emotionConstants";
-import { getPrimaryButtonStyle, getSecondaryButtonStyle, getCardStyle } from "../utils/buttonStyles";
 
 export default function MainPage() {
   const [diaryText, setDiaryText] = useState("");
@@ -63,75 +62,55 @@ export default function MainPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 font-mono relative overflow-hidden">
-      {/* Retro Cassette Tape Background Elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-48 h-28 bg-orange-400 rounded-lg transform rotate-12 shadow-2xl"></div>
-        <div className="absolute bottom-20 right-20 w-36 h-24 bg-orange-300 rounded-lg transform -rotate-6 shadow-2xl"></div>
-        <div className="absolute top-60 left-1/2 w-32 h-20 bg-orange-500 rounded-lg transform rotate-45 shadow-2xl"></div>
-        <div className="absolute top-1/3 right-1/4 w-28 h-16 bg-amber-400 rounded-lg transform -rotate-12 shadow-2xl"></div>
-        <div className="absolute top-1/4 left-1/3 w-24 h-12 bg-yellow-400 rounded-lg transform rotate-30 shadow-2xl"></div>
-        <div className="absolute bottom-1/3 left-1/4 w-20 h-16 bg-orange-300 rounded-lg transform rotate-15 shadow-2xl"></div>
-      </div>
-
-      {/* Header with Cassette Tape Design */}
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 font-sans relative overflow-hidden">
+      {/* Subtle Background Pattern */}
+      <div className="absolute inset-0 bg-vintage-pattern opacity-5"></div>
+      
+      {/* Header Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/15 to-amber-500/15"></div>
-        <div className="relative max-w-7xl mx-auto px-6 py-20">
-          <div className="flex justify-between items-center mb-16">
-            <div className="animate-fade-in relative">
-              {/* Cassette Tape Design Elements */}
-              <div className="absolute -top-8 left-0 w-32 h-20 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg transform rotate-3 opacity-20"></div>
-              <div className="absolute -bottom-8 right-0 w-28 h-16 bg-gradient-to-br from-orange-300 to-orange-500 rounded-lg transform -rotate-6 opacity-20"></div>
-              
-              <h1 className="text-6xl font-black text-orange-900 mb-6 leading-tight tracking-widest uppercase relative z-10">
+        <div className="max-w-7xl mx-auto px-12 py-32">
+          <div className="flex justify-between items-start mb-24">
+            <div className="animate-elegant-fade relative max-w-4xl">
+              {/* Main Title - Serif for elegance */}
+              <h1 className="font-serif text-8xl font-light text-gray-900 mb-12 leading-tight tracking-wide">
                 당신의
-                <span className="block bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-transparent mt-2">
+                <span className="block text-neon-lime-600 mt-6 font-medium">
                   감정 여정을 디자인하세요
                 </span>
               </h1>
               
-              {/* Cassette Tape Holes */}
-              <div className="flex items-center space-x-8 mb-6">
-                <div className="w-8 h-8 bg-orange-200 rounded-full border-4 border-orange-400 shadow-lg"></div>
-                <div className="w-8 h-8 bg-orange-200 rounded-full border-4 border-orange-400 shadow-lg"></div>
-              </div>
-              
-              <p className="text-2xl text-orange-700 max-w-3xl leading-relaxed font-bold tracking-wide">
+              {/* Subtitle */}
+              <p className="text-2xl text-gray-600 max-w-3xl leading-relaxed font-light mb-12">
                 하루의 이야기를 공유하고 AI가 당신의 감정에 맞는 맞춤형 음악 경험을 만들어드려요.
               </p>
               
-              {/* Track Info */}
-              <div className="mt-6 inline-block bg-gradient-to-r from-orange-200 to-amber-200 p-3 rounded-lg border-2 border-orange-300 transform rotate-1">
-                <div className="text-sm text-orange-800 font-black tracking-widest uppercase">
-                  <div className="flex justify-between mb-1">
-                    <span>TRACK 01</span>
-                    <span>5:30</span>
-                  </div>
-                  <div className="text-center font-black text-orange-900">EMOTIONAL JOURNEY</div>
-                </div>
+              {/* Decorative Elements */}
+              <div className="flex items-center space-x-8 mb-12">
+                <div className="w-4 h-4 bg-neon-lime-300 rounded-full animate-neon-glow"></div>
+                <div className="w-3 h-3 bg-vintage-400 rounded-full animate-vintage-float"></div>
+                <div className="w-4 h-4 bg-neon-lime-300 rounded-full animate-neon-glow animation-delay-1000"></div>
               </div>
             </div>
             
-            <div className="flex space-x-6 animate-slide-up">
+            <div className="flex space-x-8 animate-elegant-fade animation-delay-300">
               {isLoggedIn ? (
                 <>
-                  <span className="text-lg text-orange-700 font-black tracking-widest uppercase">안녕하세요, {user?.name}님!</span>
+                  <span className="text-xl text-gray-600 font-light">안녕하세요, {user?.name}님!</span>
                   <button
                     onClick={() => navigate('/dashboard')}
-                    className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 font-black tracking-widest uppercase transform hover:scale-105 relative overflow-hidden group border-4 border-orange-300"
+                    className="px-10 py-5 bg-neon-lime-500 text-white rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-500 font-medium transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
                   >
                     <span className="relative z-10">📊 대시보드</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-neon-lime-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </button>
                 </>
               ) : (
                 <button
                   onClick={() => navigate('/auth')}
-                  className="px-8 py-4 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 font-black tracking-widest uppercase transform hover:scale-105 relative overflow-hidden group border-4 border-orange-300"
+                  className="px-10 py-5 bg-neon-lime-500 text-white rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-500 font-medium transform hover:scale-105 hover:-translate-y-2 relative overflow-hidden group"
                 >
                   <span className="relative z-10">🔐 로그인</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-neon-lime-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </button>
               )}
             </div>
@@ -139,22 +118,19 @@ export default function MainPage() {
         </div>
       </div>
 
-      {/* Main Content - Album Insert Style */}
-      <div className="max-w-5xl mx-auto px-6 pb-20">
-        <div className="bg-white/95 backdrop-blur-sm shadow-3xl p-12 mb-12 relative overflow-hidden rounded-3xl border-4 border-orange-300 transform rotate-1">
-          {/* Cassette Tape Design Elements */}
-          <div className="absolute top-8 right-8 w-24 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg transform rotate-6 opacity-20 shadow-lg"></div>
-          <div className="absolute bottom-8 left-8 w-20 h-12 bg-gradient-to-br from-orange-300 to-orange-500 rounded-lg transform -rotate-8 opacity-20 shadow-lg"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-20 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-lg transform rotate-45 opacity-10 shadow-lg"></div>
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-12 pb-32">
+        {/* Diary Input Section */}
+        <div className="bg-white/90 backdrop-blur-sm shadow-elegant p-20 mb-20 relative overflow-hidden rounded-3xl border border-gray-200 transform hover:scale-100.5 transition-all duration-500">
+          {/* Subtle Background Elements */}
+          <div className="absolute top-12 right-12 w-32 h-20 bg-neon-lime-100 rounded-3xl transform rotate-6 opacity-30"></div>
+          <div className="absolute bottom-12 left-12 w-24 h-16 bg-vintage-200 rounded-3xl transform -rotate-8 opacity-30"></div>
           
-          <div className="mb-10 relative">
-            <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-4 border-white shadow-lg"></div>
-            <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-3 border-white shadow-lg"></div>
-            
-            <h2 className="text-4xl font-black text-orange-900 mb-4 tracking-widest uppercase">
+          <div className="mb-16 relative">
+            <h2 className="font-serif text-6xl font-light text-gray-900 mb-8 tracking-wide">
               당신의 이야기를 공유하세요
             </h2>
-            <p className="text-orange-700 text-xl font-bold tracking-wide">
+            <p className="text-gray-600 text-xl font-light leading-relaxed">
               하루의 이야기를 써보세요 - 기쁨, 슬픔, 중요한 순간들. 당신의 감정을 분석하고 완벽한 음악을 선별해드릴게요.
             </p>
           </div>
@@ -163,156 +139,116 @@ export default function MainPage() {
             placeholder="오늘 하루는 어땠나요? 기쁜 순간, 어려움, 마음에 드는 것들을 공유해보세요. (3-4줄 권장)"
             value={diaryText}
             onChange={(e) => setDiaryText(e.target.value)}
-            className="w-full h-48 px-8 py-6 text-orange-800 border-4 border-orange-200 rounded-2xl shadow-2xl focus:outline-none focus:ring-4 focus:ring-orange-400 focus:border-transparent resize-none font-mono text-lg leading-relaxed transition-all duration-300 bg-white/90 backdrop-blur-sm font-bold tracking-wide"
+            className="w-full h-56 px-10 py-10 text-gray-800 border-2 border-gray-200 rounded-3xl shadow-elegant focus:outline-none focus:ring-4 focus:ring-neon-lime-200 focus:border-neon-lime-300 resize-none font-sans text-lg leading-relaxed transition-all duration-300 bg-white/90 backdrop-blur-sm font-light"
             maxLength={500}
           />
           
-          <div className="flex justify-between items-center mt-6 mb-10">
-            <span className="text-lg text-orange-600 font-black tracking-wide">
+          <div className="flex justify-between items-center mt-8 mb-16">
+            <span className="text-lg text-gray-500 font-light">
               {diaryText.length}/500 글자
             </span>
             {diaryText.length > 0 && (
-              <span className="text-lg text-orange-600 font-black tracking-widest uppercase animate-pulse-gentle">
+              <span className="text-lg text-neon-lime-600 font-medium animate-tag-pulse">
                 ✨ 감정 분석 중...
               </span>
             )}
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-8">
             <button
               onClick={handleSubmit}
               disabled={!diaryText.trim() || isAnalyzing}
-              className="w-full p-6 bg-gradient-to-r from-orange-500 to-amber-600 text-white font-black tracking-widest uppercase rounded-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none border-4 border-orange-300"
+              className="w-full p-8 bg-neon-lime-500 text-white font-medium rounded-3xl hover:shadow-card-hover transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isAnalyzing ? (
                 <div className="flex items-center justify-center">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-4 border-white mr-4"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mr-4"></div>
                   <span className="relative z-10">감정 분석 중...</span>
                 </div>
               ) : (
                 <span className="relative z-10">🎵 음악 추천 받기</span>
               )}
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-600 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-neon-lime-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
             
             <button
               onClick={handleGPTAnalysis}
               disabled={!diaryText.trim()}
-              className="w-full p-6 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-black tracking-widest uppercase rounded-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none border-4 border-amber-300"
+              className="w-full p-8 bg-vintage-400 text-white font-medium rounded-3xl hover:shadow-card-hover transform hover:scale-105 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               <span className="relative z-10">🤖 AI 감정 분석 & 조언</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-amber-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-vintage-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
-          </div>
-          
-          {/* Track Info Badge */}
-          <div className="absolute top-6 right-6 bg-gradient-to-r from-orange-200 to-amber-200 p-3 rounded-lg border-2 border-orange-300 transform rotate-3">
-            <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-              <div className="text-center">TRACK A1</div>
-              <div className="text-center">3:45</div>
-            </div>
           </div>
         </div>
 
         {/* Tips Section */}
-        <div className="mt-12 animate-slide-up">
-          <div className="bg-white/95 backdrop-blur-sm shadow-3xl p-10 relative overflow-hidden rounded-3xl border-4 border-orange-300 transform -rotate-1">
-            <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full border-3 border-white shadow-lg"></div>
-            <div className="absolute bottom-6 left-6 w-4 h-4 bg-gradient-to-br from-orange-300 to-yellow-400 rounded-full border-2 border-white shadow-lg"></div>
+        <div className="mt-20 animate-elegant-fade animation-delay-500">
+          <div className="bg-white/90 backdrop-blur-sm shadow-elegant p-16 relative overflow-hidden rounded-3xl border border-gray-200 transform hover:scale-100.5 transition-all duration-500">
+            <div className="absolute top-8 right-8 w-8 h-8 bg-neon-lime-200 rounded-full animate-vintage-float"></div>
+            <div className="absolute bottom-8 left-8 w-6 h-6 bg-vintage-300 rounded-full animate-vintage-float animation-delay-1000"></div>
             
-            <h3 className="text-3xl font-black text-orange-900 mb-6 tracking-widest uppercase">
+            <h3 className="font-serif text-5xl font-light text-gray-900 mb-8 tracking-wide">
               💡 팁
             </h3>
-            <p className="text-orange-700 text-xl font-bold tracking-wide mb-6">
+            <p className="text-gray-600 text-xl font-light mb-12 leading-relaxed">
               더 정확한 음악 추천을 위해 구체적으로 경험을 설명해보세요:
             </p>
-            <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-6 rounded-2xl border-4 border-orange-200 relative">
-              <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full opacity-60"></div>
-              <p className="text-orange-800 font-black text-lg tracking-wide">
+            <div className="bg-gray-50 p-10 rounded-3xl border border-gray-200 relative">
+              <div className="absolute top-4 right-4 w-4 h-4 bg-neon-lime-300 rounded-full opacity-60 animate-neon-glow"></div>
+              <p className="text-gray-700 font-light text-lg leading-relaxed">
                 "오늘 회사에서 큰 프로젝트를 성공적으로 완료했어요. 팀원들과 함께 축하했고 정말 자랑스럽고 성취감을 느꼈어요."
               </p>
-            </div>
-            
-            {/* Track Info Badge */}
-            <div className="absolute top-4 right-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform -rotate-3">
-              <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-                <div className="text-center">TRACK A2</div>
-                <div className="text-center">1:15</div>
-              </div>
             </div>
           </div>
         </div>
 
         {/* Feature Buttons */}
-        <div className="mt-12 animate-slide-up">
+        <div className="mt-20 animate-elegant-fade animation-delay-700">
           {isLoggedIn ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               <button
                 onClick={() => navigate('/music-board')}
-                className="group p-10 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-3xl shadow-3xl hover:shadow-4xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden border-4 border-orange-300"
+                className="group p-16 bg-white/90 backdrop-blur-sm text-gray-900 rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-500 transform hover:scale-105 hover:-translate-y-3 relative overflow-hidden border border-gray-200"
               >
-                <div className="absolute top-4 right-4 w-6 h-6 bg-white/20 rounded-full animate-pulse border-2 border-white"></div>
-                <div className="text-5xl mb-4 group-hover:animate-bounce-gentle">🎵</div>
-                <h3 className="text-2xl font-black tracking-widest uppercase mb-3">음악 커뮤니티</h3>
-                <p className="text-orange-100 text-lg font-bold tracking-wide">다른 사람들과 음악 추천을 발견하고 공유하세요</p>
-                
-                {/* Track Info Badge */}
-                <div className="absolute bottom-4 left-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform rotate-3">
-                  <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-                    <div className="text-center">TRACK B1</div>
-                    <div className="text-center">2:30</div>
-                  </div>
-                </div>
+                <div className="absolute top-8 right-8 w-8 h-8 bg-neon-lime-200 rounded-full animate-neon-glow border-2 border-neon-lime-300"></div>
+                <div className="text-7xl mb-8 group-hover:animate-soft-bounce">🎵</div>
+                <h3 className="font-serif text-4xl font-light tracking-wide mb-6">음악 커뮤니티</h3>
+                <p className="text-gray-600 text-xl font-light leading-relaxed">다른 사람들과 음악 추천을 발견하고 공유하세요</p>
               </button>
               
               <button
                 onClick={() => navigate('/dashboard')}
-                className="group p-10 bg-gradient-to-r from-amber-500 to-yellow-600 text-white rounded-3xl shadow-3xl hover:shadow-4xl transition-all duration-300 transform hover:scale-105 relative overflow-hidden border-4 border-amber-300"
+                className="group p-16 bg-white/90 backdrop-blur-sm text-gray-900 rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-500 transform hover:scale-105 hover:-translate-y-3 relative overflow-hidden border border-gray-200"
               >
-                <div className="absolute top-4 right-4 w-6 h-6 bg-white/20 rounded-full animate-float border-2 border-white"></div>
-                <div className="text-5xl mb-4 group-hover:animate-bounce-gentle">📊</div>
-                <h3 className="text-2xl font-black tracking-widest uppercase mb-3">기분 분석</h3>
-                <p className="text-amber-100 text-lg font-bold tracking-wide">시간에 따른 감정 여정을 추적하세요</p>
-                
-                {/* Track Info Badge */}
-                <div className="absolute bottom-4 left-4 bg-gradient-to-r from-amber-200 to-yellow-200 p-2 rounded-lg border-2 border-amber-300 transform -rotate-3">
-                  <div className="text-xs text-amber-800 font-black tracking-widest uppercase">
-                    <div className="text-center">TRACK B2</div>
-                    <div className="text-center">1:45</div>
-                  </div>
-                </div>
+                <div className="absolute top-8 right-8 w-8 h-8 bg-vintage-300 rounded-full animate-vintage-float border-2 border-vintage-400"></div>
+                <div className="text-7xl mb-8 group-hover:animate-soft-bounce">📊</div>
+                <h3 className="font-serif text-4xl font-light tracking-wide mb-6">기분 분석</h3>
+                <p className="text-gray-600 text-xl font-light leading-relaxed">시간에 따른 감정 여정을 추적하세요</p>
               </button>
             </div>
           ) : (
             <div className="flex justify-center">
               <button
                 onClick={() => navigate('/music-board')}
-                className="group p-10 bg-gradient-to-r from-orange-500 to-amber-600 text-white rounded-3xl shadow-3xl hover:shadow-4xl transition-all duration-300 transform hover:scale-105 max-w-lg w-full relative overflow-hidden border-4 border-orange-300"
+                className="group p-16 bg-white/90 backdrop-blur-sm text-gray-900 rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-500 transform hover:scale-105 hover:-translate-y-3 max-w-2xl w-full relative overflow-hidden border border-gray-200"
               >
-                <div className="absolute top-4 right-4 w-6 h-6 bg-white/20 rounded-full animate-pulse border-2 border-white"></div>
-                <div className="text-5xl mb-4 group-hover:animate-bounce-gentle">🎵</div>
-                <h3 className="text-2xl font-black tracking-widest uppercase mb-3">음악 커뮤니티</h3>
-                <p className="text-orange-100 text-lg font-bold tracking-wide">다른 사람들과 음악 추천을 발견하고 공유하세요</p>
-                
-                {/* Track Info Badge */}
-                <div className="absolute bottom-4 left-4 bg-gradient-to-r from-orange-200 to-amber-200 p-2 rounded-lg border-2 border-orange-300 transform rotate-3">
-                  <div className="text-xs text-orange-800 font-black tracking-widest uppercase">
-                    <div className="text-center">TRACK B1</div>
-                    <div className="text-center">2:30</div>
-                  </div>
-                </div>
+                <div className="absolute top-8 right-8 w-8 h-8 bg-neon-lime-200 rounded-full animate-neon-glow border-2 border-neon-lime-300"></div>
+                <div className="text-7xl mb-8 group-hover:animate-soft-bounce">🎵</div>
+                <h3 className="font-serif text-4xl font-light tracking-wide mb-6">음악 커뮤니티</h3>
+                <p className="text-gray-600 text-xl font-light leading-relaxed">다른 사람들과 음악 추천을 발견하고 공유하세요</p>
               </button>
             </div>
           )}
         </div>
         
-        {/* Album Credits */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-orange-200 to-amber-200 p-6 rounded-2xl border-4 border-orange-300 transform rotate-1 inline-block">
-            <div className="text-sm text-orange-800 font-black tracking-widest uppercase">
-              <div className="mb-2">PRODUCED BY: EMOTIONAL MUSIC PROJECT</div>
-              <div className="mb-2">MIXED BY: AI TECHNOLOGY</div>
-              <div className="mb-2">MASTERED BY: USER EXPERIENCE</div>
+        {/* Footer */}
+        <div className="mt-32 text-center animate-elegant-fade animation-delay-1000">
+          <div className="bg-white/70 backdrop-blur-sm p-12 rounded-3xl border border-gray-200 inline-block">
+            <div className="text-sm text-gray-500 font-light tracking-wide">
+              <div className="mb-3">PRODUCED BY: EMOTIONAL MUSIC PROJECT</div>
+              <div className="mb-3">MIXED BY: AI TECHNOLOGY</div>
+              <div className="mb-3">MASTERED BY: USER EXPERIENCE</div>
               <div className="text-xs">© 2024 EMOTIONAL MUSIC PROJECT. ALL RIGHTS RESERVED.</div>
             </div>
           </div>
