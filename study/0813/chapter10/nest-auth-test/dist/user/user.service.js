@@ -15,14 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_1 = require("./user.entity");
 const typeorm_2 = require("typeorm");
+const user_entity_1 = require("./user.entity");
 let UserService = class UserService {
     userRepository;
     constructor(userRepository) {
         this.userRepository = userRepository;
     }
-    createUser(user) {
+    async createUser(user) {
         return this.userRepository.save(user);
     }
     async getUser(email) {
@@ -30,14 +30,13 @@ let UserService = class UserService {
         return result;
     }
     async updateUser(email, _user) {
-        const user = (await this.getUser(email));
-        console.log(_user);
+        const user = await this.getUser(email);
         user.username = _user.username;
         user.password = _user.password;
         console.log(user);
         this.userRepository.save(user);
     }
-    deleteUser(email) {
+    async deleteUser(email) {
         return this.userRepository.delete({ email });
     }
 };

@@ -1,10 +1,9 @@
-import { CreateUserDto } from "src/user/user.dto";
-import { UserService } from "src/user/user.service";
-import { User } from "src/user/user.entity";
+import { CreateUserDto } from 'src/user/user.dto';
+import { UserService } from 'src/user/user.service';
 export declare class AuthService {
-    private userService;
+    private readonly userService;
     constructor(userService: UserService);
-    register(userDto: CreateUserDto): Promise<Omit<User, "password">>;
+    register(userDto: CreateUserDto): Promise<import("../user/user.entity").User>;
     validateUser(email: string, password: string): Promise<{
         id?: number;
         email: string;

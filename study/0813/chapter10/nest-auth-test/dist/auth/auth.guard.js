@@ -9,38 +9,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GoogleAuthGuard = exports.AuthenticatedGuard = exports.LocalAuthGuard = exports.LoginGard = void 0;
+exports.AuthenticatedGuard = exports.LocalAuthGuard = exports.LoginGuard = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const passport_1 = require("@nestjs/passport");
-let LoginGard = class LoginGard {
+let LoginGuard = class LoginGuard {
     authService;
     constructor(authService) {
         this.authService = authService;
     }
     async canActivate(context) {
         const request = context.switchToHttp().getRequest();
-        if (request.cookies["login"]) {
-            console.log("has cookie");
+        if (request.cookies['login']) {
             return true;
         }
-        if (!request.body.eamil || !request.body.password) {
+        const body = request.body;
+        if (!body || !body.email || !body.password) {
             return false;
         }
-        const user = await this.authService.validateUser(request.body.email, request.body.password);
+        const user = await this.authService.validateUser(body.email, body.password);
         if (!user) {
             return false;
         }
-        request.user = user;
-        return false;
+        request.user = {
+            ...user,
+            password: body.password,
+        };
+        return true;
     }
 };
-exports.LoginGard = LoginGard;
-exports.LoginGard = LoginGard = __decorate([
+exports.LoginGuard = LoginGuard;
+exports.LoginGuard = LoginGuard = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [auth_service_1.AuthService])
-], LoginGard);
-let LocalAuthGuard = class LocalAuthGuard extends (0, passport_1.AuthGuard)("local") {
+], LoginGuard);
+let LocalAuthGuard = class LocalAuthGuard extends (0, passport_1.AuthGuard)('local') {
     async canActivate(context) {
         const result = (await super.canActivate(context));
         const request = context.switchToHttp().getRequest();
@@ -62,16 +65,4 @@ exports.AuthenticatedGuard = AuthenticatedGuard;
 exports.AuthenticatedGuard = AuthenticatedGuard = __decorate([
     (0, common_1.Injectable)()
 ], AuthenticatedGuard);
-let GoogleAuthGuard = class GoogleAuthGuard extends (0, passport_1.AuthGuard)("google") {
-    async canActivate(context) {
-        const result = (await super.canActivate(context));
-        const request = context.switchToHttp().getRequest();
-        await super.logIn(request);
-        return result;
-    }
-};
-exports.GoogleAuthGuard = GoogleAuthGuard;
-exports.GoogleAuthGuard = GoogleAuthGuard = __decorate([
-    (0, common_1.Injectable)()
-], GoogleAuthGuard);
 //# sourceMappingURL=auth.guard.js.map

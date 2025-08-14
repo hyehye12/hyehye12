@@ -1,3 +1,3 @@
-export declare const multerOption: {
+export declare const multerOptions: {
     storage: import("multer").StorageEngine;
 };

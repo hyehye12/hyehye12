@@ -1,10 +1,11 @@
-import { User } from './user.entity';
 import { Repository } from 'typeorm';
+import { User } from './user.entity';
+import { CreateUserDto, UpdateUserDto } from './user.dto';
 export declare class UserService {
     private userRepository;
     constructor(userRepository: Repository<User>);
-    createUser(user: any): Promise<User>;
+    createUser(user: CreateUserDto): Promise<User>;
     getUser(email: string): Promise<User | null>;
-    updateUser(email: any, _user: any): Promise<void>;
-    deleteUser(email: any): Promise<import("typeorm").DeleteResult>;
+    updateUser(email: string, _user: UpdateUserDto): Promise<void>;
+    deleteUser(email: string): Promise<import("typeorm").DeleteResult>;
 }

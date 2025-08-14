@@ -11,9 +11,9 @@ const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const user_module_1 = require("../user/user.module");
+const local_strategy_1 = require("./local.strategy");
 const passport_1 = require("@nestjs/passport");
 const session_serializer_1 = require("./session.serializer");
-const local_strategy_1 = require("./local.strategy");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
