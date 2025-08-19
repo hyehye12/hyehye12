@@ -25,7 +25,7 @@
 - MongoDB (Mongoose)
 - JWT 인증
 - OpenAI GPT API
-- Spotify API
+- Itunes
 
 ## 설치 및 실행
 
