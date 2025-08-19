@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ItunesTrack } from "../api/itunes";
-import { createShareUrl, getHighResArtwork, formatTrackTime } from "../api/itunes";
+import { ItunesTrack } from "../services/itunes";
+import { createShareUrl, getHighResArtwork, formatTrackTime } from "../services/itunes";
 
 type TrackCardProps = {
   track: ItunesTrack;
