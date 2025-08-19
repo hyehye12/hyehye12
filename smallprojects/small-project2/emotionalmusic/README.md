@@ -1,92 +1,137 @@
-# Emotional Music - 감정 기반 음악 추천 서비스
+# 📌 프로젝트명: EmoTune — 감정 기반 음악 추천 웹앱
 
-사용자의 감정 상태를 분석하고 그에 맞는 음악을 추천해주는 웹 애플리케이션입니다.
+> 사용자의 텍스트 감정을 분석하고, 그에 맞는 음악을 추천하는 경험을 통해 AI 실습과 웹 전체 흐름을 체득하는 것을 목표로 하였습니다.
 
-## 주요 기능
+---
 
-- 🎭 **감정 분석**: GPT를 활용한 텍스트 및 일기 감정 분석
-- 🎵 **음악 추천**: 감정에 맞는 Spotify 음악 추천
-- 📝 **감정 일기**: 감정 상태를 기록하고 분석
-- 📊 **대시보드**: 감정 변화 추이 및 통계 시각화
-- 👤 **사용자 관리**: 회원가입, 로그인, 개인화된 서비스
+## 📆 프로젝트 기간
 
-## 기술 스택
+- 시작일: 2025.07.23
+- 종료일: 2025.08.~
 
-### Frontend
-- React 19
-- TypeScript
-- Tailwind CSS
-- DaisyUI
-- Framer Motion
+---
 
-### Backend
-- Node.js
-- Express.js
-- MongoDB (Mongoose)
-- JWT 인증
-- OpenAI GPT API
-- Itunes
+## 🎯 주요 목표
 
-## 설치 및 실행
+- **핵심 기능1:** GPT 기반 텍스트/일기 감정 분석 파이프라인 구현
+- **핵심 기능2:** 감정 레이블에 따라 iTunes 음악을 추천 및 미리듣기 제공
+- **핵심 기능3:** 감정 일기 저장, 조회, 대시보드 시각화로 변화를 추적
+- **핵심 기능4:** JWT 인증, 사용자별 개인화 데이터 및 권한 처리
 
-### 1. 저장소 클론
+---
+
+## ⚙️ 사용 기술 스택
+
+| 분류       | 기술명                                                                 |
+|----------|-------------------------------------------------------------------------|
+| 프론트엔드 | React 19, TypeScript, Tailwind CSS, DaisyUI, Framer Motion             |
+| 백엔드     | Node.js, Express.js, MongoDB (Mongoose), JWT, OpenAI API, iTunes Search |
+| 기타       | Git, GitHub, Postman, Vercel/Render, ESLint/Prettier                   |
+
+---
+
+## 🧱 프로젝트 구조
+
 ```bash
-git clone <repository-url>
-cd emotionalmusic
+📁 emotune/
+├── client/                    # React + TS 프론트엔드
+│   ├── src/
+│   │   ├── App.tsx
+│   │   ├── components/       # 주요 UI 컴포넌트
+│   │   ├── pages/            # 홈, 대시보드, 로그인 등
+│   │   ├── services/         # API 연동 로직 (axios)
+│   │   ├── store/            # 전역 상태 관리
+│   │   └── styles/           # Tailwind 설정
+│   └── index.html
+├── server/                    # Express 백엔드
+│   ├── server.js / app.js
+│   ├── routes/               # auth, emotions, recommendations
+│   ├── controllers/          # 비즈니스 로직
+│   ├── models/               # Mongoose 스키마
+│   └── services/             # OpenAI, iTunes 연동
+└── README.md
 ```
 
-### 2. 의존성 설치
-```bash
-npm install
-```
+---
 
-### 3. 환경변수 설정
-프로젝트 루트에 `.env` 파일을 생성하고 다음 내용을 추가하세요:
+## 💡 주요 기능 설명
 
-```env
-# MongoDB 연결 정보
-MONGODB_URI=mongodb://localhost:27017/emotionalmusic
+### ✨ 기능 1: 감정 분석
 
-# JWT 시크릿
-JWT_SECRET=your_jwt_secret_key_here
+- **입력 형태:** 자유 텍스트, 일기 포스트, 간단 문장
+- **핵심 로직:** OpenAI API로 감정 레이블 분류 및 강도 스코어 산출
+- **출력 형식:** { emotion: "joy|sadness|anger|fear|neutral|...", score: 0–1, summary }
+- **UX 포인트:** 로딩 스켈레톤과 결과 애니메이션(Framer Motion)로 피드백 강화
 
-# OpenAI API 키
-OPENAI_API_KEY=your_openai_api_key_here
+### 🎵 기능 2: 음악 추천
 
-# Spotify API 키
-SPOTIFY_CLIENT_ID=your_spotify_client_id_here
-SPOTIFY_CLIENT_SECRET=your_spotify_client_secret_here
+- **데이터 소스:** iTunes Search API 기반 트랙/아티스트 검색
+- **매핑 전략:** 감정 레이블 → 장르/무드/템포 키워드 프롬프트 매핑
+- **재생 방식:** 30초 미리듣기, 외부 링크로 전체 곡 이동
+- **개인화:** 최근 선호 감정/스킵 기록 반영한 추천 가중치
 
-# 서버 포트
-PORT=5000
-```
+### 📝 기능 3: 감정 일기
 
-### 4. MongoDB 설정
-로컬 MongoDB를 사용하는 경우:
-```bash
-# MongoDB 설치 (Windows)
-# https://www.mongodb.com/try/download/community 에서 다운로드
+- **기록 요소:** 원문, 감정 레이블/스코어, 추천 목록 스냅샷, 태그
+- **CRUD:** 작성, 수정, 삭제, 월별/주별 필터 조회
+- **프라이버시:** 사용자별 격리 저장, 공개 전환 옵션 없음(기본 비공개)
 
-# MongoDB 서비스 시작
-net start MongoDB
+### 📊 기능 4: 대시보드
 
-# 또는 MongoDB Compass 사용
-```
+- **시각화:** 감정 분포 도넛, 시간대별 추이 라인차트, 주간 하이라이트
+- **인사이트:** 반복 감정 패턴, 음악 청취 상관성 카드 요약
+- **상호작용:** 범례 토글, 기간 프리셋(7/30/90일), 내보내기(PNG)
 
-클라우드 MongoDB 사용 (MongoDB Atlas):
-- MongoDB Atlas 계정 생성
-- 클러스터 생성
-- 연결 문자열을 MONGODB_URI에 설정
+### 👤 기능 5: 사용자 관리
 
-### 5. 서버 실행
-```bash
-npm start
-```
+- **인증:** 이메일/비밀번호 회원가입, 로그인, JWT 발급/검증
+- **세션:** 액세스 토큰 + 리프레시 토큰, 안전한 저장 전략 적용
+- **보안:** 비밀번호 해시, 기본 속도 제한 및 입력 검증
 
-### 6. 클라이언트 실행 (새 터미널)
-```bash
-npm run start
-```
+---
+
+## 🖼️ 데모 화면
+
+| 주요 화면 | 캡처 예시                      |
+|--------|----------------------------|
+| 홈 화면  | ![home](./assets/home.png) |
+| 감정 분석 | ![analyze](./assets/analyze.gif) |
+| 대시보드 | ![dashboard](./assets/dashboard.png) |
+
+---
+
+## 🧠 회고 요약
+
+- **어려웠던 점:** OpenAI 응답 형식 표준화와 iTunes 검색 품질 편차로 추천 일관성 유지가 쉽지 않았음
+- **배운 점:** 감정 라벨 스키마를 좁히고 매핑 테이블을 명시화하면 추천 정확도가 체계적으로 개선됨
+- **개선 포인트:** 콜드스타트 대응을 위한 온보딩 설문, 오프라인 캐시, 접근성 대비 명암 최적화
+
+---
+
+## 📦 배포 주소 선택
+
+- **프론트엔드:** https://your-frontend.vercel.app
+- **백엔드 API:** https://your-api.render.com
+
+---
+
+## 🙋‍♀️ 개발자
+
+| 이름  | GitHub                                             |
+|-----|----------------------------------------------------|
+| 혜민 | [github.com/your-github](https://github.com/your-github) |
+
+---
+
+## 🔎 부가 메모
+
+- **환경 변수:** OPENAI_API_KEY, JWT_SECRET, MONGODB_URI, CLIENT_URL
+- **요청 제한:** 감정 분석 엔드포인트는 사용자별 분당 호출 제한으로 오남용 방지
+- **테스트:** 주요 유스케이스에 대해 요청/응답 스냅샷 테스트와 스키마 검증 진행
+
+
+
+
 
 ## API 엔드포인트
 
@@ -121,85 +166,9 @@ npm run start
 ### Spotify
 - `GET /api/spotify/search/:emotion` - 감정별 음악 검색
 
-## 데이터베이스 스키마
 
-### User (사용자)
-- email: 이메일 (고유)
-- password: 비밀번호 (해시화)
-- username: 사용자명
-- createdAt, updatedAt: 타임스탬프
 
-### Diary (일기)
-- userId: 사용자 ID (참조)
-- content: 일기 내용
-- emotion: 감정 상태
-- analysis: GPT 분석 결과
-- advice: 조언
-- encouragement: 격려
-- createdAt, updatedAt: 타임스탬프
 
-### Music (음악)
-- userId: 사용자 ID (참조)
-- trackId: Spotify 트랙 ID
-- trackName: 트랙명
-- artistName: 아티스트명
-- albumName: 앨범명
-- albumImage: 앨범 이미지 URL
-- previewUrl: 미리듣기 URL
-- emotion: 감정 상태
-- selectedAt: 선택 시간
-- createdAt, updatedAt: 타임스탬프
 
-### EmotionAnalysis (감정 분석)
-- userId: 사용자 ID (참조)
-- inputText: 입력 텍스트
-- detectedEmotion: 감지된 감정
-- advice: 조언
-- analysisType: 분석 유형 (text/diary)
-- createdAt, updatedAt: 타임스탬프
 
-## 개발 가이드
 
-### 새로운 기능 추가
-1. 데이터 모델 정의 (`src/models/`)
-2. API 라우트 생성 (`src/routes/`)
-3. 프론트엔드 컴포넌트 구현
-4. API 서비스 연동 (`src/services/`)
-
-### 데이터베이스 마이그레이션
-```bash
-# 스키마 변경 시
-npm run db:migrate
-
-# 시드 데이터 추가
-npm run db:seed
-```
-
-## 배포
-
-### 환경변수 설정
-프로덕션 환경에서는 다음 환경변수를 설정하세요:
-- `NODE_ENV=production`
-- `MONGODB_URI`: 프로덕션 MongoDB 연결 문자열
-- `JWT_SECRET`: 강력한 JWT 시크릿 키
-
-### 빌드
-```bash
-npm run build
-```
-
-## 라이선스
-
-MIT License
-
-## 기여
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 문의
-
-프로젝트에 대한 문의사항이 있으시면 이슈를 생성해주세요. 

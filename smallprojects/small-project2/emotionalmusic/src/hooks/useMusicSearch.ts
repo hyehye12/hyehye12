@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getTracksByEmotion, EmotionTrack } from '../data/emotionData';
-import { searchItunesTracks, ItunesTrack } from '../api/itunes';
+import { searchItunesTracks, ItunesTrack } from '../services/itunes';
 
 export const useMusicSearch = (emotion: string) => {
   const [tracks, setTracks] = useState<ItunesTrack[]>([]);
