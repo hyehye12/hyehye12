@@ -1,10 +1,28 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <title>Nest Chat</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
   </head>
   <body>
-    <div id="chat">Nest Chat</div>
+    <h2>Simple Nest Chat</h2>
+
+    <div>
+      <h2>chat room list</h2>
+      <ul id="rooms"></ul>
+    </div>
+    <div id="chat"></div>
+
+    <input type="text" id="message" placeholder="type message" />
+    <button onclick="sendMessage()">send</button>
+    <button onclick="createRoom()">create room</button>
+
+    <div>
+      <h2>공지</h2>
+      <div id="notice"></div>
+    </div>
   </body>
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script src="http://localhost:3000/script.js"></script>
 </html>
