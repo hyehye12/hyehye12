@@ -1,5 +1,9 @@
 import {
+  ConnectedSocket,
   MessageBody,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -7,48 +11,70 @@ import {
 import { Server, Socket } from 'socket.io';
 
 @WebSocketGateway({ namespace: 'chat' })
-export class ChatGeteway {
-  @WebSocketServer() server: Server;
+export class ChatGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
+  handleDisconnect(client: any) {
+    console.log('Client disconnected');
+    console.log(client.id);
+  }
+  handleConnection(client: any, ...args: any[]) {
+    console.log('Client connected');
+    console.log(client.id);
+  }
+  afterInit() {
+    console.log('Server initialized');
+  }
+
+  @WebSocketServer()
+  server: Server;
 
   @SubscribeMessage('message')
-  handleMessage(socket: Socket, data: any): void {
+  handleMessage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     const { message, nickname } = data;
-    // server.emit은 나를 포함한 모든 클라이언트에게 전송
-    // server.broadcast.emit은 나를 제외하고 나머지에게 전송이라서 내 메시지와 상대 메시지를 구분하기 용이
-    socket.broadcast.emit('message', `${nickname}:${message}`);
+    // this.server.emit('message', { message: `${nickname}: ${message}` });
+    socket.broadcast.emit('message', { message: `${nickname}: ${message}` });
   }
 }
 
 @WebSocketGateway({ namespace: 'room' })
-export class RoomGatewary {
-  constructor(private readonly chatGateway: ChatGeteway) {}
+export class RoomGateway {
+  constructor(private readonly chatGateway: ChatGateway) {}
+
   rooms = [];
 
   @WebSocketServer()
   server: Server;
 
+  @SubscribeMessage('getRooms')
+  getRooms(@ConnectedSocket() socket: Socket) {
+    this.server.emit('rooms', this.rooms);
+  }
+
   @SubscribeMessage('createRoom')
-  handleMessage(@MessageBody() data) {
+  handleMessage(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     const { nickname, room } = data;
+    console.log(data);
     this.chatGateway.server.emit('notice', {
-      message: `${nickname}님이 ${room}방을 만들었습니다`,
+      message: `${nickname}님이 ${room}방을 만들었습니다. `,
     });
     this.rooms.push(room);
     this.server.emit('rooms', this.rooms);
   }
 
   @SubscribeMessage('joinRoom')
-  handleJoinRoom(socket: Socket, data) {
+  handleJoinRoom(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     const { nickname, room, toLeaveRoom } = data;
+    console.log(data);
     socket.leave(toLeaveRoom);
     this.chatGateway.server.emit('notice', {
-      message: `${nickname}님이 ${room}방에 입장했습니다.`,
+      message: `${nickname}님이 ${room}방에 입장했습니다. `,
     });
     socket.join(room);
   }
 
   @SubscribeMessage('message')
-  handleMessageToRoom(socket: Socket, data) {
+  handleMessageToRoom(@MessageBody() data, @ConnectedSocket() socket: Socket) {
     const { nickname, room, message } = data;
     console.log(data);
     socket.broadcast.to(room).emit('message', {
