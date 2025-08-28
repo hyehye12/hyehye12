@@ -30,7 +30,7 @@ export const useMusicSearch = (emotion: string) => {
             collectionName: track.album,
             artworkUrl100: track.imageUrl,
             previewUrl: undefined,
-            trackViewUrl: track.spotifyUrl, // 기존 URL 유지
+            trackViewUrl: track.spotifyUrl, // 외부 링크 URL
             primaryGenreName: 'Pop',
             trackTimeMillis: undefined
           }));
@@ -47,7 +47,7 @@ export const useMusicSearch = (emotion: string) => {
           collectionName: track.album,
           artworkUrl100: track.imageUrl,
           previewUrl: undefined,
-          trackViewUrl: track.spotifyUrl,
+          trackViewUrl: track.spotifyUrl, // 외부 링크 URL
           primaryGenreName: 'Pop',
           trackTimeMillis: undefined
         }));

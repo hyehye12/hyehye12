@@ -4,13 +4,13 @@ import { useMusicSearch } from "../hooks/useMusicSearch";
 import { getEmotionDescription } from "../utils/emotionAnalyzer";
 
 import LoadingSpinner from "../components/LoadingSpinner";
-import TrackCard from "../components/TrackCard";
 import Healing from "../components/Healing";
 
 export default function ResultPage() {
   const { emotion } = useParams<{ emotion: string }>();
   const navigate = useNavigate();
   const [showHealing, setShowHealing] = useState(false);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const { tracks, loading, error, searchTracks } = useMusicSearch(emotion || '');
 
   const handleHealingClick = () => {
@@ -36,31 +36,16 @@ export default function ResultPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 flex items-center justify-center p-8 font-sans relative overflow-hidden">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 bg-vintage-pattern opacity-5"></div>
-        
-        {/* Decorative Background Elements */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-48 h-28 bg-neon-lime-200 rounded-3xl transform rotate-12 shadow-elegant"></div>
-          <div className="absolute bottom-20 right-20 w-36 h-24 bg-vintage-300 rounded-3xl transform -rotate-6 shadow-elegant"></div>
-        </div>
-        
-        <div className="bg-white/95 backdrop-blur-sm shadow-elegant p-16 max-w-lg w-full text-center relative overflow-hidden rounded-3xl border border-gray-200 transform hover:scale-100.5 transition-all duration-500">
-          <div className="absolute top-8 left-8 w-24 h-16 bg-gradient-to-br from-neon-lime-200 to-neon-lime-300 rounded-3xl transform -rotate-3 opacity-30 shadow-lg"></div>
-          <div className="absolute bottom-8 right-8 w-20 h-12 bg-gradient-to-br from-vintage-200 to-vintage-300 rounded-3xl transform rotate-6 opacity-30 shadow-lg"></div>
-          
-          <div className="text-8xl mb-10 animate-bounce-gentle transform rotate-12">❌</div>
-          <h2 className="font-serif text-4xl font-light text-gray-900 mb-8 tracking-wide">Something went wrong</h2>
-          <div className="w-32 h-1 bg-gradient-to-r from-neon-lime-400 to-vintage-500 mx-auto mb-10"></div>
-          <p className="text-gray-700 mb-12 text-xl font-medium tracking-wide">{error}</p>
-          
+      <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-blue-100/50 flex items-center justify-center p-8 font-sans relative overflow-hidden">
+        <div className="modern-card p-12 max-w-lg w-full text-center">
+          <div className="text-6xl mb-8">❌</div>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">문제가 발생했습니다</h2>
+          <p className="text-gray-600 mb-8">{error}</p>
           <button
             onClick={handleBack}
-            className="px-12 py-5 bg-gradient-to-r from-neon-lime-500 to-neon-lime-600 text-white rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-300 font-medium tracking-wide transform hover:scale-105 relative overflow-hidden group border border-neon-lime-400"
+            className="soft-button px-8 py-3 rounded-xl font-medium"
           >
-            <span className="relative z-10">Try Again</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-neon-lime-600 to-neon-lime-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+다시 시도
           </button>
         </div>
       </div>
@@ -74,164 +59,174 @@ export default function ResultPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 font-sans relative overflow-hidden">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 bg-vintage-pattern opacity-5"></div>
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-blue-100/50 font-sans relative overflow-hidden">
       
-      {/* Decorative Background Elements */}
+      {/* Organic curved background elements */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-48 h-28 bg-neon-lime-200 rounded-3xl transform rotate-12 shadow-elegant"></div>
-        <div className="absolute bottom-20 right-20 w-36 h-24 bg-vintage-300 rounded-3xl transform -rotate-6 shadow-elegant"></div>
-        <div className="absolute top-60 left-1/2 w-32 h-20 bg-neon-lime-100 rounded-3xl transform rotate-45 shadow-elegant"></div>
-        <div className="absolute top-1/3 right-1/4 w-28 h-16 bg-vintage-200 rounded-3xl transform -rotate-12 shadow-elegant"></div>
-        <div className="absolute top-1/4 left-1/3 w-24 h-12 bg-neon-lime-100 rounded-3xl transform rotate-30 shadow-elegant"></div>
+        <div className="absolute top-20 left-20 w-96 h-64 bg-gradient-to-br from-blue-200 to-blue-300 rounded-full transform rotate-12 blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-72 h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full transform -rotate-6 blur-2xl"></div>
+        <div className="absolute top-60 left-1/2 w-64 h-40 bg-gradient-to-br from-blue-300 to-blue-400 rounded-full transform rotate-45 blur-3xl"></div>
       </div>
 
-      {/* Header with Clean Design */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-neon-lime-500/10 to-vintage-500/10"></div>
-        <div className="relative max-w-7xl mx-auto px-8 py-24">
-          <div className="flex items-center justify-between mb-16">
-            <button
-              onClick={handleBack}
-              className="flex items-center px-10 py-5 bg-white/90 backdrop-blur-sm shadow-elegant hover:shadow-card-hover transition-all duration-300 font-medium text-gray-700 hover:text-gray-900 transform hover:scale-105 relative overflow-hidden group rounded-3xl border border-gray-200 tracking-wide"
-            >
-              <span className="relative z-10">← BACK</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-neon-lime-100 to-vintage-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
-            
-            {/* Main Title with Clean Aesthetic */}
-            <div className="text-center relative">
-              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-32 h-20 bg-gradient-to-br from-neon-lime-200 to-neon-lime-300 rounded-3xl transform rotate-3 opacity-20"></div>
-              <div className="absolute -bottom-8 right-1/2 transform translate-x-1/2 w-28 h-16 bg-gradient-to-br from-vintage-200 to-vintage-300 rounded-3xl transform -rotate-6 opacity-20"></div>
-              
-              <h1 className="font-serif text-6xl font-light text-gray-900 mb-6 tracking-wide relative z-10">
-                Music for
-                <span className="block bg-gradient-to-r from-neon-lime-600 via-neon-lime-500 to-vintage-500 bg-clip-text text-transparent mt-4">
-                  "{emotion}"
-                </span>
-              </h1>
-              
-              {/* Decorative Dots */}
-              <div className="flex items-center justify-center space-x-12 mb-6">
-                <div className="w-8 h-8 bg-neon-lime-200 rounded-full border-2 border-neon-lime-300 shadow-lg"></div>
-                <div className="w-8 h-8 bg-neon-lime-200 rounded-full border-2 border-neon-lime-300 shadow-lg"></div>
+      {/* Main Layout Container */}
+      <div className="px-8 py-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 min-h-screen">
+            {/* Left Side - Music Player Section */}
+            <div className="lg:sticky lg:top-24 lg:h-fit">
+              <div className="modern-card p-8 mb-8">
+                {/* Currently Playing Track */}
+                <div className="text-center mb-8">
+                  <div className="vinyl-record mx-auto mb-6 relative">
+                    {tracks.length > 0 && (
+                      <img 
+                        src={tracks[currentTrackIndex]?.artworkUrl100?.replace('100x100', '300x300') || '/default-album.jpg'}
+                        alt={tracks[currentTrackIndex]?.trackName || 'Album artwork'}
+                        className="absolute inset-4 rounded-full object-cover w-[168px] h-[168px]"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/default-album.jpg';
+                        }}
+                      />
+                    )}
+                  </div>
+                  
+                  {tracks.length > 0 && (
+                    <div>
+                      <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                        {tracks[currentTrackIndex]?.trackName || 'Addict'}
+                      </h2>
+                      <p className="text-xl text-gray-600 mb-4">
+                        {tracks[currentTrackIndex]?.artistName || 'Silva Hound'}
+                      </p>
+                      
+                      {/* Play Controls */}
+                      <div className="flex items-center justify-center space-x-4 mb-6">
+                        <button 
+                          onClick={() => setCurrentTrackIndex(Math.max(0, currentTrackIndex - 1))}
+                          className="w-12 h-12 rounded-full glass-effect flex items-center justify-center hover:soft-glow transition-all disabled:opacity-50"
+                          disabled={currentTrackIndex === 0}
+                        >
+                          ⏮️
+                        </button>
+                        <button className="w-16 h-16 rounded-full soft-button flex items-center justify-center text-2xl">
+                          ▶️
+                        </button>
+                        <button 
+                          onClick={() => setCurrentTrackIndex(Math.min(tracks.length - 1, currentTrackIndex + 1))}
+                          className="w-12 h-12 rounded-full glass-effect flex items-center justify-center hover:soft-glow transition-all disabled:opacity-50"
+                          disabled={currentTrackIndex === tracks.length - 1}
+                        >
+                          ⏭️
+                        </button>
+                      </div>
+                      
+                      {/* Save Option */}
+                      <p className="text-gray-600 mb-4">이 트랙을 저장하시겠어요?</p>
+                      <button className="soft-button px-6 py-2 rounded-full">
+💾 저장
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
               
-              {/* Info Badge */}
-              <div className="bg-gradient-to-r from-neon-lime-100 to-vintage-100 p-4 rounded-2xl border border-neon-lime-200 transform rotate-1 inline-block">
-                <div className="text-sm text-gray-700 font-medium tracking-wide">
-                  <div className="text-center font-serif">EMOTION MUSIC</div>
+              {/* Emotion Info */}
+              <div className="modern-card p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3">감정 분석</h3>
+                <div className="bg-gradient-to-r from-blue-100 to-blue-200 p-4 rounded-xl">
+                  <p className="text-gray-800 font-medium">"{emotion}"</p>
+                  <p className="text-gray-600 text-sm mt-2">
+                    {getEmotionDescription(emotion, "")}
+                  </p>
                 </div>
               </div>
             </div>
-            
-            <div className="w-40"></div>
-          </div>
-          
-          <div className="text-center mb-20 animate-fade-in">
-            <p className="text-2xl text-gray-700 mb-8 max-w-3xl mx-auto font-medium tracking-wide leading-relaxed">
-              {getEmotionDescription(emotion, "")}
-            </p>
-            <div className="bg-gradient-to-r from-neon-lime-100 to-vintage-100 p-6 rounded-2xl border border-neon-lime-200 transform -rotate-1 inline-block">
-              <p className="text-lg text-gray-700 font-medium tracking-wide">
-                Analyzed emotion: <span className="text-gray-900">"{emotion}"</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Music Grid - Clean Card Style */}
-      <div className="max-w-7xl mx-auto px-8 pb-24">
-        <div className="bg-white/95 backdrop-blur-sm shadow-elegant p-16 mb-16 relative overflow-hidden rounded-3xl border border-gray-200 transform hover:scale-100.5 transition-all duration-500">
-          {/* Subtle Design Elements */}
-          <div className="absolute top-12 right-12 w-24 h-16 bg-gradient-to-br from-neon-lime-200 to-neon-lime-300 rounded-3xl transform rotate-6 opacity-20 shadow-lg"></div>
-          <div className="absolute bottom-12 left-12 w-20 h-12 bg-gradient-to-br from-vintage-200 to-vintage-300 rounded-3xl transform -rotate-8 opacity-20 shadow-lg"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-20 bg-gradient-to-br from-neon-lime-100 to-vintage-200 rounded-3xl transform rotate-45 opacity-10 shadow-lg"></div>
-          
-          {/* Track List Header */}
-          <div className="text-center mb-16 border-b border-gray-200 pb-12 relative">
-            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-neon-lime-400 to-vintage-500"></div>
-            <h2 className="font-serif text-5xl font-light text-gray-900 tracking-wide mb-6">
-              RECOMMENDED TRACKS
-            </h2>
-            <div className="flex items-center justify-center space-x-10 text-gray-600 text-lg font-medium tracking-wide">
-              <span>SIDE A: {emotion.toUpperCase()}</span>
-              <span className="text-2xl">•</span>
-              <span>SIDE B: MUSIC SELECTION</span>
-            </div>
-          </div>
-          
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
-            {tracks.map((track, index) => (
-              <div 
-                key={track.trackId} 
-                className="animate-slide-up relative"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {/* Track Info Badge */}
-                <div className="absolute -top-3 -right-3 bg-gradient-to-r from-neon-lime-100 to-vintage-100 p-3 rounded-2xl border border-neon-lime-200 transform rotate-3 z-10">
-                  <div className="text-xs text-gray-700 font-medium tracking-wide">
-                    <div className="text-center font-serif">TRACK {String.fromCharCode(65 + Math.floor(index / 3))}{index % 3 + 1}</div>
-                  </div>
+            {/* Right Side - Playlist Section */}
+            <div>
+              <div className="modern-card p-6 mb-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900">추천 트랙</h2>
+                  <div className="text-sm text-gray-500">AI 생성</div>
                 </div>
                 
-                <TrackCard track={track} emotion={emotion} />
+                <div className="space-y-4">
+                  {tracks.slice(0, 4).map((track, index) => (
+                    <div 
+                      key={track.trackId} 
+                      className={`flex items-center space-x-4 p-3 rounded-xl hover:bg-white/50 transition-all cursor-pointer ${
+                        index === currentTrackIndex ? 'bg-blue-50 border border-blue-200' : ''
+                      }`}
+                      onClick={() => setCurrentTrackIndex(index)}
+                    >
+                      <img 
+                        src={track.artworkUrl100 || '/default-album.jpg'}
+                        alt={track.trackName}
+                        className="w-12 h-12 rounded-lg object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/default-album.jpg';
+                        }}
+                      />
+                      <div className="flex-1">
+                        <h4 className="font-medium text-gray-900 truncate">{track.trackName}</h4>
+                        <p className="text-gray-600 text-sm truncate">{track.artistName}</p>
+                      </div>
+                      <button className="w-8 h-8 rounded-full glass-effect flex items-center justify-center hover:soft-glow transition-all">
+                        ▶️
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                
+                {tracks.length > 4 && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <p className="text-center text-gray-500 text-sm">+{tracks.length - 4} 개 더 많은 트랙</p>
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
-          
-          {/* Footer Credits */}
-          <div className="mt-16 pt-12 border-t border-gray-200 text-center">
-            <div className="bg-gradient-to-r from-gray-100 to-gray-200 p-8 rounded-2xl border border-gray-200 transform rotate-1 inline-block">
-              <div className="text-sm text-gray-600 font-medium tracking-wide">
-                <div className="mb-3">PRODUCED BY: AI EMOTION ANALYZER</div>
-                <div className="mb-3">MIXED BY: MUSIC RECOMMENDATION ENGINE</div>
-                <div className="mb-3">MASTERED BY: EMOTIONAL MUSIC PROJECT</div>
-                <div className="text-xs">© 2024 EMOTIONAL MUSIC PROJECT. ALL RIGHTS RESERVED.</div>
+              
+              {/* Action Buttons */}
+              <div className="space-y-4">
+                <button
+                  onClick={searchTracks}
+                  className="w-full soft-button py-3 rounded-xl font-medium"
+                >
+🔄 다른 추천가져오기
+                </button>
+                <button
+                  onClick={() => navigate('/')}
+                  className="w-full glass-effect py-3 rounded-xl font-medium text-gray-700 hover:soft-glow transition-all"
+                >
+🤖 새로운 AI 분석
+                </button>
+                {["우울함", "지침", "스트레스"].includes(emotion) && (
+                  <button
+                    onClick={handleHealingClick}
+                    className="w-full py-3 rounded-xl font-medium bg-gradient-to-r from-purple-400 to-pink-400 text-white hover:shadow-lg transition-all"
+                  >
+💌 감정적 지원 받기
+                  </button>
+                )}
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Action Buttons - Clean Style */}
-        <div className="text-center space-y-8 animate-slide-up">
-          <div className="flex flex-col sm:flex-row gap-8 justify-center">
-            <button
-              onClick={searchTracks}
-              className="px-14 py-6 bg-gradient-to-r from-neon-lime-500 to-neon-lime-600 text-white rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-300 font-medium tracking-wide transform hover:scale-105 relative overflow-hidden group border border-neon-lime-400"
-            >
-              <span className="relative z-10">🔄 GET DIFFERENT RECOMMENDATIONS</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-neon-lime-600 to-neon-lime-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
-            <button
-              onClick={() => navigate('/')}
-              className="px-14 py-6 bg-gradient-to-r from-vintage-500 to-vintage-600 text-white rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-300 font-medium tracking-wide transform hover:scale-105 relative overflow-hidden group border border-vintage-400"
-            >
-              <span className="relative z-10">🤖 AI EMOTIONAL ANALYSIS</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-vintage-600 to-vintage-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
-          </div>
           
-          {["우울함", "지침", "스트레스"].includes(emotion) && (
-            <button
-              onClick={handleHealingClick}
-              className="px-14 py-6 bg-gradient-to-r from-neon-lime-400 to-vintage-500 text-white rounded-3xl shadow-elegant hover:shadow-card-hover transition-all duration-300 font-medium tracking-wide transform hover:scale-105 relative overflow-hidden group border border-neon-lime-300"
-            >
-              <span className="relative z-10">💌 GET EMOTIONAL SUPPORT</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-vintage-500 to-neon-lime-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
-          )}
-          
-          {/* Footer Badge */}
-          <div className="mt-12 inline-block bg-gradient-to-r from-neon-lime-100 to-vintage-100 p-6 rounded-2xl border border-neon-lime-200 transform -rotate-1">
-            <div className="text-sm text-gray-700 font-medium tracking-wide">
-              <div className="flex items-center space-x-6">
-                <span>🎵 PLAY</span>
-                <span>⏸️ PAUSE</span>
-                <span>⏹️ STOP</span>
-                <span>⏭️ NEXT</span>
+          {/* Bottom Search Bar */}
+          <div className="mt-12">
+            <div className="max-w-md mx-auto">
+              <div className="modern-card p-4">
+                <div className="flex items-center space-x-3">
+                  <div className="flex-1">
+                    <input 
+                      type="text" 
+                      placeholder="노래를 검색하세요..."
+                      className="w-full bg-transparent border-none outline-none text-gray-700 placeholder-gray-500"
+                    />
+                  </div>
+                  <button className="soft-button p-2 rounded-full">
+                    🔍
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -36,164 +36,121 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-gray-50 to-gray-100 p-8 relative overflow-hidden font-sans">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 bg-vintage-pattern opacity-5"></div>
-      
-      {/* Decorative Background Elements */}
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50/30 to-blue-100/50 flex items-center justify-center p-8 font-sans relative overflow-hidden">
+      {/* Organic curved background elements */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-20 w-48 h-28 bg-neon-lime-200 rounded-3xl transform rotate-12 shadow-elegant"></div>
-        <div className="absolute bottom-20 right-20 w-36 h-24 bg-vintage-300 rounded-3xl transform -rotate-6 shadow-elegant"></div>
-        <div className="absolute top-60 left-1/2 w-32 h-20 bg-neon-lime-100 rounded-3xl transform rotate-45 shadow-elegant"></div>
-        <div className="absolute top-1/3 right-1/4 w-28 h-16 bg-vintage-200 rounded-3xl transform -rotate-12 shadow-elegant"></div>
-        <div className="absolute top-1/4 left-1/3 w-24 h-12 bg-neon-lime-100 rounded-3xl transform rotate-30 shadow-elegant"></div>
+        <div className="absolute top-20 left-20 w-96 h-64 bg-gradient-to-br from-blue-200 to-blue-300 rounded-full transform rotate-12 blur-3xl"></div>
+        <div className="absolute bottom-20 right-20 w-72 h-48 bg-gradient-to-br from-blue-100 to-blue-200 rounded-full transform -rotate-6 blur-2xl"></div>
+        <div className="absolute top-60 left-1/2 w-64 h-40 bg-gradient-to-br from-blue-300 to-blue-400 rounded-full transform rotate-45 blur-3xl"></div>
       </div>
-
-      <div className="max-w-lg w-full bg-white/95 backdrop-blur-sm shadow-elegant p-16 relative overflow-hidden rounded-3xl border border-gray-200 transform hover:scale-100.5 transition-all duration-500">
-        {/* Subtle Design Elements */}
-        <div className="absolute top-8 right-8 w-20 h-12 bg-gradient-to-br from-neon-lime-200 to-neon-lime-300 rounded-3xl transform rotate-6 opacity-20 shadow-lg"></div>
-        <div className="absolute bottom-8 left-8 w-16 h-10 bg-gradient-to-br from-vintage-200 to-vintage-300 rounded-3xl transform -rotate-8 opacity-20 shadow-lg"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-16 bg-gradient-to-br from-neon-lime-100 to-vintage-200 rounded-3xl transform rotate-45 opacity-10 shadow-lg"></div>
-        
-        <div className="text-center mb-12 relative">
-          <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-neon-lime-300 to-neon-lime-400 rounded-full border-2 border-white shadow-lg"></div>
-          <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-vintage-300 to-vintage-400 rounded-full border-2 border-white shadow-lg"></div>
-          
-          <h1 className="font-serif text-5xl font-light bg-gradient-to-r from-neon-lime-600 via-neon-lime-500 to-vintage-500 bg-clip-text text-transparent mb-6 tracking-wide">
-            {isLogin ? '로그인' : '회원가입'}
+      
+      <div className="modern-card p-12 w-full max-w-md">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 mx-auto bg-gradient-to-r from-blue-400 to-blue-500 rounded-full flex items-center justify-center text-white text-2xl mb-4">
+            🔐
+          </div>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            {isLogin ? '다시 오신 것을 환영합니다' : '회원가입'}
           </h1>
-          
-          {/* Decorative Dots */}
-          <div className="flex items-center justify-center space-x-8 mb-8">
-            <div className="w-6 h-6 bg-neon-lime-200 rounded-full border-2 border-neon-lime-300 shadow-lg"></div>
-            <div className="w-6 h-6 bg-neon-lime-200 rounded-full border-2 border-neon-lime-300 shadow-lg"></div>
-          </div>
-          
-          <p className="text-gray-700 text-xl font-light tracking-wide">
-            {isLogin ? '계정에 로그인하세요' : '새로운 계정을 만드세요'}
+          <p className="text-gray-600">
+            {isLogin ? '계정에 로그인하세요' : '감정 음악 커뮤니티에 가입하세요'}
           </p>
-          
-          {/* Info Badge */}
-          <div className="mt-8 inline-block bg-gradient-to-r from-neon-lime-100 to-vintage-100 p-4 rounded-2xl border border-neon-lime-200 transform -rotate-1">
-            <div className="text-sm text-gray-700 font-medium tracking-wide">
-              <div className="text-center font-serif">{isLogin ? 'LOGIN' : 'REGISTER'}</div>
-            </div>
-          </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {!isLogin && (
-            <div className="relative">
-              <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-neon-lime-300 to-neon-lime-400 rounded-full opacity-60"></div>
-              <label className="block text-lg font-medium text-gray-800 mb-4 tracking-wide">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                 이름
               </label>
               <input
                 type="text"
+                id="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-8 py-5 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-neon-lime-200 focus:border-neon-lime-300 bg-white/90 backdrop-blur-sm shadow-elegant transition-all duration-300 font-medium tracking-wide text-gray-800"
+                className="w-full px-4 py-3 bg-white/60 border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-soft-blue focus:border-soft-blue backdrop-blur-sm transition-all duration-300"
                 placeholder="이름을 입력하세요"
-                required
+                required={!isLogin}
               />
             </div>
           )}
-
-          <div className="relative">
-            <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-neon-lime-300 to-neon-lime-400 rounded-full opacity-60"></div>
-            <label className="block text-lg font-medium text-gray-800 mb-4 tracking-wide">
+          
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
               이메일
             </label>
             <input
               type="email"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-8 py-5 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-neon-lime-200 focus:border-neon-lime-300 bg-white/90 backdrop-blur-sm shadow-elegant transition-all duration-300 font-medium tracking-wide text-gray-800"
+              className="w-full px-4 py-3 bg-white/60 border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-soft-blue focus:border-soft-blue backdrop-blur-sm transition-all duration-300"
               placeholder="이메일을 입력하세요"
               required
             />
           </div>
-
-          <div className="relative">
-            <div className="absolute top-2 right-2 w-4 h-4 bg-gradient-to-br from-neon-lime-300 to-neon-lime-400 rounded-full opacity-60"></div>
-            <label className="block text-lg font-medium text-gray-800 mb-4 tracking-wide">
+          
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
               비밀번호
             </label>
             <input
               type="password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-8 py-5 border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-4 focus:ring-neon-lime-200 focus:border-neon-lime-300 bg-white/90 backdrop-blur-sm shadow-elegant transition-all duration-300 font-medium tracking-wide text-gray-800"
+              className="w-full px-4 py-3 bg-white/60 border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-soft-blue focus:border-soft-blue backdrop-blur-sm transition-all duration-300"
               placeholder="비밀번호를 입력하세요"
               required
             />
           </div>
 
           {error && (
-            <div className="text-red-600 text-lg text-center bg-gradient-to-r from-red-50 to-red-100 p-6 rounded-2xl border-2 border-red-200 font-medium tracking-wide">
-              {error}
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+              <p className="text-red-600 text-sm">{error}</p>
             </div>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-6 px-8 rounded-2xl text-white font-medium tracking-wide transition-all duration-300 relative overflow-hidden group border-2 ${
-              loading
-                ? 'bg-gray-400 cursor-not-allowed border-gray-300'
-                : 'bg-gradient-to-r from-neon-lime-500 to-neon-lime-600 hover:shadow-card-hover transform hover:scale-105 border-neon-lime-400'
-            }`}
+            className="w-full soft-button py-3 rounded-xl font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? (
               <div className="flex items-center justify-center">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white mr-3"></div>
-                <span className="relative z-10">처리 중...</span>
+                <div className="w-5 h-5 mr-2 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                {isLogin ? '로그인 중...' : '계정 생성 중...'}
               </div>
             ) : (
-              <>
-                <span className="relative z-10">{isLogin ? '로그인' : '회원가입'}</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-neon-lime-600 to-neon-lime-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </>
+              isLogin ? '🔑 로그인' : '🚀 계정 만들기'
             )}
           </button>
         </form>
 
-        <div className="mt-10 text-center">
+        <div className="mt-8 text-center">
+          <p className="text-gray-600 mb-4">
+            {isLogin ? "계정이 없으신가요?" : "이미 계정이 있으신가요?"}
+          </p>
           <button
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-neon-lime-600 hover:text-neon-lime-800 text-lg font-medium tracking-wide transition-colors duration-300 border-2 border-neon-lime-200 px-8 py-4 rounded-2xl hover:bg-neon-lime-50 hover:border-neon-lime-300"
+            onClick={() => {
+              setIsLogin(!isLogin);
+              setError('');
+            }}
+            className="glass-effect px-6 py-3 rounded-xl font-medium text-gray-700 hover:soft-glow transition-all"
           >
-            {isLogin ? '계정이 없으신가요? 회원가입' : '이미 계정이 있으신가요? 로그인'}
+            {isLogin ? '새 계정 만들기' : '로그인하기'}
           </button>
         </div>
 
-        <div className="mt-12 text-center">
+        <div className="mt-8 text-center">
           <button
             onClick={() => navigate('/')}
-            className="text-gray-600 hover:text-gray-800 text-lg font-medium tracking-wide transition-colors duration-300 flex items-center justify-center mx-auto group border-2 border-gray-200 px-8 py-4 rounded-2xl hover:bg-gray-50 hover:border-gray-300"
+            className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
           >
-            <span className="group-hover:-translate-x-1 transition-transform duration-300">←</span>
-            <span className="ml-3">메인으로 돌아가기</span>
+            ← 홈으로 돌아가기
           </button>
-        </div>
-        
-        {/* Info Badge */}
-        <div className="absolute top-8 left-8 bg-gradient-to-r from-neon-lime-100 to-vintage-100 p-3 rounded-2xl border-2 border-neon-lime-200 transform -rotate-3">
-          <div className="text-xs text-gray-700 font-medium tracking-wide">
-            <div className="text-center font-serif">AUTH</div>
-          </div>
-        </div>
-        
-        {/* Footer Credits */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-gray-100 to-gray-200 p-6 rounded-2xl border-2 border-gray-200 transform rotate-1 inline-block">
-            <div className="text-xs text-gray-600 font-medium tracking-wide">
-              <div className="mb-2">PRODUCED BY: EMOTIONAL MUSIC PROJECT</div>
-              <div className="text-xs">© 2024 EMOTIONAL MUSIC PROJECT. ALL RIGHTS RESERVED.</div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   );
-} 
+}

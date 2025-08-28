@@ -24,47 +24,8 @@ app.use(express.json());
 
 // 환경변수 (서버에서 관리)
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
-const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 
-// Spotify 토큰 가져오기
-const getSpotifyToken = async () => {
-  if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
-    throw new Error('Spotify API 키가 설정되지 않았습니다.');
-  }
 
-  const response = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Basic ' + Buffer.from(SPOTIFY_CLIENT_ID + ':' + SPOTIFY_CLIENT_SECRET).toString('base64')
-    },
-    body: 'grant_type=client_credentials'
-  });
-
-  if (!response.ok) {
-    throw new Error('Spotify 토큰 발급 실패');
-  }
-
-  const data = await response.json();
-  return data.access_token;
-};
-
-// 감정별 Spotify 검색 키워드
-const emotionToSpotifyQuery = {
-  "😀": "happy upbeat music",
-  "😢": "sad emotional music", 
-  "😡": "angry rock music",
-  "😍": "romantic love songs",
-  "😌": "calm peaceful music",
-  "😴": "relaxing sleep music",
-  "행복함": "happy upbeat music",
-  "지침": "tired relaxing music",
-  "스트레스": "stress relief calming music",
-  "설렘": "romantic love songs",
-  "우울함": "sad emotional music",
-  "평온함": "calm peaceful music",
-};
 
 // API Routes
 
@@ -226,52 +187,15 @@ app.post('/api/gpt/analyze-diary', async (req, res) => {
   }
 });
 
-// 3. Spotify API 프록시
-app.get('/api/spotify/search/:emotion', async (req, res) => {
-  try {
-    const { emotion } = req.params;
-    const { limit = 9 } = req.query;
-    
-    if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
-      return res.status(500).json({ error: 'Spotify API 키가 설정되지 않았습니다.' });
-    }
 
-    // 감정에 맞는 검색 쿼리 가져오기
-    const query = emotionToSpotifyQuery[emotion] || "mood music";
-    
-    // Spotify 액세스 토큰 가져오기
-    const token = await getSpotifyToken();
-    
-    // Spotify 검색 API 호출
-    const response = await fetch(
-      `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=${limit}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error('Spotify API 호출 실패');
-    }
-
-    const data = await response.json();
-    res.json(data.tracks.items);
-  } catch (error) {
-    console.error('Spotify 검색 오류:', error);
-    res.status(500).json({ error: 'Spotify 검색에 실패했습니다.' });
-  }
-});
-
-// 4. 헬스 체크
+// 3. 헬스 체크
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     message: 'Server is running',
     apis: {
       openai: !!OPENAI_API_KEY,
-      spotify: !!(SPOTIFY_CLIENT_ID && SPOTIFY_CLIENT_SECRET)
+      itunes: true // iTunes API는 무료이므로 항상 사용 가능
     }
   });
 });
@@ -280,5 +204,5 @@ app.listen(PORT, () => {
   console.log(`서버가 포트 ${PORT}에서 실행 중입니다`);
   console.log(`API 상태:`);
   console.log(`- OpenAI: ${OPENAI_API_KEY ? '설정됨' : '설정되지 않음'}`);
-  console.log(`- Spotify: ${(SPOTIFY_CLIENT_ID && SPOTIFY_CLIENT_SECRET) ? '설정됨' : '설정되지 않음'}`);
+  console.log(`- iTunes: 항상 사용 가능 (무료 API)`);
 }); 

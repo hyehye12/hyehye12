@@ -68,7 +68,10 @@ export class AuthService {
   // 로그아웃
   static logout(): void {
     this.currentUser = null;
+    // 모든 사용자 관련 데이터 삭제
     localStorage.removeItem(STORAGE_KEYS.USER);
+    localStorage.removeItem(STORAGE_KEYS.DIARY_ENTRIES);
+    localStorage.removeItem(STORAGE_KEYS.MOOD_DATA);
   }
 
   // 현재 사용자 가져오기
