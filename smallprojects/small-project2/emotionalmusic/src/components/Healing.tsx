@@ -1,6 +1,5 @@
 import React from "react";
 import { useGPTAnalysis } from "../hooks/useGPTAnalysis";
-import { getCardStyle } from "../utils/buttonStyles";
 
 type HealingProps = {
   userInput: string;
@@ -8,7 +7,7 @@ type HealingProps = {
 };
 
 export default function Healing({ userInput, onRestart }: HealingProps) {
-  const { emotion, advice, loading, retry } = useGPTAnalysis(userInput);
+  const { emotion, advice, retry } = useGPTAnalysis(userInput);
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-gray-100 flex items-center justify-center p-8 font-sans relative overflow-hidden">

@@ -1,0 +1,22 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: hyehye12
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: aws-node
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: aws-node
+
+provider:
+  name: aws
+  region: ap-northeast-2
+  runtime: nodejs20.x
+  deploymentBucket:
+    name: tmd-genai1-students02
+    blockPublicAccess: true
+    serverSideEncryption: AES256
+
+functions:
+  hello:
+    handler: handler.hello
+
+  hello2:
+    handler: handler.hello2

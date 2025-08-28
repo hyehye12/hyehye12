@@ -2,7 +2,6 @@ import React from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useDiaryAnalysis } from "../hooks/useGPTAnalysis";
-import { getCardStyle } from "../utils/buttonStyles";
 
 export default function GPTAnalysisPage() {
   const { diaryText } = useParams<{ diaryText: string }>();
@@ -276,23 +275,25 @@ export default function GPTAnalysisPage() {
             </h3>
             
             {/* Detected Emotion */}
-            <div className="bg-gradient-to-r from-neon-lime-50 to-neon-lime-100 p-12 rounded-3xl border border-neon-lime-200 relative transform hover:scale-100.5 transition-all duration-500">
+            <div className="bg-gradient-to-r from-neon-lime-50 to-neon-lime-100 p-16 rounded-3xl border border-neon-lime-200 relative transform hover:scale-100.5 transition-all duration-500">
               <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-neon-lime-300 to-neon-lime-400 rounded-full border-2 border-white shadow-lg"></div>
               <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-neon-lime-200 to-vintage-300 rounded-full border-2 border-white shadow-lg"></div>
               
-              <div className="flex items-center mb-8">
-                <span className="text-4xl mr-6">🎭</span>
-                <h4 className="font-serif text-3xl font-light text-gray-900 tracking-wide">감지된 감정</h4>
+              <div className="flex items-center mb-10">
+                <span className="text-5xl mr-8">🎭</span>
+                <h4 className="font-serif text-4xl font-light text-gray-900 tracking-wide">감지된 감정</h4>
               </div>
-              <div className="bg-white/80 p-8 rounded-3xl border border-neon-lime-200 relative">
-                <div className="absolute top-4 right-4 w-4 h-4 bg-gradient-to-br from-neon-lime-300 to-neon-lime-400 rounded-full opacity-60"></div>
-                <p className="text-gray-800 leading-relaxed font-medium text-2xl tracking-wide">
-                  {analysis.emotion}
-                </p>
+              <div className="bg-white/90 p-12 rounded-3xl border border-neon-lime-200 relative shadow-inner">
+                <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-neon-lime-300 to-neon-lime-400 rounded-full opacity-60"></div>
+                <div className="text-center">
+                  <div className="inline-block bg-gradient-to-r from-neon-lime-600 to-neon-lime-700 text-white px-8 py-4 rounded-2xl text-3xl font-bold tracking-wider shadow-lg">
+                    {analysis.emotion}
+                  </div>
+                </div>
               </div>
               
               {/* Info Badge */}
-              <div className="absolute top-6 right-6 bg-gradient-to-r from-neon-lime-100 to-vintage-100 p-3 rounded-2xl border border-neon-lime-200 transform -rotate-3">
+              <div className="absolute top-8 right-8 bg-gradient-to-r from-neon-lime-100 to-vintage-100 p-4 rounded-2xl border border-neon-lime-200 transform -rotate-3">
                 <div className="text-xs text-gray-700 font-medium tracking-wide">
                   <div className="text-center font-serif">TRACK B1</div>
                 </div>
@@ -300,23 +301,25 @@ export default function GPTAnalysisPage() {
             </div>
 
             {/* Emotional Analysis */}
-            <div className="bg-gradient-to-r from-vintage-50 to-vintage-100 p-12 rounded-3xl border border-vintage-200 relative transform hover:scale-100.5 transition-all duration-500">
+            <div className="bg-gradient-to-r from-vintage-50 to-vintage-100 p-16 rounded-3xl border border-vintage-200 relative transform hover:scale-100.5 transition-all duration-500">
               <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-vintage-300 to-vintage-400 rounded-full border-2 border-white shadow-lg"></div>
               <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-vintage-200 to-neon-lime-300 rounded-full border-2 border-white shadow-lg"></div>
               
-              <div className="flex items-center mb-8">
-                <span className="text-4xl mr-6">💭</span>
-                <h4 className="font-serif text-3xl font-light text-gray-900 tracking-wide">감정 분석</h4>
+              <div className="flex items-center mb-10">
+                <span className="text-5xl mr-8">💭</span>
+                <h4 className="font-serif text-4xl font-light text-gray-900 tracking-wide">감정 분석</h4>
               </div>
-              <div className="bg-white/80 p-8 rounded-3xl border border-vintage-200 relative">
-                <div className="absolute top-4 right-4 w-4 h-4 bg-gradient-to-br from-vintage-300 to-vintage-400 rounded-full opacity-60"></div>
-                <p className="text-gray-800 leading-relaxed text-xl tracking-wide font-medium">
-                  {analysis.analysis}
-                </p>
+              <div className="bg-white/90 p-12 rounded-3xl border border-vintage-200 relative shadow-inner">
+                <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-vintage-300 to-vintage-400 rounded-full opacity-60"></div>
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-gray-800 leading-relaxed text-xl tracking-wide font-medium mb-0">
+                    {analysis.analysis}
+                  </p>
+                </div>
               </div>
               
               {/* Info Badge */}
-              <div className="absolute top-6 right-6 bg-gradient-to-r from-vintage-100 to-neon-lime-100 p-3 rounded-2xl border border-vintage-200 transform rotate-3">
+              <div className="absolute top-8 right-8 bg-gradient-to-r from-vintage-100 to-neon-lime-100 p-4 rounded-2xl border border-vintage-200 transform rotate-3">
                 <div className="text-xs text-gray-700 font-medium tracking-wide">
                   <div className="text-center font-serif">TRACK B2</div>
                 </div>
@@ -324,23 +327,25 @@ export default function GPTAnalysisPage() {
             </div>
 
             {/* Advice */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-12 rounded-3xl border border-blue-200 relative transform hover:scale-100.5 transition-all duration-500">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-16 rounded-3xl border border-blue-200 relative transform hover:scale-100.5 transition-all duration-500">
               <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-blue-300 to-indigo-400 rounded-full border-2 border-white shadow-lg"></div>
               <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-indigo-200 to-blue-300 rounded-full border-2 border-white shadow-lg"></div>
               
-              <div className="flex items-center mb-8">
-                <span className="text-4xl mr-6">💡</span>
-                <h4 className="font-serif text-3xl font-light text-gray-900 tracking-wide">개인 조언</h4>
+              <div className="flex items-center mb-10">
+                <span className="text-5xl mr-8">💡</span>
+                <h4 className="font-serif text-4xl font-light text-gray-900 tracking-wide">개인 조언</h4>
               </div>
-              <div className="bg-white/80 p-8 rounded-3xl border border-blue-200 relative">
-                <div className="absolute top-4 right-4 w-4 h-4 bg-gradient-to-br from-blue-300 to-indigo-400 rounded-full opacity-60"></div>
-                <p className="text-gray-800 leading-relaxed text-xl tracking-wide font-medium">
-                  {analysis.advice}
-                </p>
+              <div className="bg-white/90 p-12 rounded-3xl border border-blue-200 relative shadow-inner">
+                <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-blue-300 to-indigo-400 rounded-full opacity-60"></div>
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-gray-800 leading-relaxed text-xl tracking-wide font-medium mb-0">
+                    {analysis.advice}
+                  </p>
+                </div>
               </div>
               
               {/* Info Badge */}
-              <div className="absolute top-6 right-6 bg-gradient-to-r from-blue-100 to-indigo-100 p-3 rounded-2xl border border-blue-200 transform -rotate-3">
+              <div className="absolute top-8 right-8 bg-gradient-to-r from-blue-100 to-indigo-100 p-4 rounded-2xl border border-blue-200 transform -rotate-3">
                 <div className="text-xs text-gray-700 font-medium tracking-wide">
                   <div className="text-center font-serif">TRACK B3</div>
                 </div>
@@ -348,23 +353,25 @@ export default function GPTAnalysisPage() {
             </div>
 
             {/* Encouragement */}
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-12 rounded-3xl border border-green-200 relative transform hover:scale-100.5 transition-all duration-500">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-16 rounded-3xl border border-green-200 relative transform hover:scale-100.5 transition-all duration-500">
               <div className="absolute -top-4 -left-4 w-8 h-8 bg-gradient-to-br from-green-300 to-emerald-400 rounded-full border-2 border-white shadow-lg"></div>
               <div className="absolute -bottom-4 -right-4 w-6 h-6 bg-gradient-to-br from-emerald-200 to-green-300 rounded-full border-2 border-white shadow-lg"></div>
               
-              <div className="flex items-center mb-8">
-                <span className="text-4xl mr-6">💝</span>
-                <h4 className="font-serif text-3xl font-light text-gray-900 tracking-wide">격려</h4>
+              <div className="flex items-center mb-10">
+                <span className="text-5xl mr-8">💝</span>
+                <h4 className="font-serif text-4xl font-light text-gray-900 tracking-wide">따뜻한 격려</h4>
               </div>
-              <div className="bg-white/80 p-8 rounded-3xl border border-green-200 relative">
-                <div className="absolute top-4 right-4 w-4 h-4 bg-gradient-to-br from-green-300 to-emerald-400 rounded-full opacity-60"></div>
-                <p className="text-gray-800 leading-relaxed text-xl tracking-wide font-medium">
-                  {analysis.encouragement}
-                </p>
+              <div className="bg-white/90 p-12 rounded-3xl border border-green-200 relative shadow-inner">
+                <div className="absolute top-6 right-6 w-6 h-6 bg-gradient-to-br from-green-300 to-emerald-400 rounded-full opacity-60"></div>
+                <div className="prose prose-lg max-w-none">
+                  <p className="text-gray-800 leading-relaxed text-xl tracking-wide font-medium mb-0">
+                    {analysis.encouragement}
+                  </p>
+                </div>
               </div>
               
               {/* Info Badge */}
-              <div className="absolute top-6 right-6 bg-gradient-to-r from-green-100 to-emerald-100 p-3 rounded-2xl border border-green-200 transform rotate-3">
+              <div className="absolute top-8 right-8 bg-gradient-to-r from-green-100 to-emerald-100 p-4 rounded-2xl border border-green-200 transform rotate-3">
                 <div className="text-xs text-gray-700 font-medium tracking-wide">
                   <div className="text-center font-serif">TRACK B4</div>
                 </div>

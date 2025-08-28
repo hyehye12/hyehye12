@@ -20,7 +20,7 @@ export const useGPTAnalysis = (input: string) => {
       let result: EmotionAdviceResult;
       
       // API 키가 있으면 실제 GPT 호출, 없으면 모의 응답 사용
-      if (process.env.REACT_APP_OPEN_AI_API_KEY) {
+      if (process.env.REACT_APP_OPENAI_API_KEY) {
         result = await EmotionAdvice(input);
       } else {
         // 모의 응답 사용 (약간의 지연 추가)
@@ -44,7 +44,7 @@ export const useGPTAnalysis = (input: string) => {
     if (input) {
       fetchAdvice();
     }
-  }, [fetchAdvice]);
+  }, [input, fetchAdvice]);
 
   return { emotion, advice, loading, error, retry: fetchAdvice };
 };
@@ -64,7 +64,7 @@ export const useDiaryAnalysis = (diaryText: string) => {
       // 실제 GPT API 호출 (API 키가 있으면)
       let result: GPTAnalysisResult;
       
-      if (process.env.REACT_APP_OPENAI_API_KEY || process.env.REACT_APP_OPEN_AI_API_KEY) {
+      if (process.env.REACT_APP_OPENAI_API_KEY) {
         result = await analyzeDiaryWithGPT(diaryText);
       } else {
         // API 키가 없으면 모의 응답 사용
