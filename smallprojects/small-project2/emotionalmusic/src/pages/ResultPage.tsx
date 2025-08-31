@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { useMusicSearch } from "../hooks/useMusicSearch";
 import { getEmotionDescription } from "../utils/emotionAnalyzer";
+import { handleApiResponse, safeJsonParse } from "../utils/apiUtils";
 
 import LoadingSpinner from "../components/LoadingSpinner";
 import Healing from "../components/Healing";
@@ -11,6 +12,13 @@ export default function ResultPage() {
   const navigate = useNavigate();
   const [showHealing, setShowHealing] = useState(false);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentAudio, setCurrentAudio] = useState<HTMLAudioElement | null>(null);
+  const [showAllTracks, setShowAllTracks] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSelectingTodaySong, setIsSelectingTodaySong] = useState(false);
+  const [todaySongSelected, setTodaySongSelected] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const { tracks, loading, error, searchTracks } = useMusicSearch(
     emotion || ""
   );
@@ -25,8 +33,260 @@ export default function ResultPage() {
   };
 
   const handleBack = () => {
+    if (currentAudio) {
+      currentAudio.pause();
+      setCurrentAudio(null);
+      setIsPlaying(false);
+    }
     navigate("/");
   };
+
+  const handlePlayPause = () => {
+    const currentTrack = tracks[currentTrackIndex];
+    if (!currentTrack?.previewUrl) {
+      alert('이 트랙은 미리듣기를 지원하지 않습니다.');
+      return;
+    }
+
+    if (isPlaying && currentAudio) {
+      currentAudio.pause();
+      setIsPlaying(false);
+    } else {
+      // 기존 오디오 정리
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.removeEventListener('ended', handleAudioEnd);
+      }
+
+      // 새 오디오 생성
+      const newAudio = new Audio(currentTrack.previewUrl);
+      newAudio.addEventListener('ended', handleAudioEnd);
+      newAudio.addEventListener('error', () => {
+        alert('오디오 로드에 실패했습니다.');
+        setIsPlaying(false);
+      });
+      
+      newAudio.play().catch(() => {
+        alert('오디오 재생에 실패했습니다.');
+        setIsPlaying(false);
+      });
+      
+      setCurrentAudio(newAudio);
+      setIsPlaying(true);
+    }
+  };
+
+  const handleAudioEnd = () => {
+    setIsPlaying(false);
+    setCurrentAudio(null);
+  };
+
+  const handleTrackClick = (index: number) => {
+    // 현재 재생중인 오디오 정지
+    if (currentAudio) {
+      currentAudio.pause();
+      setCurrentAudio(null);
+      setIsPlaying(false);
+    }
+    setCurrentTrackIndex(index);
+  };
+
+  const handlePreviousTrack = () => {
+    const newIndex = Math.max(0, currentTrackIndex - 1);
+    if (newIndex !== currentTrackIndex) {
+      // 현재 오디오 정지
+      if (currentAudio) {
+        currentAudio.pause();
+        setCurrentAudio(null);
+        setIsPlaying(false);
+      }
+      setCurrentTrackIndex(newIndex);
+      // 새 트랙 자동 재생
+      setTimeout(() => {
+        playTrack(newIndex);
+      }, 100);
+    }
+  };
+
+  const handleNextTrack = () => {
+    const newIndex = Math.min(tracks.length - 1, currentTrackIndex + 1);
+    if (newIndex !== currentTrackIndex) {
+      // 현재 오디오 정지
+      if (currentAudio) {
+        currentAudio.pause();
+        setCurrentAudio(null);
+        setIsPlaying(false);
+      }
+      setCurrentTrackIndex(newIndex);
+      // 새 트랙 자동 재생
+      setTimeout(() => {
+        playTrack(newIndex);
+      }, 100);
+    }
+  };
+
+  const playTrack = (index: number) => {
+    const track = tracks[index];
+    if (!track?.previewUrl) {
+      alert('이 트랙은 미리듣기를 지원하지 않습니다.');
+      return;
+    }
+
+    // 기존 오디오 정리
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.removeEventListener('ended', handleAudioEnd);
+    }
+
+    // 새 오디오 생성
+    const newAudio = new Audio(track.previewUrl);
+    newAudio.addEventListener('ended', handleAudioEnd);
+    newAudio.addEventListener('error', () => {
+      alert('오디오 로드에 실패했습니다.');
+      setIsPlaying(false);
+    });
+    
+    newAudio.play().catch(() => {
+      alert('오디오 재생에 실패했습니다.');
+      setIsPlaying(false);
+    });
+    
+    setCurrentAudio(newAudio);
+    setIsPlaying(true);
+  };
+
+  const handleSaveTrack = async () => {
+    const currentTrack = tracks[currentTrackIndex];
+    if (!currentTrack) return;
+
+    setIsSaving(true);
+    try {
+      const response = await fetch('/api/music/recommendations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          emotion: emotion,
+          track_name: currentTrack.trackName,
+          artist_name: currentTrack.artistName,
+          album_name: currentTrack.collectionName,
+          preview_url: currentTrack.previewUrl,
+          artwork_url: currentTrack.artworkUrl100
+        })
+      });
+
+      if (response.ok) {
+        alert('트랙이 성공적으로 저장되었습니다! 🎵');
+      } else {
+        if (response.status === 401) {
+          const shouldLogin = window.confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?');
+          if (shouldLogin) {
+            navigate('/auth');
+          }
+        } else {
+          try {
+            const errorData = await safeJsonParse(response);
+            alert(errorData.error || '저장에 실패했습니다.');
+          } catch (parseError) {
+            alert(`저장에 실패했습니다. (${response.status})`);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Save error:', error);
+      alert('저장 중 오류가 발생했습니다.');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleSelectTodaySong = async () => {
+    const currentTrack = tracks[currentTrackIndex];
+    if (!currentTrack) return;
+
+    setIsSelectingTodaySong(true);
+    try {
+      // 저장된 데이터가 있는지 확인 (예: localStorage 또는 세션에서 AI 분석 결과 가져오기)
+      const analysisData = JSON.parse(sessionStorage.getItem('recentAnalysis') || '{}');
+      
+      if (!analysisData.diaryContent || !analysisData.emotion) {
+        alert('일기 분석 데이터를 찾을 수 없습니다. 다시 일기를 작성해주세요.');
+        return;
+      }
+
+      const response = await fetch('/api/daily-entries', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          diary_content: analysisData.diaryContent,
+          detected_emotion: emotion || analysisData.emotion,
+          selected_track_name: currentTrack.trackName,
+          selected_artist_name: currentTrack.artistName,
+          selected_album_name: currentTrack.collectionName,
+          selected_preview_url: currentTrack.previewUrl,
+          selected_artwork_url: currentTrack.artworkUrl100,
+          selected_track_view_url: currentTrack.trackViewUrl,
+          ai_analysis: analysisData.analysis,
+          ai_advice: analysisData.advice,
+          ai_encouragement: analysisData.encouragement
+        })
+      });
+
+      if (response.ok) {
+        setTodaySongSelected(true);
+        alert('오늘의 곡이 선택되었습니다! 🎆\n대시보드에서 오늘의 일기와 함께 확인할 수 있습니다.');
+        // 세션 저장된 분석 데이터 제거
+        sessionStorage.removeItem('recentAnalysis');
+      } else {
+        if (response.status === 401) {
+          const shouldLogin = window.confirm('로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?');
+          if (shouldLogin) {
+            navigate('/auth');
+          }
+        } else {
+          try {
+            const errorData = await safeJsonParse(response);
+            alert(errorData.error || '오늘의 곡 선택에 실패했습니다.');
+          } catch (parseError) {
+            alert(`오늘의 곡 선택에 실패했습니다. (${response.status})`);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Today song selection error:', error);
+      alert('오늘의 곡 선택 중 오류가 발생했습니다.');
+    } finally {
+      setIsSelectingTodaySong(false);
+    }
+  };
+
+  const handleOpenItunes = () => {
+    const currentTrack = tracks[currentTrackIndex];
+    if (currentTrack?.trackViewUrl) {
+      window.open(currentTrack.trackViewUrl, '_blank');
+    } else {
+      alert('iTunes 링크를 찾을 수 없습니다.');
+    }
+  };
+
+  const handleShowMore = () => {
+    setShowAllTracks(true);
+  };
+
+  // 컴포넌트 언마운트 시 오디오 정리
+  useEffect(() => {
+    return () => {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.removeEventListener('ended', handleAudioEnd);
+      }
+    };
+  }, [currentAudio]);
 
   if (!emotion) {
     return <Navigate to="/" replace />;
@@ -112,25 +372,20 @@ export default function ResultPage() {
                       {/* Play Controls */}
                       <div className="flex items-center justify-center mb-6 space-x-4">
                         <button
-                          onClick={() =>
-                            setCurrentTrackIndex(
-                              Math.max(0, currentTrackIndex - 1)
-                            )
-                          }
+                          onClick={handlePreviousTrack}
                           className="flex items-center justify-center w-12 h-12 transition-all rounded-full glass-effect hover:soft-glow disabled:opacity-50"
                           disabled={currentTrackIndex === 0}
                         >
                           ⏮️
                         </button>
-                        <button className="flex items-center justify-center w-16 h-16 text-2xl rounded-full soft-button">
-                          ▶️
+                        <button 
+                          onClick={handlePlayPause}
+                          className="flex items-center justify-center w-16 h-16 text-2xl rounded-full soft-button hover:scale-105 transition-transform"
+                        >
+                          {isPlaying ? '⏸️' : '▶️'}
                         </button>
                         <button
-                          onClick={() =>
-                            setCurrentTrackIndex(
-                              Math.min(tracks.length - 1, currentTrackIndex + 1)
-                            )
-                          }
+                          onClick={handleNextTrack}
                           className="flex items-center justify-center w-12 h-12 transition-all rounded-full glass-effect hover:soft-glow disabled:opacity-50"
                           disabled={currentTrackIndex === tracks.length - 1}
                         >
@@ -142,9 +397,28 @@ export default function ResultPage() {
                       <p className="mb-4 text-gray-600">
                         이 트랙을 저장하시겠어요?
                       </p>
-                      <button className="px-6 py-2 rounded-full soft-button">
-                        💾 저장
-                      </button>
+                      <div className="flex space-x-3">
+                        <button 
+                          onClick={handleOpenItunes}
+                          className="px-6 py-2 rounded-full soft-button hover:scale-105 transition-transform"
+                        >
+                          🎵 iTunes에서 보기
+                        </button>
+                        <button 
+                          onClick={handleSaveTrack}
+                          disabled={isSaving}
+                          className="px-6 py-2 rounded-full soft-button hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isSaving ? '저장 중...' : '💾 저장'}
+                        </button>
+                        <button 
+                          onClick={handleSelectTodaySong}
+                          disabled={isSelectingTodaySong || todaySongSelected}
+                          className="px-6 py-2 text-white bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full hover:from-yellow-500 hover:to-orange-600 hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isSelectingTodaySong ? '선택 중...' : todaySongSelected ? '✓ 오늘의 곡 선택됨' : '🌟 오늘의 곡으로 선택'}
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -174,7 +448,7 @@ export default function ResultPage() {
                 </div>
 
                 <div className="space-y-4">
-                  {tracks.slice(0, 4).map((track, index) => (
+                  {(showAllTracks ? tracks : tracks.slice(0, 4)).map((track, index) => (
                     <div
                       key={track.trackId}
                       className={`flex items-center space-x-4 p-3 rounded-xl hover:bg-white/50 transition-all cursor-pointer ${
@@ -182,7 +456,7 @@ export default function ResultPage() {
                           ? "bg-blue-50 border border-blue-200"
                           : ""
                       }`}
-                      onClick={() => setCurrentTrackIndex(index)}
+                      onClick={() => handleTrackClick(index)}
                     >
                       <img
                         src={track.artworkUrl100 || "/default-album.jpg"}
@@ -193,26 +467,50 @@ export default function ResultPage() {
                             "/default-album.jpg";
                         }}
                       />
-                      <div className="flex-1">
-                        <h4 className="font-medium text-gray-900 truncate">
+                      <div className="flex-1" onClick={() => window.open(track.trackViewUrl, '_blank')}>
+                        <h4 className="font-medium text-gray-900 truncate hover:text-blue-600 transition-colors">
                           {track.trackName}
                         </h4>
                         <p className="text-sm text-gray-600 truncate">
                           {track.artistName}
                         </p>
                       </div>
-                      <button className="flex items-center justify-center w-8 h-8 transition-all rounded-full glass-effect hover:soft-glow">
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (track.previewUrl) {
+                            const audio = new Audio(track.previewUrl);
+                            audio.play().catch(() => alert('미리듣기를 재생할 수 없습니다.'));
+                          } else {
+                            alert('이 트랙은 미리듣기를 지원하지 않습니다.');
+                          }
+                        }}
+                        className="flex items-center justify-center w-8 h-8 transition-all rounded-full glass-effect hover:soft-glow"
+                      >
                         ▶️
                       </button>
                     </div>
                   ))}
                 </div>
 
-                {tracks.length > 4 && (
+                {tracks.length > 4 && !showAllTracks && (
                   <div className="pt-4 mt-4 border-t border-gray-200">
-                    <p className="text-sm text-center text-gray-500">
-                      +{tracks.length - 4} 개 더 많은 트랙
-                    </p>
+                    <button 
+                      onClick={handleShowMore}
+                      className="w-full py-2 text-sm text-center text-blue-600 hover:text-blue-800 transition-colors font-medium"
+                    >
+                      +{tracks.length - 4} 개 더 많은 트랙 보기
+                    </button>
+                  </div>
+                )}
+                {showAllTracks && (
+                  <div className="pt-4 mt-4 border-t border-gray-200">
+                    <button 
+                      onClick={() => setShowAllTracks(false)}
+                      className="w-full py-2 text-sm text-center text-gray-600 hover:text-gray-800 transition-colors font-medium"
+                    >
+                      접기
+                    </button>
                   </div>
                 )}
               </div>
@@ -220,7 +518,18 @@ export default function ResultPage() {
               {/* Action Buttons */}
               <div className="space-y-4">
                 <button
-                  onClick={searchTracks}
+                  onClick={() => {
+                    // 현재 재생 중인 오디오 정지
+                    if (currentAudio) {
+                      currentAudio.pause();
+                      setCurrentAudio(null);
+                      setIsPlaying(false);
+                    }
+                    // 트랙 인덱스 초기화 및 새 추천 가져오기
+                    setCurrentTrackIndex(0);
+                    setShowAllTracks(false);
+                    searchTracks();
+                  }}
                   className="w-full py-3 font-medium soft-button rounded-xl"
                 >
                   🔄 다른 추천가져오기
@@ -230,6 +539,12 @@ export default function ResultPage() {
                   className="w-full py-3 font-medium text-gray-700 transition-all glass-effect rounded-xl hover:soft-glow"
                 >
                   🤖 새로운 AI 분석
+                </button>
+                <button
+                  onClick={() => navigate("/dashboard")}
+                  className="w-full py-3 font-medium text-white bg-gradient-to-r from-green-400 to-green-500 rounded-xl hover:from-green-500 hover:to-green-600 transition-all"
+                >
+                  📊 대시보드 보기
                 </button>
               </div>
             </div>

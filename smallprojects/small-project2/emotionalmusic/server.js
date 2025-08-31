@@ -1,31 +1,55 @@
 const express = require('express');
 const cors = require('cors');
 const fetch = require('node-fetch');
+const session = require('express-session');
 require('dotenv').config();
 
-// MongoDB 연결
-const { connectDB } = require('./src/config/database');
+// Supabase 설정
+const { createClient } = require('@supabase/supabase-js');
+const supabaseUrl = process.env.SUPABASE_URL || '';
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY || '';
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 // 라우트 import
 const authRoutes = require('./src/routes/auth');
 const diaryRoutes = require('./src/routes/diary');
 const musicRoutes = require('./src/routes/music');
 const dashboardRoutes = require('./src/routes/dashboard');
+const dailyEntriesRoutes = require('./src/routes/dailyEntries');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// MongoDB 연결
-connectDB();
-
 // CORS 설정
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 app.use(express.json());
+
+// Session 설정
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-default-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // HTTPS에서는 true로 설정
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24시간
+  }
+}));
 
 // 환경변수 (서버에서 관리)
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 
 
+
+// 라우트 연결
+app.use('/api/auth', authRoutes);
+app.use('/api/diary', diaryRoutes);
+app.use('/api/music', musicRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/daily-entries', dailyEntriesRoutes);
 
 // API Routes
 
@@ -74,15 +98,15 @@ app.post('/api/gpt/emotion-advice', async (req, res) => {
     // 사용자 ID가 있으면 감정 분석 데이터 저장
     if (userId) {
       try {
-        const { EmotionAnalysis } = require('./src/models');
-        const emotionAnalysis = new EmotionAnalysis({
-          userId,
-          inputText: userInput,
-          detectedEmotion: emotion,
-          advice,
-          analysisType: 'text'
-        });
-        await emotionAnalysis.save();
+        await supabase
+          .from('emotion_analyses')
+          .insert({
+            user_id: userId,
+            input_text: userInput,
+            detected_emotion: emotion,
+            advice,
+            analysis_type: 'text'
+          });
       } catch (dbError) {
         console.error('감정 분석 데이터 저장 실패:', dbError);
       }
@@ -156,15 +180,15 @@ app.post('/api/gpt/analyze-diary', async (req, res) => {
     // 사용자 ID가 있으면 감정 분석 데이터 저장
     if (userId) {
       try {
-        const { EmotionAnalysis } = require('./src/models');
-        const emotionAnalysis = new EmotionAnalysis({
-          userId,
-          inputText: diaryText,
-          detectedEmotion: result.emotion,
-          advice: result.advice,
-          analysisType: 'diary'
-        });
-        await emotionAnalysis.save();
+        await supabase
+          .from('emotion_analyses')
+          .insert({
+            user_id: userId,
+            input_text: diaryText,
+            detected_emotion: result.emotion,
+            advice: result.advice,
+            analysis_type: 'diary'
+          });
       } catch (dbError) {
         console.error('일기 분석 데이터 저장 실패:', dbError);
       }
@@ -195,6 +219,7 @@ app.get('/api/health', (req, res) => {
     message: 'Server is running',
     apis: {
       openai: !!OPENAI_API_KEY,
+      supabase: !!supabaseUrl && !!supabaseServiceKey,
       itunes: true // iTunes API는 무료이므로 항상 사용 가능
     }
   });
@@ -204,5 +229,6 @@ app.listen(PORT, () => {
   console.log(`서버가 포트 ${PORT}에서 실행 중입니다`);
   console.log(`API 상태:`);
   console.log(`- OpenAI: ${OPENAI_API_KEY ? '설정됨' : '설정되지 않음'}`);
+  console.log(`- Supabase: ${supabaseUrl && supabaseServiceKey ? '설정됨' : '설정되지 않음'}`);
   console.log(`- iTunes: 항상 사용 가능 (무료 API)`);
 }); 

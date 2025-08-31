@@ -1,4 +1,5 @@
 // 사용자 인증 및 데이터 관리 서비스
+import { safeJsonParse } from '../utils/apiUtils';
 
 export interface User {
   id: string;
@@ -37,41 +38,88 @@ export class AuthService {
 
   // 로그인
   static async login(email: string, password: string): Promise<User> {
-    // 실제 구현에서는 서버 API 호출
-    // 현재는 로컬 스토리지 사용
-    const user: User = {
-      id: Date.now().toString(),
-      email,
-      name: email.split('@')[0],
-      createdAt: new Date()
-    };
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
+      });
 
-    this.currentUser = user;
-    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
-    return user;
+      if (!response.ok) {
+        const errorData = await safeJsonParse(response);
+        throw new Error(errorData.error || '로그인에 실패했습니다.');
+      }
+
+      const data = await safeJsonParse(response);
+      const user: User = {
+        id: data.user.id,
+        email: data.user.email,
+        name: data.user.email.split('@')[0], // 서버에 name이 없으면 이메일에서 추출
+        createdAt: new Date(data.user.created_at || Date.now())
+      };
+
+      this.currentUser = user;
+      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
+      return user;
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   }
 
   // 회원가입
   static async register(email: string, password: string, name: string): Promise<User> {
-    const user: User = {
-      id: Date.now().toString(),
-      email,
-      name,
-      createdAt: new Date()
-    };
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ email, password })
+      });
 
-    this.currentUser = user;
-    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
-    return user;
+      if (!response.ok) {
+        const errorData = await safeJsonParse(response);
+        throw new Error(errorData.error || '회원가입에 실패했습니다.');
+      }
+
+      const data = await safeJsonParse(response);
+      const user: User = {
+        id: data.user.id,
+        email: data.user.email,
+        name: name || data.user.email.split('@')[0],
+        createdAt: new Date(data.user.created_at || Date.now())
+      };
+
+      this.currentUser = user;
+      localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
+      return user;
+    } catch (error) {
+      console.error('Register error:', error);
+      throw error;
+    }
   }
 
   // 로그아웃
-  static logout(): void {
-    this.currentUser = null;
-    // 모든 사용자 관련 데이터 삭제
-    localStorage.removeItem(STORAGE_KEYS.USER);
-    localStorage.removeItem(STORAGE_KEYS.DIARY_ENTRIES);
-    localStorage.removeItem(STORAGE_KEYS.MOOD_DATA);
+  static async logout(): Promise<void> {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      this.currentUser = null;
+      // 모든 사용자 관련 데이터 삭제
+      localStorage.removeItem(STORAGE_KEYS.USER);
+      localStorage.removeItem(STORAGE_KEYS.DIARY_ENTRIES);
+      localStorage.removeItem(STORAGE_KEYS.MOOD_DATA);
+    }
   }
 
   // 현재 사용자 가져오기

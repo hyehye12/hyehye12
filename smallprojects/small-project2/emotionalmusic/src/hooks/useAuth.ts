@@ -38,8 +38,8 @@ export const useAuth = () => {
     }
   }, []);
 
-  const logout = useCallback(() => {
-    AuthService.logout();
+  const logout = useCallback(async () => {
+    await AuthService.logout();
     setUser(null);
   }, []);
 

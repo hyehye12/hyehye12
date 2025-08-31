@@ -1,4 +1,6 @@
 // GPT API 서비스 - 통합 버전
+import { safeJsonParse } from './apiUtils';
+
 export interface GPTAnalysisResult {
   emotion: string;
   analysis: string;
@@ -42,7 +44,7 @@ export const EmotionAdvice = async (
       }),
     });
 
-    const data = await res.json();
+    const data = await safeJsonParse(res);
     const response = data.choices[0].message.content;
 
     const emotion = response.match(/감정:\s*(.+)/)?.[1].trim() || "알 수 없음";
@@ -112,7 +114,7 @@ export const analyzeDiaryWithGPT = async (
       throw new Error(`GPT API 호출 실패: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data = await safeJsonParse(response);
     let content = data.choices[0]?.message?.content;
 
     if (!content) {

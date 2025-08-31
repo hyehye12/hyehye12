@@ -13,18 +13,51 @@ export default function AuthPage() {
   const { login, register } = useAuth();
   const navigate = useNavigate();
 
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password: string): { isValid: boolean; message?: string } => {
+    if (password.length < 8) {
+      return { isValid: false, message: '비밀번호는 최소 8자 이상이어야 합니다.' };
+    }
+    if (!/(?=.*[a-z])/.test(password)) {
+      return { isValid: false, message: '비밀번호에 소문자가 포함되어야 합니다.' };
+    }
+    if (!/(?=.*[A-Z])/.test(password)) {
+      return { isValid: false, message: '비밀번호에 대문자가 포함되어야 합니다.' };
+    }
+    if (!/(?=.*\d)/.test(password)) {
+      return { isValid: false, message: '비밀번호에 숫자가 포함되어야 합니다.' };
+    }
+    return { isValid: true };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
     try {
+      // 이메일 유효성 검사
+      if (!validateEmail(email)) {
+        throw new Error('올바른 이메일 형식을 입력해주세요. (예: user@example.com)');
+      }
+
       if (isLogin) {
         await login(email, password);
       } else {
+        // 회원가입 시 추가 유효성 검사
         if (!name.trim()) {
           throw new Error('이름을 입력해주세요.');
         }
+        
+        const passwordValidation = validatePassword(password);
+        if (!passwordValidation.isValid) {
+          throw new Error(passwordValidation.message);
+        }
+        
         await register(email, password, name);
       }
       navigate('/');
@@ -70,6 +103,7 @@ export default function AuthPage() {
                 onChange={(e) => setName(e.target.value)}
                 className="w-full px-4 py-3 bg-white/60 border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-soft-blue focus:border-soft-blue backdrop-blur-sm transition-all duration-300"
                 placeholder="이름을 입력하세요"
+                autoComplete="name"
                 required={!isLogin}
               />
             </div>
@@ -85,9 +119,11 @@ export default function AuthPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 bg-white/60 border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-soft-blue focus:border-soft-blue backdrop-blur-sm transition-all duration-300"
-              placeholder="이메일을 입력하세요"
+              placeholder="user@example.com"
+              autoComplete="email"
               required
             />
+            <p className="text-xs text-gray-500 mt-1">올바른 이메일 형식으로 입력해주세요</p>
           </div>
           
           <div>
@@ -101,8 +137,14 @@ export default function AuthPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 bg-white/60 border border-gray-200 rounded-xl focus:outline-none focus:ring-4 focus:ring-soft-blue focus:border-soft-blue backdrop-blur-sm transition-all duration-300"
               placeholder="비밀번호를 입력하세요"
+              autoComplete={isLogin ? "current-password" : "new-password"}
               required
             />
+            {!isLogin && (
+              <p className="text-xs text-gray-500 mt-1">
+                최소 8자, 대소문자, 숫자 포함 필수
+              </p>
+            )}
           </div>
 
           {error && (

@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useDiaryAnalysis } from "../hooks/useGPTAnalysis";
+import { handleApiResponse, safeJsonParse } from "../utils/apiUtils";
 
 export default function GPTAnalysisPage() {
   const { diaryText } = useParams<{ diaryText: string }>();
@@ -16,6 +17,47 @@ export default function GPTAnalysisPage() {
 
   const handleRetry = () => {
     retry();
+  };
+
+  const handleMusicRecommendation = async () => {
+    if (analysis?.emotion) {
+      // 오늘 기존 엔트리 확인
+      try {
+        const response = await fetch('/api/daily-entries/today/entry', {
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const data = await safeJsonParse(response);
+          if (data.entry) {
+            const confirmMessage = `오늘 이미 일기와 음악을 선택하셨습니다.
+
+기존 감정: ${data.entry.detected_emotion}
+새로운 감정: ${analysis.emotion}
+
+새로운 일기로 업데이트하시겠습니까?`;
+            
+            if (!window.confirm(confirmMessage)) {
+              return;
+            }
+          }
+        }
+      } catch (error) {
+        console.log('오늘의 엔트리 확인 중 오류:', error);
+      }
+      
+      // AI 분석 결과를 세션 스토리지에 저장 (음악 페이지에서 사용)
+      const analysisData = {
+        diaryContent: decodedDiaryText,
+        emotion: analysis.emotion,
+        analysis: analysis.analysis,
+        advice: analysis.advice,
+        encouragement: analysis.encouragement
+      };
+      sessionStorage.setItem('recentAnalysis', JSON.stringify(analysisData));
+      
+      navigate(`/result/${encodeURIComponent(analysis.emotion)}`);
+    }
   };
 
   if (!diaryText) {
@@ -228,6 +270,14 @@ export default function GPTAnalysisPage() {
                   <div className="inline-block px-6 py-3 text-xl font-bold text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl">
                     {analysis.emotion}
                   </div>
+                  <div className="mt-4">
+                    <button
+                      onClick={handleMusicRecommendation}
+                      className="inline-flex items-center px-4 py-2 text-sm font-medium text-purple-600 transition-all bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 hover:text-purple-700"
+                    >
+                      🎵 이 감정에 맞는 음악 추천
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -285,6 +335,23 @@ export default function GPTAnalysisPage() {
 
         {/* Action Buttons */}
         <div className="space-y-4 text-center">
+          {/* Primary Action - Music Recommendation */}
+          <div className="mb-6">
+            <button
+              onClick={handleMusicRecommendation}
+              className="px-12 py-5 text-xl font-bold text-white transition-all transform bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl hover:from-purple-600 hover:to-pink-600 hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              🎵 음악 추천 받기
+            </button>
+            <p className="mt-3 text-sm text-gray-600">
+              분석된 감정 '<span className="font-semibold text-purple-600">{analysis?.emotion}</span>'에 어울리는 음악을 추천해드릴게요!
+              <span className="block mt-1 text-xs text-blue-600">
+                * 같은 날 새 일기를 작성한 경우 기존 엔트리가 업데이트됩니다.
+              </span>
+            </p>
+          </div>
+          
+          {/* Secondary Actions */}
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <button
               onClick={handleRetry}
