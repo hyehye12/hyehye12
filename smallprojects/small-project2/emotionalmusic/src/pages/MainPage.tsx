@@ -112,12 +112,12 @@ export default function MainPage() {
                   >
                     🔐 로그인
                   </button>
-                  <button
+                  {/* <button
                     onClick={() => navigate("/music-board")}
                     className="px-6 py-3 font-medium text-gray-700 transition-all glass-effect rounded-xl hover:soft-glow"
                   >
                     🎵 음악 커뮤니티
-                  </button>
+                  </button> */}
                 </>
               )}
             </div>
@@ -181,7 +181,6 @@ export default function MainPage() {
             </button>
           </div>
         </div>
-
 
         {/* Footer */}
         <div className="mt-16 text-center">

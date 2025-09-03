@@ -1,5 +1,5 @@
 // GPT API 서비스 - 통합 버전
-import { safeJsonParse } from './apiUtils';
+import { safeJsonParse } from "./apiUtils";
 
 export interface GPTAnalysisResult {
   emotion: string;
@@ -13,55 +13,7 @@ export interface EmotionAdviceResult {
   advice: string;
 }
 
-// 기존 EmotionAdvice 함수 (Healing 컴포넌트에서 사용)
-export const EmotionAdvice = async (
-  userInput: string
-): Promise<EmotionAdviceResult> => {
-  const OpenAI_API_Key = process.env.REACT_APP_OPENAI_API_KEY;
-
-  const prompt = `당신은 감정 분석가이자 상담가입니다.
-사용자가 말한 문장에서 감정을 짧게 한 단어로 분류한 후,
-그 감정에 어울리는 짧은 위로 또는 조언 한 문장을 작성해 주세요.
-
-포맷은 다음과 같이 해주세요:
-감정: <감정단어>
-한마디: <조언 or 위로 한 문장>
-
-문장: "${userInput}"
-`;
-
-  try {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${OpenAI_API_Key}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [{ role: "user", content: prompt }],
-        temperature: 0.8,
-      }),
-    });
-
-    const data = await safeJsonParse(res);
-    const response = data.choices[0].message.content;
-
-    const emotion = response.match(/감정:\s*(.+)/)?.[1].trim() || "알 수 없음";
-    const advice =
-      response.match(/한마디:\s*(.+)/)?.[1].trim() || "마음 잘 챙기세요.";
-
-    return { emotion, advice };
-  } catch (error) {
-    console.error("EmotionAdvice API 호출 오류:", error);
-    return {
-      emotion: "알 수 없음",
-      advice: "감정 분석에 실패했어요. 잠시 후 다시 시도해주세요.",
-    };
-  }
-};
-
-// 새로운 일기 분석 함수
+//일기 분석 함수
 export const analyzeDiaryWithGPT = async (
   diaryText: string
 ): Promise<GPTAnalysisResult> => {

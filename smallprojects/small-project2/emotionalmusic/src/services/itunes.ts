@@ -126,27 +126,3 @@ export const searchItunesTracks = async (emotion: string, limit: number = 9): Pr
   }
 };
 
-// 음악 공유 URL 생성
-export const createShareUrl = (track: ItunesTrack, emotion: string): string => {
-  const shareText = `🎵 "${emotion}" 기분에 어울리는 음악을 추천받았어요!\n\n${track.trackName} - ${track.artistName}\n\n#감정음악 #${emotion}`;
-  const encodedText = encodeURIComponent(shareText);
-  const itunesUrl = track.trackViewUrl;
-  
-  return `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodeURIComponent(itunesUrl)}`;
-};
-
-// 트랙 시간을 분:초 형식으로 변환
-export const formatTrackTime = (milliseconds?: number): string => {
-  if (!milliseconds) return '0:00';
-  
-  const totalSeconds = Math.floor(milliseconds / 1000);
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = totalSeconds % 60;
-  
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-};
-
-// 아트워크 URL을 고해상도로 변환
-export const getHighResArtwork = (artworkUrl100: string): string => {
-  return artworkUrl100.replace('100x100', '600x600');
-};

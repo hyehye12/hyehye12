@@ -35,7 +35,8 @@ const positiveWords = ["정말", "너무", "완전", "진짜", "대박", "최고
 export const analyzeEmotion = (text: string): string => {
   const lowerText = text.toLowerCase();
   
-  // 각 감정별 키워드 매칭 점수 계산
+  // 각 감정별 키워드 매칭 점수 계산 
+  // // 수정 
   const emotionScores: { [key: string]: number } = {};
   
   Object.entries(emotionKeywords).forEach(([emotion, keywords]) => {

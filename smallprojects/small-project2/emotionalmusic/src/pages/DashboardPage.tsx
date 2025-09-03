@@ -11,6 +11,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { handleApiResponse, safeJsonParse } from "../utils/apiUtils";
+import { DiarySlider } from "../components/DiarySlider";
 
 interface DailyEntry {
   id: string;
@@ -49,6 +50,9 @@ const DashboardPage: React.FC = () => {
   }, []);
 
   const fetchDailyEntries = async () => {
+    setLoading(true);
+    setError(null);
+
     try {
       const response = await fetch("/api/daily-entries", {
         credentials: "include",
@@ -69,7 +73,8 @@ const DashboardPage: React.FC = () => {
       }
 
       const entries = await safeJsonParse(response);
-      setDailyEntries(entries);
+      console.log("Fetched entries:", entries); // 디버깅용
+      setDailyEntries(entries || []);
     } catch (err) {
       console.error("Daily entries fetch error:", err);
       const errorMessage =
@@ -142,6 +147,8 @@ const DashboardPage: React.FC = () => {
 
   // 월별 감정 통계 계산
   const monthlyEmotionStats = useMemo(() => {
+    console.log("Computing emotion stats for entries:", dailyEntries); // 디버깅용
+
     if (dailyEntries.length === 0) return [];
 
     const currentDate = new Date();
@@ -150,21 +157,31 @@ const DashboardPage: React.FC = () => {
 
     // 이번 달 엔트리만 필터링
     const thisMonthEntries = dailyEntries.filter((entry) => {
-      const entryDate = new Date(entry.date);
+      const entryDate = new Date(entry.date || entry.created_at);
       return (
         entryDate.getMonth() === currentMonth &&
         entryDate.getFullYear() === currentYear
       );
     });
 
+    console.log("This month entries:", thisMonthEntries); // 디버깅용
+
     const emotionCounts = thisMonthEntries.reduce((acc, entry) => {
-      acc[entry.detected_emotion] = (acc[entry.detected_emotion] || 0) + 1;
+      const emotion = entry.detected_emotion;
+      if (emotion) {
+        acc[emotion] = (acc[emotion] || 0) + 1;
+      }
       return acc;
     }, {} as Record<string, number>);
 
-    return Object.entries(emotionCounts)
+    console.log("Emotion counts:", emotionCounts); // 디버깅용
+
+    const statsArray = Object.entries(emotionCounts)
       .map(([emotion, count]) => ({ emotion, count }))
       .sort((a, b) => b.count - a.count);
+
+    console.log("Final stats array:", statsArray); // 디버깅용
+    return statsArray;
   }, [dailyEntries]);
 
   // 이번 달 가장 많은 감정과 메시지
@@ -293,150 +310,13 @@ const DashboardPage: React.FC = () => {
             </button>
           </div>
         ) : (
-          <div className="space-y-8">
-            <div className="mb-8 text-center">
-              <h2 className="mb-2 text-3xl font-bold text-gray-900">
-                나의 감정 일기
-              </h2>
-              <p className="text-gray-600">
-                총 {dailyEntries.length}개의 일기가 저장되어 있어요
-              </p>
-            </div>
-
-            {/* Daily Entries */}
-            <div className="grid gap-8">
-              {dailyEntries.map((entry, index) => (
-                <motion.div
-                  key={entry.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="overflow-hidden modern-card"
-                >
-                  {/* Date Header */}
-                  <div className="p-6 text-white bg-gradient-to-r from-blue-500 to-purple-600">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h3 className="text-xl font-bold">
-                          {formatDate(entry.date)}
-                        </h3>
-                        <div className="flex items-center mt-2 space-x-3">
-                          <span className="px-3 py-1 text-sm rounded-full bg-white/20">
-                            감정: {entry.detected_emotion}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="mb-2 text-2xl">🎵</div>
-                        <div className="text-sm opacity-90">오늘의 곡</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-8">
-                    <div className="grid gap-8 md:grid-cols-2">
-                      {/* Diary Content */}
-                      <div className="space-y-6">
-                        <div>
-                          <h4 className="flex items-center mb-3 text-lg font-semibold text-gray-900">
-                            <span className="mr-2">📝</span> 일기 내용
-                          </h4>
-                          <div className="p-4 rounded-lg bg-gray-50">
-                            <p className="leading-relaxed text-gray-800">
-                              {entry.diary_content}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* AI Analysis */}
-                        <div className="space-y-4">
-                          <div className="p-4 rounded-lg bg-blue-50">
-                            <h5 className="flex items-center mb-2 font-semibold text-blue-900">
-                              <span className="mr-2">🤖</span> AI 분석
-                            </h5>
-                            <p className="text-sm text-blue-800">
-                              {entry.ai_analysis}
-                            </p>
-                          </div>
-
-                          <div className="p-4 rounded-lg bg-green-50">
-                            <h5 className="flex items-center mb-2 font-semibold text-green-900">
-                              <span className="mr-2">💡</span> 조언
-                            </h5>
-                            <p className="text-sm text-green-800">
-                              {entry.ai_advice}
-                            </p>
-                          </div>
-
-                          <div className="p-4 rounded-lg bg-yellow-50">
-                            <h5 className="flex items-center mb-2 font-semibold text-yellow-900">
-                              <span className="mr-2">💕</span> 격려
-                            </h5>
-                            <p className="text-sm text-yellow-800">
-                              {entry.ai_encouragement}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Selected Music */}
-                      <div>
-                        <h4 className="flex items-center mb-4 text-lg font-semibold text-gray-900">
-                          <span className="mr-2">🌟</span> 선택한 곡
-                        </h4>
-                        <div className="p-6 border border-purple-100 bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl">
-                          <div className="flex items-start space-x-4">
-                            <img
-                              src={
-                                entry.selected_artwork_url ||
-                                "/default-album.jpg"
-                              }
-                              alt={entry.selected_track_name}
-                              className="object-cover w-20 h-20 rounded-lg"
-                              onError={(e) => {
-                                (e.target as HTMLImageElement).src =
-                                  "/default-album.jpg";
-                              }}
-                            />
-                            <div className="flex-1">
-                              <h5 className="mb-1 font-bold text-gray-900">
-                                {entry.selected_track_name}
-                              </h5>
-                              <p className="mb-2 text-gray-600">
-                                {entry.selected_artist_name}
-                              </p>
-                              <p className="mb-4 text-sm text-gray-500">
-                                {entry.selected_album_name}
-                              </p>
-
-                              <div className="flex space-x-2">
-                                {entry.selected_preview_url && (
-                                  <button
-                                    onClick={() => playPreview(entry)}
-                                    className="px-4 py-2 text-sm font-medium text-purple-600 transition-colors bg-purple-100 rounded-lg hover:bg-purple-200"
-                                  >
-                                    {playingEntryId === entry.id
-                                      ? "⏸️ 정지"
-                                      : "▶️ 미리듣기"}
-                                  </button>
-                                )}
-                                <button
-                                  onClick={() => openInItunes(entry)}
-                                  className="px-4 py-2 text-sm font-medium text-pink-600 transition-colors bg-pink-100 rounded-lg hover:bg-pink-200"
-                                >
-                                  🎵 iTunes
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+          <DiarySlider
+            entries={dailyEntries}
+            formatDate={formatDate}
+            playPreview={playPreview}
+            openInItunes={openInItunes}
+            playingEntryId={playingEntryId}
+          />
         )}
         <br></br>
         <br></br>
@@ -577,7 +457,7 @@ const DashboardPage: React.FC = () => {
                       </div>
                       {index === 0 && (
                         <div className="mt-2">
-                          <span className="px-2 py-1 text-xs text-yellow-800 bg-yellow-100 rounded-full">
+                          <span className="px-2 py-1 text-xs text-yellow-800 rounded-full bg-sky-200">
                             최다
                           </span>
                         </div>
@@ -598,12 +478,12 @@ const DashboardPage: React.FC = () => {
           >
             ✏️ 새 일기 작성
           </button>
-          <button
+          {/* <button
             onClick={() => navigate("/music-board")}
             className="px-8 py-4 mr-4 text-lg font-medium text-purple-600 transition-colors border border-purple-200 bg-purple-50 rounded-xl hover:bg-purple-100"
           >
             🎵 음악 보드
-          </button>
+          </button> */}
           <button
             onClick={fetchDailyEntries}
             className="px-6 py-4 text-sm font-medium text-gray-600 transition-colors border border-gray-200 bg-gray-50 rounded-xl hover:bg-gray-100"
