@@ -53,7 +53,7 @@
 | [🧮 RTC Calculator](https://github.com/AI-System-Semiconductor-SW-Develop/avr-projects/tree/main/rtc-calculator) | ATmega128A 기반 RTC 시계·LCD 계산기 | 수식 계산 로직·버튼 입력 |
 | [⚙️ STM32 Motor Control](https://github.com/AI-System-Semiconductor-SW-Develop/motor_control_mini_project) | 인터럽트·FSM 기반 모터 방향 및 PWM 속도 제어 | 전체 구현 |
 | [💡 WS2812B LED Control](https://github.com/AI-System-Semiconductor-SW-Develop/communication_control) | STM32 PWM·DMA 기반 LED 데이터 전송 및 타이밍 제어 | 전체 구현 |
-| [🌐 Woodpecker](https://github.com/T-in-meet/Woodpecker) | 웹 프로젝트 딱다구리 | 설계 총괄 담당 | github & github action | vercel 배포 | 프론트엔드 및 백엔드 구현|
+| [🌐 Woodpecker](https://github.com/T-in-meet/Woodpecker) | 웹 프로젝트 딱다구리 | 설계 총괄 담당 및 구현 일부 , 배포 담당 |
 
 ---
 
