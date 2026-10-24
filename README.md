@@ -61,13 +61,4 @@
 
 <sub>Build, learn, and keep improving.</sub>
 
-
-## 📊 GitHub 통계
-
-### GitHub Stats
-![GitHub Stats](https://github-readme-stats.vercel.app/api?username=hyehye12&show_icons=true&theme=radical)
-
-### Top Languages
-![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=hyehye12&layout=compact&theme=radical)
-
 </div>
