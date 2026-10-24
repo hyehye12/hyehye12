@@ -45,7 +45,7 @@
 | Project | Overview | My Role |
 | :--- | :--- | :--- |
 | [🚗 AVR RC Car](https://github.com/AI-System-Semiconductor-SW-Develop/avr-projects/tree/main/auto-car) | ATmega128A 기반 블루투스 수동 조종·초음파 장애물 회피 RC카 | 전체 구현 |
-| [🌿 Jetson Smart Fan](https://github.com/hckim-dev/jetson-smart-fan-controller) | Jetson Orin Nano·Linux 기반 스마트 선풍기 | LCD 출력·온도/고도 센서 연동·엔코더 담당 |
+| [🌿 Jetson Smart Fan](https://github.com/hckim-dev/jetson-smart-fan-controller) | Jetson Orin Nano·Linux 기반 스마트 선풍기 | LCD 출력·온도/고도 센서 연동|
 | [⏱️ FPGA Digital Clock](https://github.com/AI-System-Semiconductor-SW-Develop/FPGA-Verilog-Projects/tree/main/minsec_stopwatch_project) | Verilog 기반 분·초 시계와 10ms 단위 스톱워치 | Verilog 로직 구현·시뮬레이션 |
 | [✊ Vision RPS Game](https://github.com/AI-System-Semiconductor-SW-Develop/RCP_game_project) | TensorRT 손동작 인식과 PyQt5 UI를 결합한 가위바위보 게임 | 전체 구현 |
 | [🔍 Board Guard](https://github.com/clap-min99/board_guard) | AI 기반 PCB 불량 검사·이력 관리 시스템 | UI·UX 및 DB 구현 |
