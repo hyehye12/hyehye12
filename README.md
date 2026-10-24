@@ -50,7 +50,7 @@
 | [✊ Vision RPS Game](https://github.com/AI-System-Semiconductor-SW-Develop/RCP_game_project) | TensorRT 손동작 인식과 PyQt5 UI를 결합한 가위바위보 게임 | 전체 구현 |
 | [🔍 Board Guard](https://github.com/clap-min99/board_guard) | AI 기반 PCB 불량 검사·이력 관리 시스템 | UI·UX 및 DB 구현 |
 | [🖥️ Vehicle Control System](https://github.com/qkrtkdgus010208/Qt_ARM-Vehicle_Control_System) | STM32·Qt 기반 차량 전장 제어 및 모니터링 | Qt UI 구현 |
-| [🧮 RTC Calculator](https://github.com/AI-System-Semiconductor-SW-Develop/avr-projects/tree/main/rtc-calculator) | ATmega128A 기반 RTC 시계·LCD 계산기 | 수식 계산 로직·버튼 입력 |
+| [🧮 RTC Calculator](https://github.com/AI-System-Semiconductor-SW-Develop/avr-projects/tree/main/rtc-calculator) | ATmega128A 기반 RTC 시계·LCD 계산기 | 수식 계산 로직·키패드 입력 |
 | [⚙️ STM32 Motor Control](https://github.com/AI-System-Semiconductor-SW-Develop/motor_control_mini_project) | 인터럽트·FSM 기반 모터 방향 및 PWM 속도 제어 | 전체 구현 |
 | [💡 WS2812B LED Control](https://github.com/AI-System-Semiconductor-SW-Develop/communication_control) | STM32 PWM·DMA 기반 LED 데이터 전송 및 타이밍 제어 | 전체 구현 |
 | [🌐 Woodpecker](https://github.com/T-in-meet/Woodpecker) | 웹 프로젝트 딱다구리 | 설계 총괄 담당 및 구현 일부 , 배포 담당 |
