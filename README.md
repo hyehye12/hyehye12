@@ -1,5 +1,5 @@
-![header](https://capsule-render.vercel.app/api?type=venom&color=7ad7fffb&height=300&section=header&text=Welcome&fontSize=90)
 <div align="center">
+![header](https://capsule-render.vercel.app/api?type=venom&color=7ad7fffb&height=300&section=header&text=Welcome&fontSize=90)
 
 # Hi, I'm Hyemin 👋
 
@@ -55,7 +55,6 @@
 
 <sub>Build, learn, and keep improving.</sub>
 
-</div>
 
 ## 📊 GitHub 통계
 
@@ -65,7 +64,4 @@
 ### Top Languages
 ![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=hyehye12&layout=compact&theme=radical)
 
-
-## 📫 연락하기
-
-[![Email](https://img.shields.io/badge/-Email-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:gtg1349@gmail.com)
+</div>
