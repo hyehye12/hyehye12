@@ -42,13 +42,18 @@
 
 ### Project Highlights
 
-| Project | Overview |
-| :--- | :--- |
-| [🚗 Vehicle Control System](https://github.com/qkrtkdgus010208/Qt_ARM-Vehicle_Control_System) | Qt와 ARM Cortex-M4 기반 차량 제어 및 모니터링 시스템 |
-| [⚙️ Motor Control](https://github.com/AI-System-Semiconductor-SW-Develop/motor_control_mini_project) | 모터 제어 미니 프로젝트 |
-| [🔌 AVR Projects](https://github.com/AI-System-Semiconductor-SW-Develop/avr-projects) | RTC·LCD 계산기와 초음파 RC카 |
-| [💡 FPGA & Verilog](https://github.com/AI-System-Semiconductor-SW-Develop/FPGA-Verilog-Projects) | FPGA·Verilog 프로젝트 모음 |
-| [🌐 Woodpecker](https://github.com/T-in-meet/Woodpecker) | 웹 프로젝트 딱다구리 |
+| Project | Overview | My Role |
+| :--- | :--- | :--- |
+| [🚗 AVR RC Car](https://github.com/AI-System-Semiconductor-SW-Develop/avr-projects/tree/main/auto-car) | ATmega128A 기반 블루투스 수동 조종·초음파 장애물 회피 RC카 | 전체 구현 |
+| [🌿 Jetson Smart Fan](https://github.com/hckim-dev/jetson-smart-fan-controller) | Jetson Orin Nano·Linux 기반 스마트 선풍기 | LCD 출력·온도/고도 센서 연동·엔코더 담당 |
+| [⏱️ FPGA Digital Clock](https://github.com/AI-System-Semiconductor-SW-Develop/FPGA-Verilog-Projects/tree/main/minsec_stopwatch_project) | Verilog 기반 분·초 시계와 10ms 단위 스톱워치 | Verilog 로직 구현·시뮬레이션 |
+| [✊ Vision RPS Game](https://github.com/AI-System-Semiconductor-SW-Develop/RCP_game_project) | TensorRT 손동작 인식과 PyQt5 UI를 결합한 가위바위보 게임 | 전체 구현 |
+| [🔍 Board Guard](https://github.com/clap-min99/board_guard) | AI 기반 PCB 불량 검사·이력 관리 시스템 | UI·UX 및 DB 구현 |
+| [🖥️ Vehicle Control System](https://github.com/qkrtkdgus010208/Qt_ARM-Vehicle_Control_System) | STM32·Qt 기반 차량 전장 제어 및 모니터링 | Qt UI 구현 |
+| [🧮 RTC Calculator](https://github.com/AI-System-Semiconductor-SW-Develop/avr-projects/tree/main/rtc-calculator) | ATmega128A 기반 RTC 시계·LCD 계산기 | 수식 계산 로직·버튼 입력 |
+| [⚙️ STM32 Motor Control](https://github.com/AI-System-Semiconductor-SW-Develop/motor_control_mini_project) | 인터럽트·FSM 기반 모터 방향 및 PWM 속도 제어 | 전체 구현 |
+| [💡 WS2812B LED Control](https://github.com/AI-System-Semiconductor-SW-Develop/communication_control) | STM32 PWM·DMA 기반 LED 데이터 전송 및 타이밍 제어 | 전체 구현 |
+| [🌐 Woodpecker](https://github.com/T-in-meet/Woodpecker) | 웹 프로젝트 딱다구리 | 설계 총괄 담당 | github & github action | vercel 배포 | 프론트엔드 및 백엔드 구현|
 
 ---
 
