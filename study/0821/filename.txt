@@ -1,3 +1,0 @@
-// vi 편집기 연습
-Hello World!!!
-Say Hi
