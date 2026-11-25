@@ -1,5 +1,6 @@
 <div align="center">
-![header](https://capsule-render.vercel.app/api?type=venom&color=7ad7fffb&height=300&section=header&text=Welcome&fontSize=90)
+
+ ![header](https://capsule-render.vercel.app/api?type=venom&color=7ad7fffb&height=300&section=header&text=Welcome&fontSize=90)
  
 # Hi, I'm Hyemin 👋
  
@@ -42,7 +43,9 @@
 | [📡 Basys3 I2C Monitor](https://hyehye12.github.io/projects/basys3-i2c-sensor-monitor) | 두 FPGA 간 I2C 센서 전송, 테스트벤치·로직 분석기 실측 파형 검증 | 슬레이브 RTL·Qt 모니터 |
  
 <details>
-<summary>More embedded projects</summary>
+
+ <summary>More embedded projects</summary>
+
 | Project | Highlight | Role |
 | :--- | :--- | :--- |
 | [🖥️ Vehicle Control System](https://github.com/qkrtkdgus010208/Qt_ARM-Vehicle_Control_System) | STM32·Qt 차량 제어와 영상 모니터링 | Qt UI·UART 통신 |
